@@ -1,0 +1,40 @@
+<workbook>
+  <worksheet name="Book">
+    <section startRow="0" endRow="0" />
+    <loop startRow="1" endRow="1" items="result" var="book" varType="com.v2tech.domain.Book">
+      <section startRow="1" endRow="1">
+        <mapping row="1" col="0">book.bookTitle</mapping>
+        <mapping row="1" col="1">book.edition</mapping>
+        <mapping row="1" col="2">book.format</mapping>
+        <mapping row="1" col="3">book.keyword</mapping>
+         <mapping row="1" col="4">book.description</mapping>
+	
+        <mapping row="1" col="6">book.authors</mapping>
+	<mapping row="1" col="7">book.ISBN</mapping>
+	<mapping row="1" col="9">book.publisher</mapping>
+	<mapping row="1" col="10">book.year</mapping>
+	<mapping row="1" col="11">book.mrp</mapping>
+	<mapping row="1" col="12">book.currency</mapping>
+	<mapping row="1" col="14">book.mediumImageUrl</mapping>
+	<mapping row="1" col="15">book.largeImageUrl</mapping>
+	<mapping row="1" col="16">book.detailPageURL</mapping>
+	<mapping row="1" col="17">book.numberOfPages</mapping>
+	<mapping row="1" col="18">book.cStreams</mapping>
+	<mapping row="1" col="19">book.rExams</mapping>
+	<mapping row="1" col="20">book.rSubjects</mapping>
+	<mapping row="1" col="21">book.srcs</mapping>
+        
+      
+        
+        
+        
+        
+      </section>
+      <loopbreakcondition>
+        <rowcheck offset="0">
+          <cellcheck offset="0" >End Rows:</cellcheck>
+        </rowcheck>
+      </loopbreakcondition>
+    </loop>
+  </worksheet>
+</workbook>
