@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+li:before {
+ content:"${bullet}"; 
+ font-size:15px; 
+ vertical-align:center; 
+
+
+padding-right:13px;
+}
+</style>
+
+</head>
+  <body>
+    <table  style="width: 100%;margin-bottom: none;"  border="0" >
+      <tbody>
+        <tr>
+          <td style="text-align: center;">
+            <strong><span  style="font-family: Garamond;font-size:16px">${Name}</span></strong>
+          </td>
+        </tr>
+        <tr>
+          <td  style="text-align: center;"><span  style="font-family: Garamond;font-size:${font_size}">${Address}<strong> . </strong>${Mobile}<strong> . </strong>${Email}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+     <hr  style="width: 100%; border: none; border-bottom: 1px solid black; margin-left: auto; margin-right: auto;margin-top: 2 px; margin-bottom: 2px;"></hr>
+    <h2  style="font-family: Garamond;font-size:${font_size};margin-top: 6px; margin-bottom: 4px;">{{1_HEADER}}</h2>
+    <hr  style="width: 100%; border: none; border-bottom: 1px solid black; margin-left: auto; margin-right: auto;margin-top: 2 px; margin-bottom: 2px;"></hr>
+    ${Repeat_1_Comment}
+    <hr  style="width: 100%; border: none; border-bottom: 1px solid black; margin-left: auto; margin-right: auto;margin-top: 2 px; margin-bottom: 2px;"></hr>
+    <h2  style="font-family: Garamond;font-size:${font_size};margin-top: 6px; margin-bottom: 4px;">{{2_HEADER}}</h2>
+    <hr  style="width: 100%; border: none; border-bottom: 1px solid black; margin-left: auto; margin-right: auto;margin-top: 2 px; margin-bottom: 2px;"></hr>
+    ${Repeat_2_Comment}
+     <hr  style="width: 100%; border: none; border-bottom: 1px solid black; margin-left: auto; margin-right: auto;margin-top: 2 px; margin-bottom: 2 px;"></hr>
+    <h2  style="font-family: Garamond;font-size:${font_size};margin-top: 2px; margin-bottom: 4px">{{3_HEADER}}</h2>
+    <hr  style="width: 100%; border: none; border-bottom: 1px solid black; margin-left: auto; margin-right: auto;margin-top: 2 px; margin-bottom: 2px;"></hr>
+
+    <div> ${Repeat_3_Comment} </div>
+  </body>
+</html>

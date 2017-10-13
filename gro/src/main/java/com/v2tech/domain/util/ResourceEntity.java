@@ -317,7 +317,7 @@ public class ResourceEntity implements Serializable
 				{
 					setSmallUrl("" + book.getSmallImageUrl());
 				}
-			Integer rating = (int) ((book.getAverageRating() == null) ? 1 : Math.round(book.getAverageRating()));
+			Integer rating = (int) ((book.getAverageRating() == null) ? 0 : Math.round(book.getAverageRating()));
 			setRating(rating.intValue());
 			setAuthor(book.getAuthors());
 			setRateCount(book.getRateCount());
@@ -355,7 +355,7 @@ public class ResourceEntity implements Serializable
 					{
 						setSmallUrl("" + book.getSmallImageUrl());
 					}
-				Integer rating = (int) ((book.getAverageRating() == null) ? 1 : Math.round(book.getAverageRating()));
+				Integer rating = (int) ((book.getAverageRating() == null) ? 0 : Math.round(book.getAverageRating()));
 				setRating(rating.intValue());
 				String readMore = getReadMore();
 				setAuthor(book.getAuthors());
@@ -403,7 +403,7 @@ public class ResourceEntity implements Serializable
 				}
 			setUniqueKey(coachingClass.getName());
 			setSmallUrl("images/class.jpg");
-			Integer rating = (int) ((coachingClass.getAverageRating() == null) ? 1 : Math.round(coachingClass.getAverageRating()));
+			Integer rating = (int) ((coachingClass.getAverageRating() == null) ? 0 : Math.round(coachingClass.getAverageRating()));
 			setRating(rating.intValue());
 			setYear(coachingClass.getYearFounded());
 			setWebsite(coachingClass.getWebsite());
@@ -438,7 +438,7 @@ public class ResourceEntity implements Serializable
 				setSmallUrl("images/class.jpg");
 				setReadMore(readMore);
 				setReviews(reviews);
-				Integer rating = (int) ((coachingClass.getAverageRating() == null) ? 1 : Math.round(coachingClass.getAverageRating()));
+				Integer rating = (int) ((coachingClass.getAverageRating() == null) ? 0 : Math.round(coachingClass.getAverageRating()));
 				setRating(rating.intValue());
 				setYear(coachingClass.getYearFounded());
 				setWebsite(coachingClass.getWebsite());
@@ -474,7 +474,7 @@ public class ResourceEntity implements Serializable
 				setSmallUrl("images/class.jpg");
 				setReadMore(readMore);
 				setReviews(reviews);
-				Integer rating = (int) ((coachingClass.getAverageRating() == null) ? 1 : Math.round(coachingClass.getAverageRating()));
+				Integer rating = (int) ((coachingClass.getAverageRating() == null) ? 0 : Math.round(coachingClass.getAverageRating()));
 				setRating(rating.intValue());
 				Object yearFounded = coachingClass.getAdditionalProperties().get("yearFounded");
 				setYear((yearFounded != null) ? (String) yearFounded : null);
@@ -491,7 +491,7 @@ public class ResourceEntity implements Serializable
 			//setBigUrl("images/digitalResource.png");
 			setDetailUrl(digitalTool.getWebSite());
 			setIdentity(digitalTool.getName());
-			Integer rating = (int) ((digitalTool.getAverageRating() == null) ? 1 : Math.round(digitalTool.getAverageRating()));
+			Integer rating = (int) ((digitalTool.getAverageRating() == null) ? 0 : Math.round(digitalTool.getAverageRating()));
 			setRating(rating.intValue());
 			setStream(digitalTool.getCareerStreams());
 			setWebsite(digitalTool.getWebSite());
@@ -511,7 +511,7 @@ public class ResourceEntity implements Serializable
 				//setBigUrl("images/digitalResource.png");
 				setDetailUrl(digitalTool.getWebSite());
 				setIdentity(digitalTool.getName());
-				Integer rating = (int) ((digitalTool.getAverageRating() == null) ? 1 : Math.round(digitalTool.getAverageRating()));
+				Integer rating = (int) ((digitalTool.getAverageRating() == null) ? 0 : Math.round(digitalTool.getAverageRating()));
 				setRating(rating.intValue());
 				setReviews(reviews);
 				setStream(digitalTool.getCareerStreams());

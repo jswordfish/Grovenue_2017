@@ -49,6 +49,16 @@ CoachingClassRepository coachingClassRepository;
 
 @Test
 @Rollback(value=false)
+public void testCoachingClassRetrievalForStateAndCity(){
+	Set<CoachingClass> cs = coachingClassRepository.getCoachingClassesAsPerSelectedStateAndCity("(?i).*Mumbai.*", "(?i).*Nerul.*", 10);
+	for(CoachingClass class1 : cs){
+		System.out.println(class1.getState()+"-"+class1.getCity()+" - "+class1.getName());
+	}
+}
+
+
+@Test
+@Rollback(value=false)
 public void testDuplicates(){
 	Result<CoachingClass> classes = coachingClassRepository.findAll();
 	Map<String,CoachingClass> map = new HashMap<>();

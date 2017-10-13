@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title id='Description'>Terms & Conditions</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!--<link rel="icon" href="favicon.png">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+    <link rel="stylesheet" href="css/responsive.css?v=1.0">
+    <link rel="stylesheet" href="css/menu.css?v=1.0">
+    <link rel="stylesheet" href="css/popup.css?v=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.14.1/hello.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.js"></script>
+    <script src="js/fileSaver.js?v=1.0"></script>
+    <script src="js/modalService.js?v=1.0"></script>
+    <script src="js/commonServices.js?v=1.0"></script>
+    <script src="js/authController.js?v=1.0"></script>
+    <script src="js/feedbackController.js?v=1.0"></script>
+    <script src="js/login.js?v=1.0"></script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97928294-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body ng-cloak ng-app="myApp" ng-controller="loginController">
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-md-3">
+                    <a href="index.html"><img src="images/colorlogo.png" /></a>
+                </div>
+                <div class="menu col-md-6">
+                    <div class="top topsearch">
+                        <div class="search">
+                            <div class="all"> </div>
+                            <form ng-submit="redirectAndSearch()">
+                                <input type="text" name="search" ng-model="searchText" placeholder="Books, Coaching Classes, Digital Tools, Careers..." />
+                            </form>
+                            <!--<input type="text" class="hideshow" name="search" placeholder="Search"/>-->
+                            <a href="javascript:void(0);" id="searchshow"><i class="fa fa-search" aria-hidden="true" ng-click="redirectAndSearch()"></i></a>
+                            <div class="popup">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu col-md-3">
+                    <div class="top">
+                        <div class="login-reg">
+                            <div class="headeruser"><img src="images/user.png" /></div>
+                            <div class="logreg" ng-if="!isLoggedin()">
+
+                                <a ng-click="openLoginSignupModal()" style="cursor:pointer;">LOGIN / REGISTER</a>
+                            </div>
+                            <div class="logreg" ng-if="isLoggedin()">
+                                <input type="button" value="{{loggedInUser.fullName}}" popover-animation="true" popover-placement="bottom" popover-trigger="'focus'" uib-popover-template="'partials/user-menu-popover.html'" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="menu main_menu col-md-12">
+                    <div id='cssmenu' class="center-parent">
+                        <ul class="center">
+                            <li><a href="Discover.html" class="menulink">discover</a></li>
+                            <li class='active'><a href="prepare_for_greatness.html" class="menulink">prepare for greatness</a></li>
+                            <li><a href="be_job_ready.html" class="menulink">be job ready</a></li>
+                            <li id="last"><a href="write_review.html" class="menulink">write a review</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+
+
+    <div class="terms">
+        <!--<h1>Terms & Condition</h1>-->
+    </div>
+    <!-- Careers -->
+
+
+
+    <div class="current_opening">
+        <div class="container" style="text-align:left;margin-top:10px;">
+            <div class="current_opening_space">
+                <p><strong>Last updated: Jul 20<sup>th</sup>, 2016.</strong> </p>
+                <p>These terms and conditions are effective immediately for all users of Grovenue and its affiliated sites and products.</p>
+                <p>These terms and conditions (the <strong>"Terms"</strong>) govern your access to and use of Grovenue&rsquo;s websites and mobile applications that link to or reference these Terms (<strong>"Site"</strong>). By accessing or using the Site, you are agreeing to these Terms and concluding a legally binding contract with Mirabilia Learning Solutions, headquartered in Mumbai, India (<strong>"Company"</strong>). Do not access or use the Site if you are unwilling or unable to be bound by the Terms.</p>
+                <p><u>&nbsp;</u></p>
+                <ul>
+                    <li>
+                        <strong>DEFINITIONS</strong>
+                        <ul>
+                            <li>
+                                <strong>Parties</strong><strong>
+                                </strong><strong>"You"</strong> and <strong>"your"</strong> refer to you, as a user of the Site. A <strong>"user"</strong> is someone who accesses, browses, crawls, scrapes, or in any way uses the Site. <strong>"We,"</strong> <strong>"us,"</strong> and <strong>"our"</strong> refer to Grovenue.
+                            </li>
+                            <li>
+                                <strong>Content</strong><strong>
+                                </strong><strong>"Content"</strong> means text, images, photos, audio, video, location data, and all other forms of data or communication. <strong>"Your Content"</strong> means Content that you submit or transmit to, through, or in connection with the Site, such as ratings, reviews, compliments, invitations, check-ins, messages, and information that you publicly display or displayed in your account profile. <strong>"User Content"</strong> means Content that users submit or transmit to, through, or in connection with the Site. <strong>"Grovenue Content"</strong> means Content that we create and make available in connection with the Site. <strong>"Third Party Content"</strong> means Content that originates from parties other than Grovenue or its users, which is made available in connection with the Site. <strong>"Site Content"</strong> means all of the Content that is made available in connection with the Site, including Your Content, User Content, Third Party Content, and Grovenue Content.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>CHANGES TO THE TERMS OF SERVICE</strong><strong>
+                        </strong>We may modify the Terms from time to time. You understand and agree that your access to or use of the Site is governed by the Terms effective at the time of your access to or use of the Site. If we make material changes to these Terms, we will notify you by email or by posting a notice on the Site prior to the effective date of the changes. It is your responsibility to be updated on the latest Terms. We will also indicate at the top of this page the date that revisions were last made. You should revisit these Terms on a regular basis as revised versions will be binding on you. Any such modification will be effective upon our posting of new Terms. <strong>You understand and agree that your continued access to or use of the Site after the effective date of modifications to the Terms indicates your acceptance of the modifications.</strong>
+                    </li>
+                    <li>
+                        <strong>TRANSLATION</strong><strong>
+                        </strong>We may translate these Terms into other languages for your convenience. Nevertheless, the English version governs your relationship with Grovenue, and any inconsistencies among the different versions will be resolved in favor of the English version.
+                    </li>
+                    <li>
+                        <strong>USING THE SITE</strong>
+                        <ul>
+                            <li>
+                                <strong>Eligibility</strong><strong>
+                                </strong>To access or use the Site, you must be 18 years or older and have the requisite power and authority to enter into these Terms. You may not access or use the Site if you are a competitor of ours or if we have previously banned you from the Site or closed your account.
+                            </li>
+                            <li>
+                                <strong>Permission to Use the Site</strong><strong>
+                                </strong>We grant you permission to use the Site subject to the restrictions in these Terms. Your use of the Site is at your own risk, including the risk that you might be exposed to Content that is offensive, indecent, inaccurate, objectionable, or otherwise inappropriate.
+                            </li>
+                            <li>Compliance with Laws. You are responsible for complying with all laws and regulations in the country in which you live when you access and use the Services. You agree to use the Services only in compliance with these Terms and applicable law, and in a manner that does not violate our legal rights or those of any third party(ies).</li>
+                            <li>
+                                <strong>Site Availability</strong><strong>
+                                </strong>The Site may be modified, updated, interrupted, suspended or discontinued at any time without notice or liability.
+                            </li>
+                            <li>
+                                <strong>User Accounts</strong><strong>
+                                </strong>You must create an account and provide certain information about yourself in order to use some of the features that are offered through the Site. You are responsible for maintaining the confidentiality of your account password. You are also responsible for all activities that occur in connection with your account. You agree to notify us immediately of any unauthorized use of your account. We reserve the right to close your account at any time for any or no reason.Your account is for your personal, non-commercial use only. In creating it, we ask that you provide complete and accurate information about yourself to bolster your credibility as a contributor to the Site. You may not impersonate someone else (e.g., adopt the identity of a celebrity or your next-door neighbor), create or use an account for anyone other than yourself, provide an email address other than your own, or create multiple accounts. If you use a pseudonym, take care to note that others may still be able to identify you if, for example, you include identifying information in your reviews, use the same account information on other sites, or allow other sites to share information about you with Grovenue. Please read our Privacy Policy for more information.
+                            </li>
+                            <li>
+                                <strong>Communications from Grovenue and other Users</strong><strong>
+                                </strong>By creating an account, you agree to receive certain communications in connection with the Site. For example, you might receive compliments or friend requests from other Users. You will also receive our newsletters or email communications from time to time, including birthday wishes, product updates. You can opt out of some communications by emailing us at <a href="mailto:admin@grovenue.com">admin@grovenue.com</a>.
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>CONTENT</strong></li>
+                </ul>
+                <p>
+                    <strong>Responsibility for Your Content</strong><strong>
+                    </strong>You alone are responsible for Your Content, and once published, it cannot always be withdrawn. You assume all risks associated with Your Content, including anyone's reliance on its quality, accuracy, or reliability, or any disclosure by you of information in Your Content that makes you personally identifiable. You represent that you own, or have the necessary permissions to use and authorize the use of Your Content as described herein. You may not imply that Your Content is in any way sponsored or endorsed by Grovenue. You may expose yourself to liability if, for example, Your Content contains material that is false, intentionally misleading, or defamatory; violates any third-party right, including any copyright, trademark, patent, trade secret, moral right, privacy right, right of publicity, or any other intellectual property or proprietary right; contains material that is unlawful, including illegal hate speech or pornography; exploits or otherwise harms minors; or violates or advocates the violation of any law or regulation. You assume all risks associated with Your Content, including anyone's reliance on its quality, accuracy, or reliability, or any disclosure by you of information in Your Content that makes you personally identifiable. While we reserve the right to remove content, we do not control actions or content posted by our users and do not guarantee the accuracy, integrity or quality of any content. You acknowledge and agree that content posted by users and any and all liability arising from such content is the sole responsibility of the user who posted the content, and not us.
+                </p>
+                <p>&nbsp;</p>
+                <ul>
+                    <li>We grant you a personal, limited, non-exclusive and non-transferable license to access and use the Services only as expressly permitted in these Terms. You shall not use the Services for any illegal purpose or in any manner inconsistent with these Terms. You may use information made available through the Services solely for your personal, non-commercial use. You agree not to use, copy, display, distribute, modify, broadcast, translate, reproduce, reformat, incorporate into advertisements and other works, sell, promote, create derivative works, or in any way exploit or allow others to exploit any of Grovenue Content in whole or in part except as expressly authorized by us. Except as otherwise expressly granted to you in writing, we do not grant you any other express or implied right or license to the Services, Grovenue Content or our IP Rights.</li>
+                    <li>Any violation by you of the license provisions contained in this Section may result in the immediate termination of your right to use the Services, as well as potential liability for copyright and other IP Rights infringement depending on the circumstances.</li>
+                    <li>
+                        <strong>Our Right to Use Your Content</strong><strong>
+                        </strong>We may use Your Content in a number of different ways, including publicly displaying it, reformatting it, incorporating it into advertisements and other works, creating derivative works from it, promoting it, distributing it, and allowing others to do the same in connection with their own websites and media platforms (<strong>"Other Media"</strong>). As such, you hereby irrevocably grant us world-wide, perpetual, non-exclusive, royalty-free, assignable, sublicensable, transferable rights to use Your Content for any purpose. Please note that you also irrevocably grant the users of the Site and any Other Media the right to access Your Content in connection with their use of the Site and any Other Media. Finally, you irrevocably waive, and cause to be waived, against Grovenue and its users any claims and assertions of moral rights or attribution with respect to Your Content. By "use" we mean use, copy, publicly perform and display, reproduce, distribute, modify, translate, remove, analyze, commercialize, and prepare derivative works of Your Content.
+                    </li>
+                    <li>
+                        <strong>Ownership</strong><strong>
+                        </strong>As between you and Grovenue, you own Your Content. We own the Grovenue Content, including but not limited to visual interfaces, interactive features, graphics, design, compilation, including, but not limited to, our compilation of User Content and other Site Content, computer code, products, software, aggregate user review ratings, and all other elements and components of the Site excluding Your Content, User Content and Third Party Content. We also own the copyrights, trademarks, service marks, trade names, and other intellectual and proprietary rights throughout the world (<strong>"IP Rights"</strong>) associated with the Grovenue Content and the Site, which are protected by copyright, trade dress, patent, trademark laws and all other applicable intellectual and proprietary rights and laws. As such, you may not modify, reproduce, distribute, create derivative works or adaptations of, publicly display or in any way exploit any of the Grovenue Content in whole or in part except as expressly authorized by us. Except as expressly and unambiguously provided herein, we do not grant you any express or implied rights, and all rights in and to the Site and the Grovenue Content are retained by us.
+                    </li>
+                    <li>User reviews do not reflect the opinion of Zomato. Zomato receives multiple reviews by users, which reflect the opinions of the Users. It is pertinent to state that each and every review posted on Zomato is the personal opinion of the user/reviewer only. Zomato is a neutral platform, which solely provides a means of communication between users/reviewers including users or restaurant owners/representatives with access to restaurant business page. The advertisements on Zomato are published on an independent basis and there is no relation between the reviews of advertisers those who have advertised on the Services. We are a neutral platform and we don&rsquo;t arbitrate disputes.</li>
+                    <li>
+                        <strong>Advertising</strong><strong>
+                        </strong>Grovenue and its licensees may publicly display advertisements and other information adjacent to or included with Your Content. You are not entitled to any compensation for such advertisements. The manner, mode and extent of such advertising are subject to change without specific notice to you. Responsibility for ensuring that material submitted for inclusion on the Site or mobile apps complies with applicable international and national law is exclusively on the party providing the information/material. Your correspondence or business dealings with, or participation in promotions of, advertisers other than Grovenue found on or through the Site and or mobile apps, including payment and delivery of related goods or services, and any other terms, conditions, warranties or representations associated with such dealings, shall be solely between you and such advertiser. Grovenue will not be responsible or liable for any error or omission, inaccuracy in advertising material or any loss or damage of any sort incurred as a result of any such dealings or as a result of the presence of such other advertiser(s) on the Site and mobile apps.
+                    </li>
+                    <li>
+                        <strong>Other</strong><strong>
+                        </strong>User Content (including any that may have been created by users employed or contracted by Grovenue) does not necessarily reflect the opinion of Grovenue. We reserve the right to remove, screen, edit, or reinstate User Content from time to time at our sole discretion for any reason or no reason, and without notice to you. For example, we may remove a review if we believe it violates our Content Guidelines. We have no obligation to retain or provide you with copies of Your Content, nor do we guarantee any confidentiality with respect to Your Content.
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <strong>RESTRICTIONS</strong><strong>
+                        </strong>We are under no obligation to enforce the Terms on your behalf against another user. While we encourage you to let us know if you believe another user has violated the Terms, we reserve the right to investigate and take appropriate action at our sole discretion.
+                        <ul>
+                            <li>
+                                <strong>You agree not to, and will not assist, encourage, or enable others to use the Site to:</strong>
+                                <ul>
+                                    <li>Violate our Content Guidelines, for example, by writing a fake or defamatory review, trading reviews with other businesses, or compensating someone or being compensated to write or remove a review;</li>
+                                    <li>Violate any third party's rights, including any breach of confidence, copyright, trademark, patent, trade secret, moral right, privacy right, right of publicity, or any other intellectual property or proprietary right;</li>
+                                    <li>Threaten, stalk, harm, or harass others, or promote bigotry or discrimination;</li>
+                                    <li>Promote a business or other commercial venture or event, or otherwise use the Site for commercial purposes, except in connection with a Business / Partner Account and as expressly permitted by Grovenue;</li>
+                                    <li>Send bulk emails, surveys, or other mass messaging, whether commercial in nature or not; engage in keyword spamming, or otherwise attempt to manipulate the Site's search results or any third party website;</li>
+                                    <li>Solicit personal information from minors, or submit or transmit pornography; or</li>
+                                    <li>Violate any applicable law.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>You also agree not to, and will not assist, encourage, or enable others to:</strong>
+                                <ul>
+                                    <li>Violate the Terms;</li>
+                                    <li>Modify, adapt, appropriate, reproduce, distribute, translate, create derivative works or adaptations of, publicly display, sell, trade, or in any way exploit the Site or Site Content (other than Your Content), except as expressly authorized by Grovenue;</li>
+                                    <li>Use any robot, spider, site search/retrieval application, or other automated device, process or means to access, retrieve, scrape, or index any portion of the Site or any Site Content;</li>
+                                    <li>Reverse engineer any portion of the Site;</li>
+                                    <li>Remove or modify any copyright, trademark or other proprietary rights notice that appears on any portion of the Site or on any materials printed or copied from the Site;</li>
+                                    <li>Record, process, or mine information about other users;</li>
+                                    <li>Access, retrieve or index any portion of the Site for purposes of constructing or populating a searchable database of business reviews;</li>
+                                    <li>Reformat or frame any portion of the Site;</li>
+                                    <li>Take any action that imposes, or may impose, in our sole discretion, an unreasonable or disproportionately large load on Grovenue's technology infrastructure or otherwise make excessive traffic demands of the Site;</li>
+                                    <li>Attempt to gain unauthorized access to the Site, user accounts, computer systems or networks connected to the Site through hacking, password mining or any other means;</li>
+                                    <li>Use the Site or any Site Content to transmit any computer viruses, worms, defects, Trojan horses or other items of a destructive nature (collectively, <strong>"Viruses"</strong>);</li>
+                                    <li>Use any device, software or routine that interferes with the proper working of the Site, or otherwise attempt to interfere with the proper working of the Site;</li>
+                                    <li>Use the Site to violate the security of any computer network, crack passwords or security encryption codes; disrupt or interfere with the security of, or otherwise cause harm to, the Site or Site Content; or</li>
+                                    <li>Remove, circumvent, disable, damage or otherwise interfere with any security-related features of the Site, features that prevent or restrict the use or copying of Site Content, or features that enforce limitations on the use of the Site.</li>
+                                </ul>
+                            </li>
+                            <li>The restrictions above only apply to the extent permissible under applicable law. Nevertheless, you agree not to act contrary to them (even if permissible under applicable law) without providing 30 days' prior written notice to us <a href="http://www.yelp.com/contact">here</a>, together with any information that we may reasonably require to give us an opportunity to provide alternative remedies or otherwise accommodate you at our sole discretion.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>GUIDELINES AND POLICIES</strong>
+                        <ul>
+                            <li>
+                                <strong>Content Guidelines</strong><strong>
+                                </strong>You represent that you have read and understood our Content Guidelines and agree to abide by the same at all times when using Grovenue&rsquo;s site, related products, and Content.
+                            </li>
+                            <li>
+                                <strong>Privacy</strong><strong>
+                                </strong>You represent that you have read and understood our Privacy Policy. Note that we may disclose information about you to third parties if we have a good faith belief that such a disclosure is reasonably necessary to (i) take action regarding suspected illegal activities; (ii) enforce or apply our Terms and Privacy Policy; (iii) comply with legal process or other government inquiry or other legal process served on us; or (iv) protect our rights, reputation, and property, or that of our users, affiliates, or the public. If you use the Site outside of India, you consent to having your personal data transferred to and processed in India.
+                            </li>
+                            <li>
+                                <strong>Copyright And Trademark Disputes</strong><strong>
+                                </strong>Please see our <a href="https://www.yelp.com/static?p=infringementpolicy">Infringement Policy</a> for information about copyright and trademark disputes.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong><span style="text-decoration: line-through;">GROVENUE DEALS AND GROVENUE ADVERTISING</span></strong><strong>
+                            <span style="text-decoration: line-through;">
+                            </span>
+                        </strong><span style="text-decoration: line-through;">If you purchase a Grovenue Deal or Gift Certificate, the terms of your purchase will be governed by the Grovenue General Terms for Deals and Certificates. Please review them before you make each purchase since they may change from time to time. In the event of any conflict between the Grovenue General Terms for Deals and Certificates and these Terms, the Grovenue General Terms for Deals and Certificates will prevail.</span><span style="text-decoration: line-through;">
+                        </span><span style="text-decoration: line-through;">Similarly, if you create a business owner's account on the Site or purchase advertising from Grovenue, the Grovenue Advertising Agreement will apply. In the event of any conflict between the Grovenue Advertising Agreement and these Terms, the Grovenue Advertising Agreement will prevail.</span>
+                    </li>
+                    <li>
+                        <strong>SUGGESTIONS AND IMPROVEMENTS</strong><strong>
+                        </strong>By sending us any ideas, suggestions, documents or proposals (<strong>"Feedback"</strong>), you agree that (i) your Feedback does not contain the confidential or proprietary information of third parties, (ii) we are under no obligation of confidentiality, express or implied, with respect to the Feedback, (iii) we may have something similar to the Feedback already under consideration or in development, and (iv) you grant us an irrevocable, non-exclusive, royalty-free, perpetual, worldwide license to use, modify, prepare derivative works, publish, distribute and sublicense the Feedback, and you irrevocably waive, and cause to be waived, against Grovenue and its users any claims and assertions of any moral rights contained in such Feedback.
+                    </li>
+                    <li>
+                        <strong>THIRD PARTIES</strong><strong>
+                        </strong>The Site may include links to other websites or applications (each, a <strong>"Third Party Site"</strong>). We do not control or endorse any Third Party Site. You agree that we are not responsible for the availability or contents of such Third Party Sites. Your use of Third Party Sites is at your own risk. Some of the services made available through the Site may be subject to additional third party or open source licensing terms and disclosures.
+                    </li>
+                    <li>
+                        <strong>INDEMNITY</strong><strong>
+                        </strong>You agree to indemnify, defend, and hold Grovenue, its parents, subsidiaries, affiliates, any related companies, suppliers, licensors and partners, and the officers, directors, employees, agents and representatives of each of them (collectively, the "<strong>Grovenue Entities</strong>") harmless, including costs, liabilities and legal fees, from any claim or demand made by any third party arising out of or relating to (i) your access to or use of the Site, (ii) your violation of the Terms, (iii) any products or services purchased or obtained by you in connection with the Site, or (iv) the infringement by you, or any third party using your account, of any intellectual property or other right of any person or entity. Grovenue reserves the right, at your expense, to assume the exclusive defense and control of any matter for which you are required to indemnify us and you agree to cooperate with our defense of these claims. You agree not to settle any such matter without the prior written consent of Grovenue. Grovenue will use reasonable efforts to notify you of any such claim, action or proceeding upon becoming aware of it.
+                    </li>
+                    <li>
+                        <strong>DISCLAIMERS AND LIMITATIONS OF LIABILITY</strong><strong>
+                        </strong><strong>PLEASE READ THIS SECTION CAREFULLY SINCE IT LIMITS THE LIABILITY OF THE GROVENUE ENTITIES TO YOU. EACH OF THE SUBSECTIONS BELOW ONLY APPLIES UP TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW. NOTHING HEREIN IS INTENDED TO LIMIT ANY RIGHTS YOU MAY HAVE WHICH MAY NOT BE LAWFULLY LIMITED. IF YOU ARE UNSURE ABOUT THIS OR ANY OTHER SECTION OF THESE TERMS, PLEASE CONSULT WITH A LEGAL PROFESSIONAL PRIOR TO ACCESSING OR USING THE SITE. BY ACCESSING OR USING THE SITE, YOU REPRESENT THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO THESE TERMS, INCLUDING THIS SECTION. YOU ARE GIVING UP SUBSTANTIAL LEGAL RIGHTS BY AGREEING TO THESE TERMS.</strong>
+                        <ul>
+                            <li>THE SITE IS MADE AVAILABLE TO YOU ON AN "AS IS", "WITH ALL FAULTS" AND "AS AVAILABLE" BASIS, WITH THE EXPRESS UNDERSTANDING THAT THE GROVENUE ENTITIES MAY NOT MONITOR, CONTROL, OR VET USER CONTENT. AS SUCH, YOUR USE OF THE SITE IS AT YOUR OWN DISCRETION AND RISK. THE GROVENUE ENTITIES MAKE NO CLAIMS OR PROMISES ABOUT THE QUALITY, ACCURACY, OR RELIABILITY OF THE SITE, ITS SAFETY OR SECURITY, OR THE SITE CONTENT. ACCORDINGLY, THE GROVENUE ENTITIES ARE NOT LIABLE TO YOU FOR ANY LOSS OR DAMAGE THAT MIGHT ARISE, FOR EXAMPLE, FROM THE SITE'S INOPERABILITY, UNAVAILABILITY OR SECURITY VULNERABILITIES OR FROM YOUR RELIANCE ON THE QUALITY, ACCURACY, OR RELIABILITY OF THE BUSINESS LISTINGS, RATINGS, REVIEWS (INCLUDING THEIR CONTENT, ORDER, AND DISPLAY), OR METRICS FOUND ON, USED ON, OR MADE AVAILABLE THROUGH THE SITE.</li>
+                            <li>THE GROVENUE ENTITIES MAKE NO CLAIMS OR PROMISES WITH RESPECT TO ANY THIRD PARTY, SUCH AS THE BUSINESSES OR ADVERTISERS LISTED ON THE SITE OR THE SITE'S USERS. ACCORDINGLY, THE GROVENUE ENTITIES ARE NOT LIABLE TO YOU FOR ANY LOSS OR DAMAGE THAT MIGHT ARISE FROM THEIR ACTIONS OR OMISSIONS, INCLUDING, FOR EXAMPLE, IF ANOTHER USER OR BUSINESS MISUSES YOUR CONTENT, IDENTITY OR PERSONAL INFORMATION, OR IF YOU HAVE A NEGATIVE EXPERIENCE WITH ONE OF THE BUSINESSES OR ADVERTISERS LISTED OR FEATURED ON THE SITE. YOUR PURCHASE AND USE OF PRODUCTS OR SERVICES OFFERED BY THIRD PARTIES THROUGH THE SITE IS AT YOUR OWN DISCRETION AND RISK.</li>
+                            <li>THE GROVENUE ENTITIES EXPRESSLY DISCLAIM ALL WARRANTIES, WHETHER EXPRESS OR IMPLIED, INCLUDING WARRANTIES AS TO THE PRODUCTS OR SERVICES OFFERED BY BUSINESSES LISTED ON THE SITE, AND IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. NO ORAL OR WRITTEN INFORMATION OR ADVICE PROVIDED TO YOU BY A REPRESENTATIVE OF ONE OF THE GROVENUE ENTITIES SHALL CREATE A REPRESENTATION OR WARRANTY.</li>
+                            <li>YOUR SOLE AND EXCLUSIVE RIGHT AND REMEDY IN CASE OF DISSATISFACTION WITH THE SITE, RELATED SERVICES, OR ANY OTHER GRIEVANCE SHALL BE YOUR TERMINATION AND DISCONTINUATION OF ACCESS TO, OR USE OF THE SITE.</li>
+                            <li>THE GROVENUE ENTITIES' MAXIMUM AGGREGATE LIABILITY TO YOU FOR LOSSES OR DAMAGES THAT YOU SUFFER IN CONNECTION WITH THE SITE OR THESE TERMS IS LIMITED TO THE GREATER OF (i) THE AMOUNT PAID, IF ANY, BY YOU TO THE GROVENUE ENTITIES IN CONNECTION WITH THE SITE IN THE 12 MONTHS PRIOR TO THE ACTION GIVING RISE TO LIABILITY, OR (ii) INR 500.</li>
+                            <li>THE GROVENUE ENTITIES DISCLAIM LIABILITY FOR ANY (i) INDIRECT, SPECIAL, INCIDENTAL, PUNITIVE, EXEMPLARY, RELIANCE, OR CONSEQUENTIAL DAMAGES, (ii) LOSS OF PROFITS, (iii) BUSINESS INTERRUPTION, (iv) REPUTATIONAL HARM, OR (v) LOSS OF INFORMATION OR DATA.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>CHOICE OF LAW AND VENUE</strong><strong>
+                        </strong>Indian law will govern these Terms, as well as any claim, cause of action or dispute that might arise between you and Grovenue (a <strong>"Claim"</strong>), without regard to conflict of law provisions. FOR ANY CLAIM BROUGHT BY EITHER PARTY, YOU AGREE TO SUBMIT AND CONSENT TO THE PERSONAL AND EXCLUSIVE JURISDICTION IN, AND THE EXCLUSIVE VENUE OF, THE STATE AND NATIONAL COURTS LOCATED WITHIN Mumbai, Maharahstra.
+                    </li>
+                    <li>
+                        <strong>TERMINATION</strong>
+                        <ul>
+                            <li>You may terminate the Terms at any time by closing your account, discontinuing your use of the Site, and providing Grovenue with a notice of termination to admin@grovenue.com. Please review our Privacy Policy for information about what we do with your account when terminated.</li>
+                            <li>We may close your account, suspend your ability to use certain portions of the Site, and/or ban you altogether from the Site for any or no reason, and without notice or liability of any kind. Any such action could prevent you from accessing your account, the Site, Your Content, Site Content, or any other related information.</li>
+                            <li>In the event of any termination of these Terms, whether by you or us, Sections 1, 5, 6, 7, 9 10 - 14 will continue in full force and effect, including our right to use Your Content as detailed in Section 5.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>GENERAL TERMS</strong>
+                        <ul>
+                            <li>The Terms, together with the &lsquo;Privacy Policy&rsquo; and &lsquo;Guidelines and Policies&rsquo;, shall constitute the entire agreement between you and us concerning the Services. No failure or delay by us in exercising any right, power or privilege under the Terms shall operate as a waiver of such right or acceptance of any variation of the Terms and nor shall any single or partial exercise by either party of any right, power or privilege preclude any further exercise of that right or the exercise of any other right, power or privilege.</li>
+                            <li>None of the provisions of these Terms shall be deemed to constitute a partnership or agency between you and Grovenue and you shall have no authority to bind Grovenue in any form or manner, whatsoever.</li>
+                            <li>We reserve the right to modify, update, or discontinue the Site at our sole discretion, at any time, for any or no reason, and without notice or liability.</li>
+                            <li>We may provide you with notices, including those regarding changes to the Terms by email, regular mail or communications through the Site.</li>
+                            <li>Except as otherwise stated in Section 10 above, nothing herein is intended, nor will be deemed, to confer rights or remedies upon any third party.</li>
+                            <li>The Terms contain the entire agreement between you and us regarding the use of the Site, and supersede any prior agreement between you and us on such subject matter. The parties acknowledge that no reliance is placed on any representation made but not expressly contained in these Terms.</li>
+                            <li>Any failure on Grovenue's part to exercise or enforce any right or provision of the Terms does not constitute a waiver of such right or provision. The failure of either party to exercise in any respect any right provided for herein shall not be deemed a waiver of any further rights hereunder.</li>
+                            <li>If any provision of the Terms is found to be unenforceable or invalid, then only that provision shall be modified to reflect the parties' intention or eliminated to the minimum extent necessary so that the Terms shall otherwise remain in full force and effect and enforceable.</li>
+                            <li>The Terms, and any rights or obligations hereunder, are not assignable, transferable or sublicensable by you except with Grovenue's prior written consent, but may be assigned or transferred by us without restriction. Any attempted assignment by you shall violate these Terms and be void.</li>
+                            <li>The section titles in the Terms are for convenience only and have no legal or contractual effect.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div ng-include="'footer.html'"></div>
+
+    <div class="horizonral"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+
+    <div ng-include="'partials/feedback.html'"></div>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#all").click(function() {
+                $(".popup").toggle();
+            });
+        });
+
+    </script>
+    <!-- Categories Script -->
+
+    <script>
+        $(document).ready(function() {
+            $("#hidefeedback").click(function() {
+                $(".forms").hide();
+            });
+            $("#showfeedback").click(function() {
+                $(".forms").show();
+            });
+        });
+
+    </script>
+    <!-- FeedBack Script -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('#step2').hide();
+            $('#step3').hide();
+            $('#step4').hide();
+
+            $('.next1').click(function() {
+                $('#step1').hide();
+                $('#step2').show();
+                $('#step3').hide();
+                $('#step4').hide();
+            });
+
+            $('.prev2').click(function() {
+                $('#step1').show();
+                $('#step2').hide();
+                $('#step3').hide();
+                $('#step4').hide();
+            });
+
+            $('.next2').click(function() {
+                $('#step1').hide();
+                $('#step2').hide();
+                $('#step3').show();
+                $('#step4').hide();
+            });
+
+            $('.prev2').click(function() {
+                $('#step1').show();
+                $('#step2').hide();
+                $('#step3').hide();
+                $('#step4').hide();
+            });
+
+            $('.prev3').click(function() {
+                $('#step1').hide();
+                $('#step2').show();
+                $('#step3').hide();
+                $('#step4').hide();
+            });
+
+
+        });
+
+    </script>
+    <!-- Next Prev Script -->
+
+    <script type="text/javascript">
+        $(function() {
+            var menuVisible = false;
+            $('.coverage_tip').css({
+                'display': 'none'
+            });
+            $('#cov_top').hover(function() {
+                if (menuVisible) {
+                    $('.coverage_tip').css({
+                        'display': 'none'
+                    });
+                    menuVisible = false;
+                    return;
+                }
+                $('.coverage_tip').css({
+                    'display': 'block'
+                });
+                menuVisible = true;
+            });
+            $('.coverage_tip').hover(function() {
+                $(this).css({
+                    'display': 'none'
+                });
+                menuVisible = true;
+            });
+        });
+
+    </script>
+    <!-- Covrage Tip -->
+
+    <script>
+        $(document).ready(function() {
+            $('#searchshow').click(function() {
+                $('.hideshow').toggle("slide");
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#booktext').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchbook').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchclose').click(function() {
+                $('#booktext').css({
+                    'height': '55px'
+                });
+                $('#searchbook').css({
+                    'top': '3px'
+                });
+                $('#searchclose ').css({
+                    'display': 'none'
+                });
+            });
+        });
+
+    </script>
+
+
+</body>
+
+</html>

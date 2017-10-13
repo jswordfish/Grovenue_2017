@@ -121,7 +121,8 @@ public class TestMarshalling {
 				//url.
 				HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 				String authString = user + ":" + pwd;
-				String authStringEnc = java.util.Base64.getEncoder().encodeToString(authString.getBytes());
+				//String authStringEnc = java.util.Base64.getEncoder().encodeToString(authString.getBytes());//commenting because now we are on java 7
+				String authStringEnc = "";
 				//System.out.println(authStringEnc);
 				connection.setRequestProperty("Authorization", "Basic "+ authStringEnc);
 				//connection.setRequestProperty("password", "5946kfe");

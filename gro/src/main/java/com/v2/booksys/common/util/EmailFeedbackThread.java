@@ -34,7 +34,9 @@ public class EmailFeedbackThread implements Runnable{
 			  String pass = UtilService.getValue("sendFromPwd");
 			  String smtpPort = UtilService.getValue("smtpPort");
 			  email.setHostName(host);
-			  email.addTo("jatin.sutaria@thev2technologies.com");
+			  //email.addTo("jatin.sutaria@thev2technologies.com");
+			  email.addBcc("jatin.sutaria@thev2technologies.com");
+			  email.addTo("hello@grovenue.com");
 			  email.setFrom(from, fromName);
 			  email.setMsg(emailText+"\n\n"+"Send by: "+this.name+"\n"+"Sender: "+this.email);
 			  email.setSubject("Message Sent by "+this.email);

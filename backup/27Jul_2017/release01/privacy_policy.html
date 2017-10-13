@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title id='Description'>Privacy Policy</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!--<link rel="icon" href="favicon.png">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+    <link rel="stylesheet" href="css/responsive.css?v=1.0">
+    <link rel="stylesheet" href="css/menu.css?v=1.0">
+    <link rel="stylesheet" href="css/popup.css?v=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.14.1/hello.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.js"></script>
+    <script src="js/fileSaver.js?v=1.0"></script>
+    <script src="js/modalService.js?v=1.0"></script>
+    <script src="js/commonServices.js?v=1.0"></script>
+    <script src="js/authController.js?v=1.0"></script>
+    <script src="js/feedbackController.js?v=1.0"></script>
+    <script src="js/login.js?v=1.0"></script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97928294-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body ng-cloak ng-app="myApp" ng-controller="loginController">
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-md-3">
+                    <a href="index.html"><img src="images/colorlogo.png" /></a>
+                </div>
+                <div class="menu col-md-6">
+                    <div class="top topsearch">
+                        <div class="search">
+                            <div class="all"> </div>
+                            <form ng-submit="redirectAndSearch()">
+                                <input type="text" name="search" ng-model="searchText" placeholder="Books, Coaching Classes, Digital Tools, Careers..." />
+                            </form>
+                            <!--<input type="text" class="hideshow" name="search" placeholder="Search"/>-->
+                            <a href="javascript:void(0);" id="searchshow"><i class="fa fa-search" aria-hidden="true" ng-click="redirectAndSearch()"></i></a>
+                            <div class="popup">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu col-md-3">
+                    <div class="top">
+                        <div class="login-reg">
+                            <div class="headeruser"><img src="images/user.png" /></div>
+                            <div class="logreg" ng-if="!isLoggedin()">
+
+                                <a ng-click="openLoginSignupModal()" style="cursor:pointer;">LOGIN / REGISTER</a>
+                            </div>
+                            <div class="logreg" ng-if="isLoggedin()">
+                                <input type="button" value="{{loggedInUser.fullName}}" popover-animation="true" popover-placement="bottom" popover-trigger="'focus'" uib-popover-template="'partials/user-menu-popover.html'" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="menu main_menu col-md-12">
+                    <div id='cssmenu' class="center-parent">
+                        <ul class="center">
+                            <li><a href="Discover.html" class="menulink">discover</a></li>
+                            <li class='active'><a href="prepare_for_greatness.html" class="menulink">prepare for greatness</a></li>
+                            <li><a href="be_job_ready.html" class="menulink">be job ready</a></li>
+                            <li id="last"><a href="write_review.html" class="menulink">write a review</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+    <div class="policy">
+        <!--<h1>Privacy Policy</h1>-->
+    </div>
+    <!-- Privacy Policy -->
+
+
+    <div class="privacy_policy_contain">
+        <div class="container">
+            <div class="privacy_policy_container">
+                <div class="padd">
+                    <div class="numbers">
+                        <!--<h1>Privacy Policy</h1>-->
+                        <span>&nbsp;</span>
+                        <p>Last Updated: July 30th, 2016</p>
+                    </div>
+                </div>
+                <div class="padd">
+                    <div class="numbers">
+                        <span>&nbsp;</span>
+                        <p>This Privacy Policy describes our policies on the collection, use, and disclosure of information about you in connection with your use of our services, including those offered through our websites, emails, and mobile applications (collectively, the "Service"). The terms "we", "us", and "Grovenue" refer to Grovenue, a trademark of Mirabilia Learning Solutions. When you use the Service, you consent to our collection, use, and disclosure of information about you as described in this Privacy Policy.</p>
+                    </div>
+                </div>
+                <div class="padd">
+                    <div class="numbers">
+                        <span>1.</span>
+                        <p>INFORMATION WE COLLECT AND HOW WE USE IT We may collect and store information about you when you use the Service. We use the information to fulfill your requests, provide the Service's functionality, improve the Service's quality, personalize your experience, provide feedback to third party businesses that are listed on the Service, display relevant advertising, market the Service, provide customer support, message you, back up our systems and allow for disaster recovery, enhance the security of the Service, and comply with legal obligations.</p>
+                    </div>
+                    <div class="numbers">
+                        <span>&nbsp;</span>
+                        <p>Among the information we collect, please note:</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>a</span>
+                        <p>Account Information: If you create an account on Grovenue, we may store and use your full name, email address, mobile number, college / school name, mailing address, and other information you may provide with your account, such as your birth date. Your first and last name, or alternatively, a chosen pseudonym along with a photo chosen by you will be publicly displayed as part of your account profile. You can modify some of the information associated with your account anytime by going to the profile page when you're logged in. If you believe that someone has created an unauthorized account depicting you, you can request its removal emailing us at admin@grovenue.com</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>b</span>
+                        <p>Public Content: The information that you contribute through the Service is intended for public consumption, including your reviews, tips, photos, videos, and account profile. We may display this information through the Service, share it with businesses, and further distribute it to a wider audience through third party sites and services. We will, however, distribute these as aggregated information, not personal-level data.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>c</span>
+                        <p>Contacts: You can invite your friends to join the Service by providing us with their contact information, or by allowing us to access your contacts from your social media accounts on Quora, Facebook, Google+, and Twitter to select which friends you want to invite. If you allow us to access your contacts, we may transmit that information to Grovenue long enough to process your invitations.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>d</span>
+                        <p>Transactional Information: If you initiate a transaction through the Service, such as a purchase, we may collect and store information about you, such as your name, phone number, address, email, and credit card information, as well as any other information you provide to us, in order to process your transaction, send communications about them to you, and populate forms for future transactions. This information may be shared with third parties for the same purposes. Grovenue does not disclose your personal information to third parties for the purpose of directly marketing their services to you unless you first agree to such disclosure. When you submit credit card numbers, we encrypt that information using industry standard technology. If you write reviews about businesses with which you transact through the Service, we may publicly display the fact that you transacted with those businesses. For example, if you make a dinner reservation through the Service and write a review about your experience, we may publicly display the fact that you made your dinner reservation through the Service.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>e</span>
+                        <p>Activity: We may store information about your use of the Service, such as your search activity, the pages you view, reviews, bookmarked / favorited items, providers / businesses you call using our mobile applications, websites, and purchases you make through the Service. We also may store information that your computer or mobile device provides to us in connection with your use of the Service, such as your browser type, type of computer or mobile device, browser language, IP address, mobile carrier, phone number, unique device identifier, advertising identifier, location (including geolocation, beacon based location, and GPS location), and requested and referring URLs. You may be able to disallow our use of certain location data through your device or browser settings.</p>
+                    </div>
+                </div>
+                <div class="padd">
+                    <div class="numbers">
+                        <span>2.</span>
+                        <p>Cookies</p>
+                    </div>
+                    <div class="numbers">
+                        <span>&nbsp;</span>
+                        <p>We, and third parties with whom we partner, may use cookies, web beacons, tags, scripts, local shared objects such as HTML5 and Flash (sometimes called "flash cookies"), advertising identifiers, and similar technology ("Cookies") in connection with your use of the Service, third party websites, and mobile applications. Cookies may have unique identifiers, and reside, among other places, on your computer or mobile device, in emails we send to you, and on our web pages. Cookies may transmit information about you and your use of the Service, such as your browser type, search preferences, IP address, data relating to advertisements that have been displayed to you or that you have clicked on, and the date and time of your use. Cookies may be persistent or stored only during an individual session.</p>
+                    </div>
+                </div>
+                <div class="padd">
+                    <div class="numbers">
+                        <span>3.</span>
+                        <p>THIRD PARTIES</p>
+                    </div>
+                    <div class="numbers">
+                        <span>&nbsp;</span>
+                        <p>Third parties may receive information about you as follows:</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>a</span>
+                        <p>Service Providers: We may rely on third party providers to support or provide some of the services that are available through the Service, such as inquiries, book purchases, Strong and Onet tests. We may also rely on third party providers to perform certain services for us in connection with your use of the Service, such as communications and hosting services, network security, technical and customer support, tracking and reporting functions, quality assurance testing, payment processing, our own marketing of the Service, and other functions. We may share information from or about you with these third party providers so that they can perform their services or complete your requests. These third party providers may share information with us that they obtain from or about you in connection with providing their services or completing your requests. Third party providers may also share this information with their subsidiaries, joint ventures, or other companies under common control. Some of our web pages utilize framing techniques to serve content to you from our third party providers, while preserving the look and feel of the Service. In such cases, please note that the information you provide is being provided to the third party.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>b</span>
+                        <p>Aggregate Information: We may share user information in the aggregate with third parties, such as advertisers, distribution partners, and content partners. For example, we may disclose the number of users that have been exposed to, or clicked on, advertisements, specific pages, or product listings.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>c</span>
+                        <p>Business Transfers: We may share information from or about you with our parent companies, subsidiaries, joint ventures, or other companies under common control, in which case we will require them to honor this Privacy Policy. If another company acquires Grovenue or all or substantially all of our assets, that company will possess the same information, and will assume the rights and obligations with respect to that information as described in this Privacy Policy.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>d</span>
+                        <p>Investigations: We may investigate and disclose information from or about you if we have a good faith belief that such investigation or disclosure (a) is reasonably necessary to comply with legal process and law enforcement instructions and orders, such as a search warrant, subpoena, statute, judicial proceeding, or other legal process served on us; (b) is helpful to prevent, investigate, or identify possible wrongdoing in connection with the Service; or (c) protects our rights, reputation, property, or that of our users, affiliates, or the public, such as disclosures in connection with our Consumer Alerts program. If you flag or otherwise complain to Grovenue about content through the Service, we may share the substance of your complaint with the contributor of that content in order to provide an opportunity for the contributor to respond.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>e</span>
+                        <p>Links: The Service may contain links to unaffiliated third party services. Except as set forth herein, we do not share your personal information with them, and are not responsible for their privacy practices. We suggest you read the privacy policies on or applicable to all such third party services.</p>
+                    </div>
+                    <div class="numbers sublist">
+                        <span>f</span>
+                        <p>Third Party Accounts: If you sign up for Grovenue using a third party service like Facebook, Twitter, or Google+ to link your Grovenue account to your account with the third party service, we may receive information about you from such third party service.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            console.log("ready!");
+            loadPlayer();
+            $(".youtubevideo").click(function() {
+                stopVideo();
+            });
+        });
+
+        function getArtistId() {
+            //return 'l-gQLqv9f4o';
+            return '0XLwyFIrR3Q';
+        }
+
+        function loadPlayer() {
+            if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
+
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                window.onYouTubePlayerAPIReady = function() {
+                    onYouTubePlayer();
+                };
+
+            } else {
+
+                onYouTubePlayer();
+
+            }
+        }
+
+        var player;
+
+        function onYouTubePlayer() {
+            player = new YT.Player('player', {
+                height: '400',
+                width: '100%',
+                videoId: getArtistId(),
+                playerVars: {
+                    controls: 1,
+                    showinfo: 0,
+                    rel: 0,
+                    showsearch: 0,
+                    iv_load_policy: 3
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange,
+                    'onError': catchError
+                }
+            });
+        }
+
+        var done = false;
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+                // setTimeout(stopVideo, 6000);
+                done = true;
+            } else if (event.data == YT.PlayerState.ENDED) {
+                location.reload();
+            }
+        }
+
+        function onPlayerReady(event) {
+
+            //if(typeof(SONG.getArtistId()) == undefined)
+            //{
+            //  console.log("undefineeeed");
+            //}
+            //event.target.playVideo();
+        }
+
+        function catchError(event) {
+            if (event.data == 100) console.log("De video bestaat niet meer");
+        }
+
+        function stopVideo() {
+            player.stopVideo();
+        }
+
+    </script>
+    <div ng-include="'footer.html'"></div>
+
+    <div class="horizonral"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+
+    <div ng-include="'partials/feedback.html'"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("#all").click(function() {
+                $(".popup").toggle();
+            });
+        });
+
+    </script>
+    <!-- Categories Script -->
+
+    <script>
+        $(document).ready(function() {
+            $("#hidefeedback").click(function() {
+                $(".forms").hide();
+            });
+            $("#showfeedback").click(function() {
+                $(".forms").show();
+            });
+        });
+
+    </script>
+    <!-- FeedBack Script -->
+
+    <script>
+        $(document).ready(function() {
+            $('#searchshow').click(function() {
+                $('.hideshow').toggle("slide");
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#booktext').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchbook').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchclose').click(function() {
+                $('#booktext').css({
+                    'height': '55px'
+                });
+                $('#searchbook').css({
+                    'top': '3px'
+                });
+                $('#searchclose ').css({
+                    'display': 'none'
+                });
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

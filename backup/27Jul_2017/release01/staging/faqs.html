@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title id='Description'>FAQs</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!--<link rel="icon" href="favicon.png">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.14.1/hello.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.js"></script>
+    <script src="js/fileSaver.js"></script>
+    <script src="js/modalService.js"></script>
+    <script src="js/commonServices.js"></script>
+    <script src="js/authController.js"></script>
+    <script src="js/feedbackController.js"></script>
+    <script src="js/login.js?dummy=dummy"></script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97928294-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body ng-cloak ng-app="myApp" ng-controller="loginController">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-md-3">
+                    <a href="index.html"><img src="images/colorlogo.png" /></a>
+                </div>
+                <div class="menu col-md-6">
+                    <div class="top topsearch">
+                        <div class="search">
+                            <div class="all"> </div>
+                            <form ng-submit="redirectAndSearch()">
+                                <input type="text" name="search" ng-model="searchText" placeholder="Books, Coaching Classes, Digital Tools, Careers..." />
+                            </form>
+                            <!--<input type="text" class="hideshow" name="search" placeholder="Search"/>-->
+                            <a href="javascript:void(0);" id="searchshow"><i class="fa fa-search" aria-hidden="true" ng-click="redirectAndSearch()"></i></a>
+                            <div class="popup">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu col-md-3">
+                    <div class="top">
+                        <div class="login-reg">
+                            <div class="headeruser"><img src="images/user.png" /></div>
+                            <div class="logreg" ng-if="!isLoggedin()">
+
+                                <a ng-click="openLoginSignupModal()" style="cursor:pointer;">LOGIN / REGISTER</a>
+                            </div>
+                            <div class="logreg" ng-if="isLoggedin()">
+                                <input type="button" value="{{loggedInUser.fullName}}" popover-animation="true" popover-placement="bottom" popover-trigger="'focus'" uib-popover-template="'partials/user-menu-popover.html'" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="menu main_menu col-md-12">
+                    <div id='cssmenu' class="center-parent">
+                        <ul class="center">
+                            <li><a href="Discover.html" class="menulink">discover</a></li>
+                            <li><a class="active" href="prepare_for_greatness.html" class="menulink">prepare for greatness</a></li>
+                            <li><a href="be_job_ready.html" class="menulink">be job ready</a></li>
+                            <li id="last"><a href="#.html" class="menulink">write a review</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+
+    <div class="faqs_contain">
+        <div class="container">
+            <div class="faqs_container" style="margin-top: 80px;">
+                <h1>FAQs</h1>
+                <ul>
+                    <li>
+                        <b><p>How do I use the test results?</p></b>
+                        <p>Both our tests are meant to help you learn about your interests and career choices that you might find fulfilling. Think about what aspect of a career excites you, even if the career as a whole may not appeal to you. For example, you may not be interested in engineering as a field, but might enjoy building things. Similarly, you may not want to be teacher, but might enjoy working with and helping others. Your goal should be to research careers that best relate to these interests. Think of it as a self-discovery tool that will help you understand what drives you.</p>
+                    </li>
+                    <li>
+                        <b><p>How is the paid test different than the free test?</p></b>
+                        <p>
+                            The free test is a valuable first step in exploring careers. It will provide you with scores across the Holland occupational themes (i.e., Realistic, Investigative, Artistic, Social, Enterprising, and Conventional) and help you understand your dominant motivators (i.e., doing, thinking, creating, helping, or organizing). It will also provide career choices for you to explore across RIASEC types, based on your responses. The paid test is a highly renowned tool backed by 80+ years of research and used by academicians, corporations, and psychologists worldwide. It is a much deeper study of not only your occupational themes, but also interest areas (e.g., Social Sciences, Research, Healthcare Services), specific occupations, and personality styles (e.g., risk-taking, leadership, work style). These assessments come with a 30-45 minute counseling session to discuss results and action plan to incorporate results into work, educational, and leisure activities.
+                        </p>
+                    </li>
+                    <li>
+                        <b><p>Will you tell me my best career choices?</p></b>
+                        <p>Only you can identify the best career for yourself. We can only help you understand your drivers, motivators, and interests. Career decisions are a function of several factors (e.g., interests, skills, lifestyle choices) and series of decisions over your lifetime. We simply help you take the first step and guide you along the journey.</p>
+                    </li>
+                    <li>
+                        <b><p>How do I use the Exam Prep section?</p></b>
+                        <p>Our Exam Prep section helps you choose the best resources to prepare for entrance exams. Doing your best on this exam will take you even closer to your dream career. But you have limited time (and money) to prepare and find the best resources. This is where we come in. We bring you carefully hand-picked books, coaching classes, and online prep tools best suited for your unique learning style and needs. Reviews will help you get the insider scoop on the pros and cons. Our genuine, unbiased reviews come from actual students from reputed colleges who’ve used the product. </p>
+                    </li>
+                    <li>
+                        <b><p>How do I pay?</p></b>
+                        <p>You can use our payment gateway to pay via credit / debit card and net banking. We currently do not offer cash on delivery, but that might change in the future!</p>
+                    </li>
+                    <li>
+                        <b><p>How does the resume / cover letter process work?</p></b>
+                        <p>Simple and quick. Once you choose a package from those listed below and make a payment:</p>
+                        <ul>
+                            <li>We ask you a few questions about your background. This might involve a few calls.</li>
+                            <li>We then research your target roles to identify skills we should highlight most in your resume.</li>
+                            <li>We craft your story. This might involve a phone call.</li>
+                            <li>We use our template, content team, and advisors to create your first draft.</li>
+                            <li>We make changes to the draft per your feedback - one set of changes is included in the rates below.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <b><p>Do you offer packages for Linkedln profiles and interview prep?</p></b>
+                        <p>Yes, depending on your work experience and industry. Email us at admin@grovenue.com to discuss further.</p>
+                    </li>
+                    <li>
+                        <b><p>Will Grovenue help me find a job?</p></b>
+                        <p>We will help prepare your story, resume, and cover letter. However, we do not currently offer placement services for full-time jobs and internships. </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div ng-include="'footer.html'"></div>
+
+    <div class="horizonral"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+
+    <div ng-include="'partials/feedback.html'"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("#all").click(function() {
+                $(".popup").toggle();
+            });
+        });
+
+    </script>
+    <!-- Categories Script -->
+
+    <script>
+        $(document).ready(function() {
+            $("#hidefeedback").click(function() {
+                $(".forms").hide();
+            });
+            $("#showfeedback").click(function() {
+                $(".forms").show();
+            });
+        });
+
+    </script>
+    <!-- FeedBack Script -->
+    <script>
+        $(document).ready(function() {
+            $('#searchshow').click(function() {
+                $('.hideshow').toggle("slide");
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#booktext').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchbook').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchclose').click(function() {
+                $('#booktext').css({
+                    'height': '55px'
+                });
+                $('#searchbook').css({
+                    'top': '3px'
+                });
+                $('#searchclose ').css({
+                    'display': 'none'
+                });
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

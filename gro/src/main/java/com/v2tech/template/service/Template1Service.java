@@ -60,10 +60,12 @@ public class Template1Service {
 				schoolLocal = schoolLocal.replace("${School_Location}", template1School.getSchoolLocation());
 				schoolLocal = schoolLocal.replace("${font_size}", template1.getFontSizeContents()+"px");
 				
-					
+				if(degree == null){
+					degree = "";
+				}
 				
 				schoolLocal = schoolLocal.replace("${School_Degree}", degree);
-				schoolLocal = schoolLocal.replace("${School_MonthAndYear}", template1School.getMonthAndYear());
+				schoolLocal = schoolLocal.replace("${School_MonthAndYear}", (template1School.getMonthAndYear() == null?"":template1School.getMonthAndYear()));
 				//schoolHtml += schoolLocal+"\n";
 				
 				

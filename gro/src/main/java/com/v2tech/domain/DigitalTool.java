@@ -246,6 +246,8 @@ public class DigitalTool
 			
 		public void setRateCount(Integer rateCount)
 			{
+				
+				if(rateCount != null)
 				this.rateCount = rateCount;
 			}
 

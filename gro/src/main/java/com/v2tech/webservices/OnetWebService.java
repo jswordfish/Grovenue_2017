@@ -2,11 +2,16 @@ package com.v2tech.webservices;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.Consumes;
@@ -17,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -29,16 +35,24 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.v2.booksys.onet.careers.Careers;
 import com.v2.booksys.onet.data.Questions;
+import com.v2.booksys.onet.data.Questions.Question;
 import com.v2.booksys.onet.data.answers.Results;
 import com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport;
+import com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Knowledge.Element;
+import com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Occupation.SampleOfReportedJobTitles;
+import com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Skills;
+import com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Tasks.Task;
+import com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.ToolsTechnology.Technology.Category;
 import com.v2.booksys.onet.data.occupation.fullSummary.SummaryReport;
 import com.v2.booksys.onet.data.occupations.Occupations;
 import com.v2.booksys.onet.data.occupations.overview.Occupation;
+import com.v2tech.base.V2GenericException;
 import com.v2tech.domain.OnetReportData;
 import com.v2tech.services.OnetReportDataService;
 
@@ -91,7 +105,7 @@ public class OnetWebService
 		static Questions		questions3						= new Questions();
 		static Questions		questions4						= new Questions();
 		static Questions		questions5						= new Questions();
-		
+		static private Questions questions  = null;
 		static
 			{
 				try
@@ -119,7 +133,7 @@ public class OnetWebService
 						Resource resource = new ClassPathResource("onet" + File.separator + "questions.xml");
 						String str = FileUtils.readFileToString(resource.getFile());
 						StringReader reader = new StringReader(str);
-						Questions questions = (Questions) unmarshallerQuestions.unmarshal(reader);
+						questions = (Questions) unmarshallerQuestions.unmarshal(reader);
 						questions1.getQuestion().addAll(questions.getQuestion().subList(0, 12));
 						questions2.getQuestion().addAll(questions.getQuestion().subList(12, 24));
 						questions3.getQuestion().addAll(questions.getQuestion().subList(24, 36));
@@ -263,7 +277,18 @@ public class OnetWebService
 							}
 						else
 							{
-								return Response.status(Status.SERVICE_UNAVAILABLE).build();
+								if(start < 0 || start >= 60 || end <1 || end > 60){
+									return Response.status(Status.SERVICE_UNAVAILABLE).build();
+								}
+								else{
+									List<Question> qs = questions.getQuestion().subList(start, end);
+									Questions		questions						= new Questions();
+									questions.getQuestion().addAll(qs);
+									return Response.ok().entity(questions).build();
+									
+								}
+							
+								
 							}
 							
 					}
@@ -477,6 +502,43 @@ public class OnetWebService
 						return Response.status(Status.SERVICE_UNAVAILABLE).build();
 					}
 			}
+		
+		private DetailsReport fetchOccupationDetails(String occCode){
+			try
+			{
+				String urlOnetOccupationFullDetails1 = urlOnetOccupationFullDetails.replace("{occupationCode}", URLDecoder.decode(occCode));
+				URL url = new URL(urlOnetOccupationFullDetails1);
+				//url.
+				HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+				String authString = user + ":" + pwd;
+				String authStringEnc = Base64Utils.encodeToString(authString.getBytes());
+				System.out.println(authStringEnc);
+				connection.setRequestProperty("Authorization", "Basic " + authStringEnc);
+				//connection.setRequestProperty("password", "5946kfe");
+				connection.setDoOutput(true);
+				connection.setDoInput(true);
+				connection.setUseCaches(false);
+				int responseCode = connection.getResponseCode();
+				//InputStream is = connection.getInputStream();
+				String str = "";
+				
+				BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String inputLine;	
+				while ((inputLine = in.readLine()) != null)
+					{
+						str += inputLine + "\n";
+					}
+				in.close();
+				StringReader reader = new StringReader(str);
+				System.out.println(str);
+				DetailsReport detailsReport = (DetailsReport) unmarshallerFullDetails.unmarshal(reader);
+				reader.close();
+				return detailsReport;
+			}
+			catch(Exception e){
+				throw new V2GenericException("Can not fetch occupation details");
+			}
+		}
 			
 		@GET
 		@Path("/onet/occupationFullDetails/occupationCode/{occupationCode}/token/{token}")
@@ -485,36 +547,108 @@ public class OnetWebService
 			{
 				try
 					{
-						String urlOnetOccupationFullDetails1 = urlOnetOccupationFullDetails.replace("{occupationCode}", URLDecoder.decode(occupationCode));
-						URL url = new URL(urlOnetOccupationFullDetails1);
-						//url.
-						HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-						String authString = user + ":" + pwd;
-						String authStringEnc = Base64Utils.encodeToString(authString.getBytes());
-						System.out.println(authStringEnc);
-						connection.setRequestProperty("Authorization", "Basic " + authStringEnc);
-						//connection.setRequestProperty("password", "5946kfe");
-						connection.setDoOutput(true);
-						connection.setDoInput(true);
-						connection.setUseCaches(false);
-						int responseCode = connection.getResponseCode();
-						//InputStream is = connection.getInputStream();
-						String str = "";
-						
-						BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-						String inputLine;	
-						while ((inputLine = in.readLine()) != null)
-							{
-								str += inputLine + "\n";
-							}
-						in.close();
-						StringReader reader = new StringReader(str);
-						System.out.println(str);
-						DetailsReport detailsReport = (DetailsReport) unmarshallerFullDetails.unmarshal(reader);
-						reader.close();
+						DetailsReport detailsReport = fetchOccupationDetails(occupationCode);
 						return Response.ok().entity(detailsReport).build();
 					}
-				catch (JAXBException e)
+				catch (Exception e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						logger.error("Can not unmarshal back the xml rsults from onet to java", e);
+						return Response.status(Status.SERVICE_UNAVAILABLE).build();
+					}
+			}
+		
+		@GET
+		@Path("/onet/downloadOccupationFullDetails/occupationCode/{occupationCode}/token/{token}")
+		@Produces("application/pdf")
+		public Response downloadOccupationFullDetailsReport(@PathParam("occupationCode") String occupationCode, @PathParam("token") String token) throws JsonParseException, JsonMappingException, IOException
+			{
+				try
+					{
+						DetailsReport detailsReport = fetchOccupationDetails(occupationCode);
+						java.nio.file.Path path = Paths.get(getClass().getClassLoader().getResource("onetResult.html").toURI());
+						StringBuilder data = new StringBuilder();
+						byte[] htmlBytes = Files.readAllBytes(path);
+						String html = new String(htmlBytes);
+						html = html.replace("&OCCUPATION_LABEL&", detailsReport.getOccupation().getTitle());
+						SampleOfReportedJobTitles titles =   detailsReport.getOccupation().getSampleOfReportedJobTitles();
+						String alsoCalled = "";
+						List<String> tits = titles.getTitle();
+							for(int i=0;i<tits.size();i++){
+								if(i < tits.size() - 1){
+									alsoCalled += tits.get(i) +", ";
+								}
+								else{
+									alsoCalled += tits.get(i);
+								}
+								
+							}
+						html = html.replace("&OCCUPATION_LABEL_ALSO_CALLED&", alsoCalled);
+						String whatTheyDo = detailsReport.getOccupation().getDescription();
+						html = html.replace("&WHAT_THEY_DO&", whatTheyDo);
+						
+						List<Task> tasks = detailsReport.getTasks().getTask();
+						String tsks = "";
+						for(Task task : tasks){
+							tsks += "<li>"+task.getStatement()+" </li>\n";
+						}
+						html = html.replace("&WHAT_YOU_WOULD&", "<ul> \n"+tsks+"\n </ul>");
+						
+						List<Element> ele = detailsReport.getKnowledge().getElement();
+						String knw = "";
+						for(Element e: ele){
+							knw += "<li>"+e.getName()+" </li>\n";
+						}
+						html = html.replace("&KNOWLEDGE&", "<ul> \n"+knw+"\n </ul>");
+						
+						List<com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Skills.Element> skills = detailsReport.getSkills().getElement();
+						String skl = "";
+						for(com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Skills.Element skill : skills){
+							skl += "<li>"+skill.getName()+" </li>\n";
+						}
+						html = html.replace("&SKILLS&", "<ul> \n"+skl+"\n </ul>");
+						
+						List<com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Abilities.Element> abilities = detailsReport.getAbilities().getElement();
+						String abl = "";
+						for(com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.Abilities.Element e:abilities){
+							abl += "<li>"+e.getName()+" </li>\n";
+						}
+						html = html.replace("&ABILITIES&", "<ul> \n"+abl+"\n </ul>");
+						
+						List<com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.WorkStyles.Element> workStyles = detailsReport.getWorkStyles().getElement();
+						String per = "";
+						for(com.v2.booksys.onet.data.occupation.fullDetails.DetailsReport.WorkStyles.Element e:workStyles){
+							per += "<li>"+e.getName()+" </li>\n";
+						}
+						html = html.replace("&PERSONALITY&", "<ul> \n"+per+"\n </ul>");
+						
+						Category cats = detailsReport.getToolsTechnology().getTechnology().getCategory().get(0);
+						String tech = "";
+						for(String t:cats.getExample()){
+							tech += "<li>"+t+" </li>\n";
+						}
+						html = html.replace("&TECHNOLOGY&", "<ul> \n"+tech+"\n </ul>");
+						
+						ITextRenderer renderer = new ITextRenderer();
+						renderer.setDocumentFromString( html );
+						renderer.layout();
+						//String fileNameWithPath = outputFileFolder + "PDF-FromHtmlString.pdf";
+						String name = "ONET_RESULTS_"+System.currentTimeMillis()+".pdf";
+						File output = new File("onetResults"+File.separator+""+name);
+						FileOutputStream fos = new FileOutputStream( output);
+						try {
+							renderer.createPDF( fos );
+						} catch (com.lowagie.text.DocumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fos.close();
+						ResponseBuilder response = Response.ok((Object) output);
+					    response.header("Content-Disposition", "attachment; filename="+name);
+					    return response.build();
+					}
+				catch (Exception e)
 					{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -524,3 +658,5 @@ public class OnetWebService
 			}
 			
 	}
+
+	

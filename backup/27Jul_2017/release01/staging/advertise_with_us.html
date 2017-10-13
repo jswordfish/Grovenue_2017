@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title id='Description'>Advertise With Us</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!--<link rel="icon" href="favicon.png">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.14.1/hello.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.js"></script>
+    <script src="js/fileSaver.js"></script>
+    <script src="js/modalService.js"></script>
+    <script src="js/commonServices.js"></script>
+    <script src="js/authController.js"></script>
+    <script src="js/feedbackController.js"></script>
+    <script src="js/login.js?dummy=dummy"></script>
+    
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97928294-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body ng-cloak ng-app="myApp" ng-controller="loginController">
+
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-md-3">
+                    <a href="index.html"><img src="images/colorlogo.png" /></a>
+                </div>
+                <div class="menu col-md-6">
+                    <div class="top topsearch">
+                        <div class="search">
+                            <div class="all"> </div>
+                            <form ng-submit="redirectAndSearch()">
+                                <input type="text" name="search" ng-model="searchText" placeholder="Books, Coaching Classes, Digital Tools, Careers..." />
+                            </form>
+                            <!--<input type="text" class="hideshow" name="search" placeholder="Search"/>-->
+                            <a href="javascript:void(0);" id="searchshow"><i class="fa fa-search" aria-hidden="true" ng-click="redirectAndSearch()"></i></a>
+                            <div class="popup">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu col-md-3">
+                    <div class="top">
+                        <div class="login-reg">
+                            <div class="headeruser"><img src="images/user.png" /></div>
+                            <div class="logreg" ng-if="!isLoggedin()">
+
+                                <a ng-click="openLoginSignupModal()" style="cursor:pointer;">LOGIN / REGISTER</a>
+                            </div>
+                            <div class="logreg" ng-if="isLoggedin()">
+                                <input type="button" value="{{loggedInUser.fullName}}" popover-animation="true" popover-placement="bottom" popover-trigger="'focus'" uib-popover-template="'partials/user-menu-popover.html'" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="menu main_menu col-md-12">
+                    <div id='cssmenu' class="center-parent">
+                        <ul class="center">
+                            <li><a href="Discover.html" class="menulink">discover</a></li>
+                            <li class='active'><a href="prepare_for_greatness.html" class="menulink">prepare for greatness</a></li>
+                            <li><a href="be_job_ready.html" class="menulink">be job ready</a></li>
+                            <li id="last"><a href="write_review.html" class="menulink">write a review</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contactus">
+        <h1>Advertise With Us</h1>
+    </div>
+    <!-- Contact Us -->
+
+    <div class="proud_partners" style="display:none">
+        <div class="container">
+            <div class="title">
+                <h2>Proud Partners</h2>
+            </div>
+            <div class="prepare_for_greatness_slider proud_partner_slider reviewcoachingclass">
+                <div class="slider-wrap">
+                    <div class="slider7 container">
+                        <ul>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                                <div class="book_first_slide">
+                                    <img src="images/proud_partner.PNG" />
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="slider-arrow sa-left7"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    <a href="#" class="slider-arrow sa-right7"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <!--Carousel Slider -->
+        </div>
+    </div>
+    <!--Proud Partners -->
+
+    <div class="advertise_with_us">
+        <div class="container">
+            <h2>Advertise With Us</h2>
+
+            <div class="advertise_with_us_tabs">
+                <ul class="nav nav-tabs">
+                    <li class="firsttab active"><a data-toggle="tab" href="#book">Books</a></li>
+                    <li class="secondtab firstpre"><a data-toggle="tab" href="#coaching_classes">Coaching Classes</a></li>
+                    <li class="therdtab secondpre"><a data-toggle="tab" href="#tools">Tools</a></li>
+                </ul>
+
+                <div class="tabpopup">
+                    <div class="tab-content">
+                        <div id="book" class="tab-pane fade in active">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <form>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvBooks.BookName" placeholder="Book Name" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvBooks.Author" placeholder="Author" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvBooks.ISBN" placeholder="ISBN No." />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvBooks.PublicationDate" placeholder="Publication Date" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="submit" value="submit" name="submit" ng-click="AdvBooks()" />
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="next"><a data-toggle="tab" class="firstnext" href="#coaching_classes">Next <i class="fa fa-chevron-right" aria-hidden="true"></i><i class="fa fa-chevron-right" aria-hidden="true"></i></a></div>
+                        </div>
+                        <!-- First Tab -->
+
+                        <div id="coaching_classes" class="tab-pane fade">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <form>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.ClassName" placeholder="Class Name" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.Owner" placeholder="Owner" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.YFounded" placeholder="Year Founded" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.website" placeholder="Website URL" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="submit" value="submit" ng-submit="AdvCoachClass()" name="submit" />
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="back"><a data-toggle="tab" class="firstpre" href="#book"><i class="fa fa-chevron-left" aria-hidden="true"></i><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
+                            <div class="next"><a data-toggle="tab" class="secondnext" href="#tools">Next <i class="fa fa-chevron-right" aria-hidden="true"></i><i class="fa fa-chevron-right" aria-hidden="true"></i></a></div>
+                        </div>
+                        <!-- Second Tab -->
+
+                        <div id="tools" class="tab-pane fade">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <form>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.ToolName" placeholder="Tool Name" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.YFounded" placeholder="Year Founded" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.WebUrl" placeholder="Website URL" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="text" name="contactno" ng-model="AdvCoachClass.AppUrl" placeholder="App URL" />
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <input type="submit" value="submit" ng-submit="AdvTools()" name="submit" />
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="back"><a data-toggle="tab" class="secondpre" href="#coaching_classes"><i class="fa fa-chevron-left" aria-hidden="true"></i><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></div>
+                        </div>
+                        <!-- Therd Tab -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Advertise With Us -->
+    
+    <div ng-include="'partials/feedback.html'"></div>
+
+    <div ng-include="'footer.html'"></div>
+
+    <div class="horizonral"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" src="libs/jquery.lbslider.js"></script>
+
+    
+        <script>
+            $(document).ready(function() {
+                $("#all").click(function() {
+                    $(".popup").toggle();
+                });
+            });
+
+        </script>
+        <!-- Categories Script -->
+
+        <script>
+            $(document).ready(function() {
+                $('#searchshow').click(function() {
+                    $('.hideshow').toggle("slide");
+                });
+            });
+
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $('#booktext').click(function() {
+                    $('#booktext').css({
+                        'height': '100px'
+                    });
+                    $('#searchbook').css({
+                        'top': '30px'
+                    });
+                    $('#searchclose ').css({
+                        'display': 'block'
+                    });
+                });
+                $('#searchbook').click(function() {
+                    $('#booktext').css({
+                        'height': '100px'
+                    });
+                    $('#searchbook').css({
+                        'top': '30px'
+                    });
+                    $('#searchclose ').css({
+                        'display': 'block'
+                    });
+                });
+                $('#searchclose').click(function() {
+                    $('#booktext').css({
+                        'height': '55px'
+                    });
+                    $('#searchbook').css({
+                        'top': '3px'
+                    });
+                    $('#searchclose ').css({
+                        'display': 'none'
+                    });
+                });
+            });
+
+        </script>
+
+
+        <script>
+            jQuery('.slider7').lbSlider({
+                leftBtn: '.sa-left7',
+                rightBtn: '.sa-right7',
+                visible: 4,
+                autoPlay: true,
+                autoPlayDelay: 5
+            });
+
+        </script>
+        <!-- Slider -->
+</body>
+
+</html>

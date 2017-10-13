@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.v2tech.base.V2GenericException;
+import com.v2tech.domain.Book;
 import com.v2tech.domain.CoachingClass;
 import com.v2tech.domain.KeywordEntity;
 import com.v2tech.domain.RESOURCE_TYPE;
@@ -247,7 +250,21 @@ public class CoachingClassService1
 		
 		public Set<CoachingClass> searchuniqueCoachingClassByGenericKeyword(String keyword)
 		{
-			Set<CoachingClass> cs = getUniqueRecords(keyword);
+			Set<CoachingClass> cs = new HashSet<>();
+			
+			if(keyword.startsWith("Non_Keyword_Entered:")){
+				keyword = keyword.substring("Non_Keyword_Entered:".length(), keyword.length());
+				StringTokenizer stk = new StringTokenizer(keyword, "-");
+				String state = stk.nextToken();
+				String city = stk.nextToken();
+				cs = coachingClassRepository.getCoachingClassesAsPerSelectedStateAndCity("(?i).*"+state+".*", "(?i).*"+city+".*", 5);
+				
+			}
+			else{
+				cs = getUniqueRecords(keyword);
+			}
+			
+			
 			/**
 			 * As per client if a generic search yields nothing then return dummy results
 			 */
@@ -258,6 +275,13 @@ public class CoachingClassService1
 		}
 		
 		private Set<CoachingClass> getUniqueRecords(String keyword){
+				if(keyword.contains("-") ){
+					/**
+					 * This will be called when one clicks on Write Review link on prep for greatness page.
+					 */
+					return getRecordsByNameAndBranch(keyword);
+				}
+			
 			keyword = "(?i).*" + keyword + ".*";
 			String query = "MATCH (class:CoachingClass) WHERE  class.searchable ='yes' AND (class.keyword =~ {key} OR class.name =~ {key} OR class.typeOfProgram =~ {key}  OR class.courses =~ {key}  OR class.rExams =~ '(?i).*JEE.*'  OR class.cStreams =~ {key} ) RETURN collect (distinct class.name);";
 			Map<String, Object> params = new HashMap<>();
@@ -280,6 +304,41 @@ public class CoachingClassService1
 					}
 				}
 			return classes;
+		}
+		
+		private Set<CoachingClass> getRecordsByNameAndBranch(String keyword){
+			String qry = "MATCH (cs:CoachingClass) WHERE  cs.searchable ='yes' AND ( $qry ) return cs LIMIT 1";
+			String revisedK = keyword.replaceAll("[\\s]", "###");
+			revisedK = revisedK.replaceAll("[.]", "###");
+			revisedK = revisedK.replaceAll("'", "###");
+			revisedK = revisedK.replaceAll("[()]", "###");
+			revisedK = revisedK.replaceAll("-", "###");
+			StringTokenizer stk = new StringTokenizer(revisedK, "###");
+			String tokens[];
+			tokens = new String[stk.countTokens()];
+			
+			
+				String actual = "";
+				for(int i=0;i< tokens.length;i++){
+					tokens[i] = stk.nextToken();
+					if( i != tokens.length -1 )	{
+						actual += "cs.keyword =~ '(?i).*"+tokens[i]+".*' AND ";
+					}
+					else{
+						actual += "cs.keyword =~ '(?i).*"+tokens[i]+".*'";
+					}
+				}
+			qry = qry.replace("$qry", actual);
+			
+			Result<CoachingClass> classes = coachingClassRepository.query(qry, new HashMap<String,Object>());
+			Iterator<CoachingClass> itr = classes.iterator();
+			Set<CoachingClass> css = new HashSet<>();
+			while(itr.hasNext()){
+				css.add(itr.next());
+			}
+			return css;
+			
+			
 		}
 		
 			

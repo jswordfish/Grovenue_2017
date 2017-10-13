@@ -51,4 +51,7 @@ public interface CoachingClassRepository extends GraphRepository<CoachingClass>
 		
 		@Query("MATCH (class:CoachingClass) WHERE class.name = {0}  return class limit 1;")
 		public CoachingClass getSingleCoachingClassbyName(String name);
+		
+		@Query("MATCH (class:CoachingClass) WHERE class.keyword =~ {0} AND  class.keyword =~ {1} return class limit {2}")
+		public Set<CoachingClass> getCoachingClassesAsPerSelectedStateAndCity(String state, String city, Integer limit);
 	}

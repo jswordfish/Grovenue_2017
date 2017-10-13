@@ -1,11 +1,14 @@
 package com.test;
 
+import java.util.Set;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.v2tech.domain.Book;
 import com.v2tech.services.BookService;
 import com.v2tech.services.CoachingClassService1;
 
@@ -31,4 +34,11 @@ public class TestSearch
 				//LoggerUtil.log("findCoachingClassesUserProfile", coachingClassService.findCoachingClassesUserProfile(loaction, radius, userId));
 				
 			}
+		
+		@Test
+		public void testTokenizedQueryForBooks(){
+		Set<Book> books = bookService.searchBooksByGenericKeywordCustomQuery("Verma", 4);
+		System.out.println("********** "+books.size());
+		
+		}
 	}

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title id='Description'>Grovenue</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!--<link rel="icon" href="favicon.png">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/custom_v2.css?v=1.0">
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+    <link rel="stylesheet" href="css/responsive.css?v=1.0">
+    <link rel="stylesheet" href="css/menu.css?v=1.0">
+    <link rel="stylesheet" href="css/popup.css?v=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.14.1/hello.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.js"></script>
+    <script src="js/fileSaver.js?v=1.0"></script>
+    <script src="js/modalService.js?v=1.0"></script>
+    <script src="js/commonServices.js?v=1.0"></script>
+    <script src="js/authController.js?v=1.0"></script>
+    <script src="js/feedbackController.js?v=1.0"></script>
+    <script src="js/beJobReadyController.js?v=1.0"></script>
+    <script src="https://js.instamojo.com/v1/checkout.js"></script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97928294-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body ng-cloak ng-app="myApp" ng-controller="beJobReadyController">
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-md-3">
+                    <a href="index.html"><img src="images/colorlogo.png" /></a>
+                </div>
+                <div class="menu col-md-6">
+                    <div class="top topsearch">
+                        <div class="search">
+                            <div class="all"></div>
+                            <form ng-submit="redirectAndSearch()">
+                                <input type="text" name="search" ng-model="searchText" placeholder="Books, Coaching Classes, Digital Tools, Careers..." />
+                            </form>
+                            <!--<input type="text" class="hideshow" name="search" placeholder="Search"/>-->
+                            <a href="javascript:void(0);" id="searchshow">
+                                <i class="fa fa-search" aria-hidden="true" ng-click="redirectAndSearch()"></i>
+                            </a>
+                            <div class="popup">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu col-md-3">
+                    <div class="top">
+                        <div class="login-reg">
+                            <div class="headeruser"><img src="images/user.png" /></div>
+                            <div class="logreg" ng-if="!isLoggedin()">
+
+                                <a ng-click="openLoginSignupModal()" style="cursor:pointer;">LOGIN / REGISTER</a>
+                            </div>
+                            <div class="logreg" ng-if="isLoggedin()">
+                                <input type="button" value="{{loggedInUser.fullName}}" popover-animation="true" popover-placement="bottom" popover-trigger="'focus'" uib-popover-template="'partials/user-menu-popover.html'" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="menu main_menu col-md-12">
+                    <div id='cssmenu' class="center-parent">
+                        <ul class="center">
+                            <li><a href="Discover.html" class="menulink">discover</a></li>
+                            <li>
+                                <a href="prepare_for_greatness.html" class="menulink">
+                                prepare
+                                for greatness
+                            </a>
+                            </li>
+                            <!-- <li class='active'><a href="" class="menulink">prepare for greatness</a></li> -->
+                            <li>
+                                <a href="be_job_ready.html" class="menulink">
+                                be job
+                                ready
+                            </a>
+                            </li>
+                            <li id="last">
+                                <a href="write_review.html" class="menulink">
+                                write
+                                a review
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+
+    <div class="row slides" style="margin-left:0px;margin-right:0px;padding-top:12px;padding-bottom:84px;">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="container-fluid">
+                <div class="row"><img src="images/be_job_ready_banner_srgb.png" width="85%" height="85%" /></div>
+                <div class="row">
+                    <div class="desc" style="padding-top:24px;">Sail through your interview</div>
+                    <div class="desc">And enjoy the view.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <!-- Slide -->
+
+    <div ng-include="'partials/feedback.html'"></div>
+
+    <div class="bejobready_steps">
+        <div class="container">
+            <div class="first" ng-click="goToStep(1)">
+                <div class="firstposition">
+                    <a href="javascript:void(0);" class="cvprev1 cvnext1">
+                        <img src="images/step1.png" />
+                        <div class="steppostion">step 1</div>
+                    </a>
+                </div>
+                <div class="name">Build your CV</div>
+            </div>
+            <div class="second">
+                <img src="images/right_arrow_pink.png" />
+            </div>
+            <div class="first" ng-click="goToStep(2)">
+                <div class="firstposition">
+                    <a href="javascript:void(0);" class="cvprev2 cvnext2">
+                        <img src="images/step2.png" />
+                        <div class="steppostion">step 2</div>
+                    </a>
+                </div>
+                <div class="name">Build your cover letter</div>
+            </div>
+            <div class="second">
+                <img src="images/right_arrow_pink.png" />
+            </div>
+            <div class="first" ng-click="goToStep(3)">
+                <div class="firstposition">
+                    <a href="javascript:void(0);" class="cvprev3 cvnext3">
+                        <img src="images/step3.png" />
+                        <div class="steppostion">step 3</div>
+                    </a>
+                </div>
+                <div class="name">Interview Preparation</div>
+            </div>
+        </div>
+    </div>
+    <!-- Steps -->
+    <div id="stepsDetail"  style="float:left;width:100%;">
+    <div id="cv" class="build_your_cv" ng-if="isShowCV">
+        <div class="buildposition cv-years" ng-if="showYearCategories">
+            <div class="container">
+                <div class="skips" ng-click="goToStep(2)">Skip</div>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <h3>Let us Build your CV</h3>
+                <div class="row year-category-row">
+                    <div class="years col-md-4" ng-click="showPricingPane(year)" ng-repeat="year in cv.yearCategories">
+                        <img src="{{year.image}}" />
+                        <div class="yearoption">
+                            <a style="cursor:pointer;"><strong>{{year.min}}-{{year.max}}</strong><span>Years</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buildposition cv-pricing" ng-if="showPricingCategories">
+            <div class="container">
+                <div class="skips" ng-click="goToStep(2)">Skip</div>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <div class="header">
+                    <span class="left-pane" ng-click="closePricing()">
+                        <img src="images/left_arrow_white.png">
+                        <span>Back</span>
+                    </span>
+                    <span class="right-pane" ng-click="closePricing()" style="position:relative;">
+                        <span style="position: absolute;top: 50%;right: 30px;transform: translateY(-50%);">Close</span>
+                    <span style="font-size: xx-large;font-weight: normal;">X</span>
+                    </span>
+                </div>
+                <h3>{{cv.selectedYearCategory.min}}-{{cv.selectedYearCategory.max}} Years of Experience</h3>
+                <div class="row pricing-category-row">
+                    <div class="basic_pro_elite col-md-4" ng-repeat="pricing in cv.selectedYearCategory.pricing" ng-click="showPricingDetailPane(pricing)">
+                        <img ng-src="{{pricing.image}}" />
+                        <div class="bpe">
+                            <div class="title">{{pricing.title}}</div>
+                            <hr style="height:0px;">
+                            <div class="desc">{{pricing.desc}}</div>
+                            <div class="price">{{pricing.price | currency : "INR " : 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="packageDetailPane" class="cv-pricing-detail carte_options">
+            <div class="container" ng-if="showPricingDetail">
+                <div class="alacon">
+                    <div class="title">Base Price - {{cv.selectedPricing.price}}</div>
+                    <div class="title">
+                        Package Chosen : {{cv.selectedPricing.title}} - {{cv.selectedYearCategory.min}} to {{cv.selectedYearCategory.max}} Exp. Service Type - CV.
+                    </div>
+                    <div class="title">A la carte options</div>
+                    <table class="table table-responsive">
+                        <tr>
+                            <td><label>Template use only:</label></td>
+                            <td><label>INR 500</label></td>
+                            <td><input type="checkbox" name="checkbox" ng-model="serviceCosting.templateUseOnly" /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Express service (48 hours):</label></td>
+                            <td>
+                                <label>
+                                    INR 300(only
+                                    for basic and pro services)
+                                </label>
+                            </td>
+                            <td><input type="checkbox" name="checkbox" ng-model="serviceCosting.expressService" /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Super Express service (24 hours):</label></td>
+                            <td>
+                                <label>
+                                    INR 750(only for basic service)
+                                </label>
+                            </td>
+                            <td><input type="checkbox" name="checkbox" ng-model="serviceCosting.superExpressService" /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Each additional iteration:</label></td>
+                            <td>
+                                <label>
+                                    INR 1,000
+                                </label>
+                            </td>
+                            <td><input type="checkbox" name="checkbox" ng-model="serviceCosting.eachAdditionIteration" /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Cover letter:</label></td>
+                            <td>
+                                <label>
+                                    INR 1,000
+                                </label>
+                            </td>
+                            <td><input type="checkbox" name="checkbox" ng-model="serviceCosting.coverLetter" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="right">
+                                <input type="submit" name="submit" value="submit" ng-click="confirmCosting()" />
+                                <button ng-if="showPayButton" style="background: #75c26a;color: #FFF;border: 1px solid rgba(59,122,50,0.3);text-shadow: rgba(0,0,0,0.6) 0 1px 1px;border-radius: 4px;width: 200px;height: 30px;line-height: 1.2em;margin: 0.3em 0;letter-spacing: 1px;" ng-click="initPayment()">Pay</button>
+<!--
+                                <script src="https://d2xwmjc4uy2hr5.cloudfront.net/im-embed/im-embed.min.js"></script>
+                                <div id="payButton">
+                                    <a ng-href="https://www.instamojo.com/jswordfisdh/grovenue-career-services/?embed=form&data_Field_65046=readonly&data_readonly=data_email&data_readonly=data_amount&data_readonly=data_phone&data_readonly=data_name&data_name={{loggedInUser.firstName}}&data_email={{loggedInUser.user}}&data_phone={{loggedInUser.contact}}&data_amount=10&data_Field_65046={{loggedInUser.socialMediaType}}&data_Field_53399={{orderTypeEncoded}}&data_hidden=data_Field_65046&data_hidden=data_Field_53399"
+                                       rel="im-checkout" data-behaviour="remote" data-style="light"
+                                       data-text="Pay" data-token="15ba5e078297952c2c2614bbfd0ce4c6"></a>
+                                </div>
+-->
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Build Your CV -->
+
+    <div id="coverletter" class="build_your_cv build_your_cover_letter" ng-if="isShowCover">
+        <div class="buildposition cv-years" ng-if="showYearCategories">
+            <div class="container">
+                <div class="skips" ng-click="goToStep(3)">Skip</div>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <h3>Let us Build your Cover Letter</h3>
+                <div class="row year-category-row">
+                    <div class="years col-md-4" ng-click="showCoverPricingPane(year)" ng-repeat="year in cover.yearCategories">
+                        <img src="images/0-1years.png" />
+                        <div class="yearoption">
+                            <a style="cursor:pointer;">
+                                <strong>{{year.min}}-{{year.max}}</strong><span>Years</span><span>
+                                    of
+                                    experience
+                                </span>
+                            </a>
+                            <h2 style="margin-top:24px;">{{year.price | currency : "INR " : 0 }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buildposition cv-pricing" ng-if="showPricingCategories">
+            <div class="container">
+                <div class="skips" ng-click="goToStep(3)">Skip</div>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <div class="header">
+                    <span class="left-pane" ng-click="closePricing()">
+                        <img src="images/left_arrow_white.png">
+                        <span>Back</span>
+                    </span>
+                    <span class="right-pane" ng-click="closePricing()" style="position:relative;">
+                        <span style="position: absolute;top: 50%;right: 30px;transform: translateY(-50%);">Close</span>
+                    <span style="font-size: xx-large;font-weight: normal;">X</span>
+                    </span>
+                </div>
+                <h3>{{cover.selectedYearCategory.min}}-{{cover.selectedYearCategory.max}} Years of Experience</h3>
+                <div class="row pricing-category-row">
+                    <div class="basic_pro_elite col-md-4" ng-repeat="pricing in cover.selectedYearCategory.pricing" ng-click="showCoverPricingDetailPane(pricing)">
+                        <img ng-src="{{pricing.image}}" />
+                        <div class="bpe">
+                            <div class="title">{{pricing.title}}</div>
+                            <hr style="height:0px;">
+                            <div class="desc">{{pricing.desc}}</div>
+                            <div class="price">{{pricing.price | currency : "INR " : 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Build Your Cover Letter -->
+
+    <div id="interview" class="build_your_cv interview_preparation" id="interview" ng-if="isShowInterview">
+        <div class="buildposition cv-years" ng-if="showYearCategories">
+            <div class="container">
+                <div class="skips">Skip</div>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <h3>Let us prepare for your Interview</h3>
+                <div class="col-md-2"></div>
+                <div class="years col-md-4" ng-click="showIntPackageDetail(pricing)" ng-repeat="pricing in int.pricingCategories">
+                    <img ng-src="{{pricing.image}}" />
+                    <div class="yearoption">
+                        <a style="cursor:ponter;">
+                            <span>{{pricing.desc1}}</span>
+                            <span>{{pricing.desc2}}</span>
+                            <span>{{pricing.desc3}}</span>
+                        </a>
+                        <h2>{{pricing.price | currency : "INR " : 0 }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+        </div>
+        <div class="buildposition cv-pricing" ng-if="showPricingCategories">
+            <div class="container">
+                <div class="skips" ng-click="goToStep(2)">Skip</div>
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <div class="header">
+                    <span class="left-pane" ng-click="closePricing()">
+                        <img src="images/left_arrow_white.png">
+                        <span>Back</span>
+                    </span>
+                    <span class="right-pane" ng-click="closePricing()" style="position:relative;">
+                        <span style="position: absolute;top: 50%;right: 30px;transform: translateY(-50%);">Close</span>
+                    <span style="font-size: xx-large;font-weight: normal;">X</span>
+                    </span>
+                </div>
+                <h3>{{int.selectedPricing.desc1}} {{int.selectedPricing.desc2}} {{int.selectedPricing.desc3}}</h3>
+                <div class="row pricing-category-row">
+                    <div class="behavioural_interview_questions">
+                        <ul>
+                            <li ng-repeat="item in int.selectedPricing.packageItems">{{item}}</li>
+                        </ul>
+                        <div class="buttons">
+                            <input type="submit" name="submit" value="buy" ng-click="buyInterviewServices()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Interview Preparation -->
+</div>
+
+    <div ng-include="'footer.html'"></div>
+
+    <div class="horizonral"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+
+
+
+    <script>
+        $(document).ready(function() {
+            $("#all").click(function() {
+                $(".popup").toggle();
+            });
+        });
+
+    </script>
+    <!-- Categories Script -->
+
+    <script type="text/javascript">
+        $(function() {
+            var menuVisible = false;
+            $('#searchtips').css({
+                'display': 'none'
+            });
+            $('#tips').hover(function() {
+                if (menuVisible) {
+                    $('#searchtips').css({
+                        'display': 'none'
+                    });
+                    menuVisible = false;
+                    return;
+                }
+                $('#searchtips').css({
+                    'display': 'block'
+                });
+                menuVisible = true;
+            });
+            $('#searchtips').hover(function() {
+                $(this).css({
+                    'display': 'none'
+                });
+                menuVisible = true;
+            });
+        });
+
+    </script>
+    <!-- Tool Trp-->
+
+    <script>
+        $(document).ready(function() {
+            $('#searchshow').click(function() {
+                $('.hideshow').toggle("slide");
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#booktext').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchbook').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchclose').click(function() {
+                $('#booktext').css({
+                    'height': '55px'
+                });
+                $('#searchbook').css({
+                    'top': '3px'
+                });
+                $('#searchclose ').css({
+                    'display': 'none'
+                });
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

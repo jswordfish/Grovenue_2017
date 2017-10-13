@@ -1,5 +1,6 @@
 package com.test;
 
+import java.net.URLEncoder;
 import java.util.Set;
 
 import org.junit.Test;
@@ -32,6 +33,13 @@ public class TestUser
 		UserService			userService;
 		
 		@Test
+		public void testEncode(){
+			String str = "ttt@yyy.com";
+			str = URLEncoder.encode(str);
+			System.out.println(str);
+		}
+		
+		@Test
 		public void testFetchUser()
 			{
 				User user = new User();
@@ -62,6 +70,7 @@ public class TestUser
 				user.setValidated(true);
 				ObjectMapper mapper = new ObjectMapper();
 				String str = mapper.writeValueAsString(user);
+				System.out.println(str);
 				//Ruser
 				userService.saveOrUpdate(user);
 			}

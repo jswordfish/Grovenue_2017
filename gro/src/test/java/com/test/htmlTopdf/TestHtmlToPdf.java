@@ -1,16 +1,17 @@
 package com.test.htmlTopdf;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xhtmlrenderer.resource.XMLResource;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -22,7 +23,12 @@ import com.v2tech.template.domain.Template1Company;
 import com.v2tech.template.domain.Template1Misc;
 import com.v2tech.template.domain.Template1School;
 import com.v2tech.template.service.Template1Service;
+import com.v2tech.webservices.TemplateWebService;
 public class TestHtmlToPdf {
+	
+	@Autowired
+	TemplateWebService temmpSevice;
+	
 	@Test
 	public void test1(){
 		// step 1
@@ -240,10 +246,14 @@ public class TestHtmlToPdf {
 		Template1Service service = new Template1Service();
 		Template1 template1 = getExampleTemplate();
 		String html = service.generateHtml(template1);
-		HtmlToPdf_IText htmlToPdf_IText = new HtmlToPdf_IText();
-		/**
-		 * Use below to generate to pdf
-		 */
-		//htmlToPdf_IText.convert(htmlContents, pdfOutput, header);
+//		HtmlToPdf_IText htmlToPdf_IText = new HtmlToPdf_IText();
+//		File file = new File("output.pdf");
+//		FileUtils.write(new File("temp.html"), html);
+//		File htm = new File("temp.html");
+//		htmlToPdf_IText.convertFlyingSoccer(htm, file, html);
+		TemplateWebService service2 = new TemplateWebService();
+		Response res = service2.generatePDF(template1, "");
+		System.out.println("done");
+	
 	}
 }

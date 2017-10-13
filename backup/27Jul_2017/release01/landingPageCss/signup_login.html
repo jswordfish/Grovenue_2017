@@ -1,0 +1,64 @@
+﻿<!-- Register Form -->
+<div class="user_register">
+    <label class="title">Sign Up</label>
+    <form id="formRegister" action="" ng-submit="signup(user)">
+        <fieldset class="form-group">
+            <input type="text" name="name" ng-model="user.firstName" placeholder="Name" style="width: 36% !important; float: left;" required /> <input type="text" name="lastname" ng-model="user.lastName" placeholder="Last Name" style="width: 60% !important; float: right;" required />
+        </fieldset>
+        <fieldset class="form-group">
+            <input type="text" name="contact" ng-model="user.contact" placeholder="Contact Number" required />
+        </fieldset>
+        <fieldset class="form-group">
+            <input type="email" ng-model="user.user" name="email" placeholder="Email ID" required />
+        </fieldset>
+        <fieldset class="form-group">
+            <input type="password" name="password" ng-model="user.password" placeholder="Password" required />
+        </fieldset>
+        <fieldset class="form-group checkbox">
+            <input style="margin-right:0px;float: left;" id="send_updates" type="checkbox" ng-model="termCheck" ng-click="display()" required />
+            <label style="padding:0px;margin:0px;width: 90% !important; float: right;" for="send_updates">I agree to the <a href="terms_conditions.html" target="_blank">Terms & Conditions</a> and <a href="privacy_policy.html" target="_blank">Privacy Policy</a> of Grovenue and associated trademarks.</label>
+        </fieldset>
+        <div class="action_btns">
+            <div class="one_half last">
+                <input type="submit" name="button" class="btn btn_red" value="Let's go!" ng-disabled="check()" />
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Social Login -->
+<div class="social_login">
+    <label class="title">Sign in With</label>
+    <p>
+        Just select your favorite social <br> network to get started
+    </p>
+    <!-- social login Div updated By sharmapuneet1510@gmail.com -->
+    <div class="social_icon">
+        <ul>
+            <!-- Social Login  -->
+            <!--<button onclick="hello('facebook').login({scope:'user_friends'})">Login</button>-->
+            <li data-ng-click="socialLogin('facebook')"><a href=""><i class="fa fa-facebook"></i></a></li>
+            <li data-ng-click="socialLogin('twitter')"><a href=""><i class="fa fa-twitter"></i></a></li>
+            <li data-ng-click="socialLogin('google')"><a href=""><i class="fa fa-google-plus"></i></a></li>
+            <!-- <li data-ng-click="socialLogin('linkedin')"><a href=""><i class="fa fa-linkedin"></i></a></li>  -->
+            <li data-ng-click="socialLogin('instagram')"><a href=""><i class="fa fa-instagram"></i></a></li>
+        </ul>
+        <br>
+    </div>
+</div>
+<!-- Username & Password Login form -->
+<div class="user_login">
+    <label class="title">User Login</label>
+    <form id="loginForm" method="post" ng-submit="login(user1)">
+        <fieldset class="form-group">
+            <input type="text" name="email" placeholder="Username" ng-model="user1.user" required />
+        </fieldset>
+        <fieldset class="form-group">
+            <input type="password" name="password" placeholder="Password" ng-model="user1.password" required />
+        </fieldset>
+        <div class="action_btns">
+            <div class="one_half last">
+                <input type="submit" name="submit" class="btn btn_red" value="SUBMIT" />
+            </div>
+        </div>
+    </form>
+</div>

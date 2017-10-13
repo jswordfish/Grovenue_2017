@@ -1,0 +1,21 @@
+    <div class="feedback" ng-controller="feedbackController">
+        <div class="feedbacklink">
+            <a style="cursor:pointer;" ng-click="toggleForm()" id="showfeedback">feedback</a>
+        </div>
+        <div class="forms" ng-submit="submit(feedback)" ng-if="showForm" id="fbForm">
+            <form>
+                <div class="closes" ng-click="toggleForm()" id="hidefeedback">
+                    <img src="images/close.png">
+                </div>
+                <p>We'd love to hear from you. Drop us a note!</p>
+                <input type="text" name="name" placeholder="Name" ng-model="feedback.name" required /> 
+                <input type="email" name="email" placeholder="Email" ng-model="feedback.email" required />
+                <textarea name="message" placeholder="Message" ng-model="feedback.message" required></textarea>
+                <input type="submit" name="submit" value="Submit" />
+            </form>
+        </div>
+        <!-- Feedback -->
+        <div class="tack_a_break">
+            <a style="cursor:pointer;" ng-click="openTakeABreakModal()">take a break</a>
+        </div>
+    </div>

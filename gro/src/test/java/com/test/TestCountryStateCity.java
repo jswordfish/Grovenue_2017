@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.v2tech.domain.CountryStateCity;
+import com.v2tech.repository.CountryStateCityRepository;
 import com.v2tech.services.CountryStateCityService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,6 +24,15 @@ public class TestCountryStateCity
 		
 		@Autowired
 		private CountryStateCityService countryStateCityService;
+		
+		@Autowired
+		CountryStateCityRepository rep; 
+		
+		@Test
+		public void deleteCityAndRgion(){
+			CountryStateCity countryStateCity = rep.findCountryRegionAndCity("Chandan Nagar", "Mumbai");
+			rep.delete(countryStateCity);
+		}
 
 		@Test
 		public void createCountryStateCity()

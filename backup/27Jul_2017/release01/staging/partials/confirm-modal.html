@@ -1,0 +1,15 @@
+    <div class="modal-header">
+        <span style="padding:4px;">{{modalOptions.headerText}}</span>
+        <img style="cursor:pointer;float: right; width: 20px;" src="images/x.png" data-ng-click="modalOptions.close()">
+    </div>
+    <div class="modal-body">
+        <p ng-bind-html="modalOptions.bodyText"></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn" data-ng-click="modalOptions.close()">
+        {{modalOptions.closeButtonText}}
+    </button>
+        <button class="btn btn-primary" data-ng-click="modalOptions.ok();">
+        {{modalOptions.actionButtonText}}
+    </button>
+    </div>

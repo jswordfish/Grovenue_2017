@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title id='Description'>Discover</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!--<link rel="icon" href="favicon.png">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/alert.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.14.1/hello.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.js"></script>
+    <script src="js/fileSaver.js"></script>
+    <script src="js/modalService.js"></script>
+    <script src="js/commonServices.js"></script>
+    <script src="js/authController.js"></script>
+    <script src="js/feedbackController.js"></script>
+    <script src="js/discover.js?dummy=dummy"></script>
+    <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97928294-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <script>
+        function changeFocus() {
+            document.getElementById("freeOnetInterestProfilerImg").scrollIntoView();
+
+        }
+
+    </script>
+</head>
+
+<body ng-cloak ng-app="myApp" ng-controller="discoverController" id="bodyId">
+    <script>
+        w3IncludeHTML();
+
+    </script>
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-md-3">
+                    <a href="index.html"><img src="images/colorlogo.png" /></a>
+                </div>
+                <div class="menu col-md-6">
+                    <div class="top topsearch">
+                        <div class="search">
+                            <div class="all"> </div>
+                            <form ng-submit="redirectAndSearch()">
+                                <input type="text" name="search" ng-model="searchText" placeholder="Books, Coaching Classes, Digital Tools, Careers..." />
+                            </form>
+                            <!--<input type="text" class="hideshow" name="search" placeholder="Search"/>-->
+                            <a href="javascript:void(0);" id="searchshow"><i class="fa fa-search" aria-hidden="true" ng-click="redirectAndSearch()"></i></a>
+                            <div class="popup">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu col-md-3">
+                    <div class="top">
+                        <div class="login-reg">
+                            <div class="headeruser"><img src="images/user.png" /></div>
+                            <div class="logreg" ng-if="!isLoggedin()">
+                                <a ng-click="openLoginSignupModal()" style="cursor:pointer;">LOGIN / REGISTER</a>
+                            </div>
+                            <div class="logreg" ng-if="isLoggedin()">
+                                <input type="button" value="{{loggedInUser.fullName}}" popover-animation="true" popover-placement="bottom" popover-trigger="'focus'" uib-popover-template="'partials/user-menu-popover.html'" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="menu main_menu col-md-12">
+                    <div id='cssmenu' class="center-parent">
+                        <ul class="center">
+                            <li><a href="Discover.html" class="menulink">discover</a></li>
+                            <li><a href="prepare_for_greatness.html" class="menulink">prepare for greatness</a></li>
+                            <li><a href="be_job_ready.html" class="menulink">be job ready</a></li>
+                            <li id="last"><a href="write_review.html" class="menulink">write a review</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+    <div class="row slides" style="margin-left:0px;margin-right:0px;padding-top:12px;padding-bottom:84px;">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="container-fluid">
+                <div class="row"><img src="images/discover_banner_srgb.png" width="85%" height="85%" /></div>
+                <div class="row">
+                    <div class="desc" style="padding-top:24px;">Your future looks bright.</div>
+                    <div class="desc">If you look in the right places.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <!-- Slide -->
+    <div ng-include="'partials/feedback.html'"></div>
+    <div class="career_indicators">
+        <div class="container">
+            <!--<h3>Career Indicators</h3>-->
+            <div class="careerdesc">
+                <div class="firsrtit">
+                    <h3>What do you want to do in life?</h3>
+                </div>
+                <!--<div class="secondtit">"What's your plan for the future?"</div>-->
+                <div class="desc">
+                    <h4><b>The answer to that question can be quite simple. Take these tests to find out.</b></h4>
+                </div>
+            </div>
+            <div class="profile_inventory col-md-6" style="width:40%;margin-right:10%;margin-left:5%">
+                <a href="" ng-click="show_discover_steps(true)">
+                    <img src="images/interest_profiler.png" />
+                    <div class="onet_strong">
+                        <h4>The O*net<br>Interest Profile</h4>
+                        <p>Based on your interests, discover<br>potential career options.</p>
+                    </div>
+                    <div class="free_paids">
+                        <img src="images/free.png" id="freeOnetInterestProfilerImg" />
+                        <h3>free</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="profile_inventory col-md-6" style="width:40%;">
+                <a href="" ng-click="show_strongintrest_steps(true)">
+                    <img src="images/interest_inventory.png" />
+                    <div class="onet_strong">
+                        <h4>The STRONG<br>Interest Inventory</h4>
+                        <p>Get an in-depth assessment and<br>discover the right career for you.</p>
+                    </div>
+                    <div class="free_paids">
+                        <img src="images/paid.png" />
+                        <h3>paid</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Career Indicators -->
+
+    <div class="discover_steps" id="strongintrest_steps" ng-if="isStrongIntrest">
+        <div class="container">
+            <div class="dis_step">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step1.png" />
+                    <strong><a>step 1</a></strong>
+                    <p>Pick Your Interest</p>
+                </div>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step2.png" />
+                    <strong><a>step 2</a></strong>
+                    <p>Get in-depth analysis</p>
+                </div>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step3.png" />
+                    <strong><a>step 3</a></strong>
+                    <p>Discuss your results</p>
+                </div>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step4.png" />
+                    <strong><a>step 4</a></strong>
+                    <p>Apply results</p>
+                </div>
+                <div class="get_started" style="cursor:pointer;">
+                    <a ng-click="submitStrongIntrest()">get started</a>
+                    <!--                    <a style="display:none" href="#showstrongintrest" id="show_strongintrest_trigger" onclick="getStarted()">get started</a>-->
+                </div>
+            </div>
+            <!-- Steps -->
+        </div>
+    </div>
+    <div class="discover_steps" id="discover_steps" ng-if="isOnetInterest">
+        <div class="container">
+            <div class="dis_step">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step1.png" />
+                    <strong><a>step 1</a></strong>
+                    <p>Pick Your Interest</p>
+                </div>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step2.png" />
+                    <strong><a>step 2</a></strong>
+                    <p>Get Your Results</p>
+                </div>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step3.png" />
+                    <strong><a>step 3</a></strong>
+                    <p>Select a Job Zones</p>
+                </div>
+                <div class="steps col-md-3">
+                    <img src="images/discover_step4.png" />
+                    <strong><a>step 4</a></strong>
+                    <p>Discover Potential Careers</p>
+                </div>
+            </div>
+            <!-- Steps -->
+            <!--<div class="get_started"><a href="">get started1</a></div> -->
+            <div class="ipadair col-md-12">
+                <div class="ipad">
+                    <div class="ipadimg"><img src="images/ipadbg.png" /></div>
+                    <div class="ipadleftarrow" style="z-index:60;cursor:pointer;">
+                        <a ng-click="ipadBack()" id="prev" class="prev1"><img src="images/left_arrow_white.png" /></a>
+                    </div>
+                    <div class="ipadrightarrow" style="z-index:60;cursor:pointer;">
+                        <a ng-click="ipadNext()" id="next" class="next1"><img src="images/right_arrow_white.png" /></a>
+                    </div>
+                    <div class="discoverabsulate" ng-if="step==1" id="step1">
+                        <div class="topimage"><img src="images/onet_interest.png" /></div>
+                        <div class="title">What is this?</div>
+                        <div class="desc">We think we know our interests well. But…do we really? Research shows that personal satisfaction leads to better performance in the workplace.</div>
+                        <div class="desc">This fun, interactive activity uses a scientifically-tested methodology to help you discover careers that you are likely to find personally satisfying.</div>
+                        <div class="desc">Your results are intended to help you discover potentially rewarding careers. Pick careers that interest you and research them further. Talk to family, friends, seniors, teachers, and people in these careers. Think about it. We’re always here to help you through the journey.</div>
+                        <div class="get_started"><a href="" id="getStartedId" ng-click="ipadNext()">get started</a></div>
+                        <ul>
+                            <li><label class="active">START</label><img src="images/right_arrow_pink.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>INTEREST</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                        </ul>
+                    </div>
+                    <!-- Frist Steps -->
+                    <div class="discoverabsulate" ng-if="step==2" id="step2">
+                        <div class="topimage"><img src="images/onet_interest.png" /></div>
+                        <div class="title">How Does It Work?</div>
+                        <div class="desc">This will only take about 10 minutes, we promise! Do not think of it as your usual test – there is no right or wrong answer. What matters most is that you remain true to your interests. You will be asked a series of questions asking you how feel about several work activities - some of these may not seem directly relevant, but trust us (and the experts), they are important! Do not rush through the answers – take your time, but do not overthink your responses. You can click “Back” and change your answers anytime.</div>
+                        <div class="get_started">
+                            <ul>
+                                <li><img src="images/funicon1.png" /><label>Strongly Dislike</label></li>
+                                <li><img src="images/funicon2.png" /><label>Dislike</label></li>
+                                <li><img src="images/funicon3.png" /><label>Unsure</label></li>
+                                <li><img src="images/funicon4.png" /><label>Like</label></li>
+                                <li><img src="images/funicon5.png" /><label>Strongly Likes</label></li>
+                            </ul>
+                        </div>
+                        <ul>
+                            <li><label class="active">START</label><img src="images/right_arrow_pink.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>INTEREST</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                        </ul>
+                        <!--
+                                                <div class="ipadleftarrow">
+                                                    <a href="javascript:void(0);" id="prev" class="prev2"><img src="images/left_arrow_white.png" /></a>
+                                                </div>
+                                                <div class="ipadrightarrow">
+                                                    <a href="javascript:void(0);" id="next" class="next2"><img src="images/right_arrow_white.png" /></a>
+                                                </div>
+                        -->
+                    </div>
+                    <!-- Second Steps -->
+                    <div class="discoverabsulate" ng-if="step==3" id="step3">
+                        <div class="topimage"><img src="images/onet_interest.png" /></div>
+                        <div class="title">
+                            As you answer the questions...
+                        </div>
+                        <div class="title">
+                            Think about:
+                        </div>
+                        <div class="desc">
+                            * What excites you? <br /> * What you truly care about? <br /> * What would make you look forward to going to work every single day? <br /> * How much would you like or dislike doing the specific activity?
+                        </div>
+                        <div class="title">
+                            Do NOT think about:
+                        </div>
+                        <div class="desc">
+                            * How much money you will make doing the specific activity? <br /> * Your qualifications and training for the activity <br /> * How good you will be at the activity? <br /> * We know these are important factors, but first, we need to figure out your true interests <br />
+                        </div>
+                        <div class="pad" style="padding:12px 0;float:left;width:100%;"></div>
+                        <ul>
+                            <li><label class="active">START</label><img src="images/right_arrow_pink.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>INTEREST</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                        </ul>
+                        <!--
+                                                <div class="ipadleftarrow">
+                                                    <a href="javascript:void(0);" id="prev" class="prev3"><img src="images/left_arrow_white.png" /></a>
+                                                </div>
+                                                <div class="ipadrightarrow">
+                                                    <a href="javascript:void(0);" id="next" class="next3"><img src="images/right_arrow_white.png" /></a>
+                                                </div>
+                        -->
+                    </div>
+                    <!-- Therd Steps -->
+                    <div class="discoverabsulate" ng-if="step==4" id="step4">
+                        <div class="topimage"><img src="images/onet_interest.png" /></div>
+                        <div class="title">
+                            This is not a test !
+                            <p>There are no right or wrong answers!</p>
+                        </div>
+                        <div class="desc">* Whether you have enough education or training to do the work.<br><strong>or</strong><br>* How much money you would make doing the work.</div>
+                        <div class="desc">Just think about whether you would like or dislike doing the work.</div>
+                        <div class="pad" style="padding:35px 0;float:left;width:100%;"></div>
+                        <ul>
+                            <li><label class="active">START</label><img src="images/right_arrow_pink.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>INTEREST</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                        </ul>
+                        <!--
+                                                <div class="ipadleftarrow">
+                                                    <a href="javascript:void(0);" id="prev" class="prev4"><img src="images/left_arrow_white.png" /></a>
+                                                </div>
+                                                <div class="ipadrightarrow">
+                                                    <a href="javascript:void(0);" id="next" class="next4"><img src="images/right_arrow_white.png" /></a>
+                                                </div>
+                        -->
+                    </div>
+                    <!-- Fourth Steps -->
+                    <div class="discoverabsulate discoverabsulatestep5" ng-if="step==5" id="step5">
+                        <div class="topimage">
+                            <div class="topimage"><img src="images/onet_interest.png" /></div>
+                            <div class="rightscroller"><img src="images/questionpage.png" /></div>
+                        </div>
+                        <div class="stepfivecontent">
+                            <div class="overflowhidden">
+                                <table>
+                                    <tr style="border:none;">
+                                        <th width="5%;">&nbsp;</th>
+                                        <th width="7%;"><img src="images/funicon1.png" /></th>
+                                        <th width="7%;"><img src="images/funicon2.png" /></th>
+                                        <th width="7%;"><img src="images/funicon3.png" /></th>
+                                        <th width="7%;"><img src="images/funicon4.png" /></th>
+                                        <th width="7%;"><img src="images/funicon5.png" /></th>
+                                        <th width="60%;">&nbsp;</th>
+                                    </tr>
+                                    <tr class="abc">
+                                        <td colspan="7">&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="quest in questions1.question">
+                                        <td>{{ quest.index }}</td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="1" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="2" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="3" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="4" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="5" ng-model="quest.answer" /></td>
+                                        <td style="text-align:left; padding-left:20px;">{{ quest.text }}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <ul style="margin-top:16px;">
+                                <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label class="active">INTEREST</label><img src="images/right_arrow_pink.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                            </ul>
+                            <div ng-if="!allSelected" style="color: red;float: inherit;margin-top: 24px;">
+                                <strong>Warning!</strong> Please answer all Questions. You can't proceed further without answering them!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Five Steps -->
+                    <!--end 5 -->
+                    <!-- start 6-->
+                    <div class="discoverabsulate discoverabsulatestep5" ng-if="step==6" id="step6">
+                        <div class="topimage">
+                            <div class="topimage"><img src="images/onet_interest.png" /></div>
+                            <div class="rightscroller"><img src="images/questionpage.png" /></div>
+                        </div>
+                        <div class="stepfivecontent">
+                            <div class="overflowhidden">
+                                <table>
+                                    <tr style="border:none;">
+                                        <th width="5%;">&nbsp;</th>
+                                        <th width="7%;"><img src="images/funicon1.png" /></th>
+                                        <th width="7%;"><img src="images/funicon2.png" /></th>
+                                        <th width="7%;"><img src="images/funicon3.png" /></th>
+                                        <th width="7%;"><img src="images/funicon4.png" /></th>
+                                        <th width="7%;"><img src="images/funicon5.png" /></th>
+                                        <th width="60%;">&nbsp;</th>
+                                    </tr>
+                                    <tr class="abc">
+                                        <td colspan="7">&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="quest in questions2.question">
+                                        <td>{{ quest.index }}</td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="1" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="2" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="3" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="4" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="5" ng-model="quest.answer" /></td>
+                                        <td style="text-align:left; padding-left:20px;">{{ quest.text }}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <ul>
+                                <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label class="active">INTEREST</label><img src="images/right_arrow_pink.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                            </ul>
+                            <div ng-if="!allSelected" style="color: red;float: inherit;margin-top: 24px;">
+                                <strong>Warning!</strong> Please answer all Questions. You can't proceed further without answering them!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Five Steps -->
+                    <!-- end 6 -->
+                    <!-- start 7-->
+                    <div class="discoverabsulate discoverabsulatestep5" ng-if="step==7" id="step7">
+                        <div class="topimage">
+                            <div class="topimage"><img src="images/onet_interest.png" /></div>
+                            <div class="rightscroller"><img src="images/questionpage.png" /></div>
+                        </div>
+                        <div class="stepfivecontent">
+                            <div class="overflowhidden">
+                                <table>
+                                    <tr style="border:none;">
+                                        <th width="5%;">&nbsp;</th>
+                                        <th width="7%;"><img src="images/funicon1.png" /></th>
+                                        <th width="7%;"><img src="images/funicon2.png" /></th>
+                                        <th width="7%;"><img src="images/funicon3.png" /></th>
+                                        <th width="7%;"><img src="images/funicon4.png" /></th>
+                                        <th width="7%;"><img src="images/funicon5.png" /></th>
+                                        <th width="60%;">&nbsp;</th>
+                                    </tr>
+                                    <tr class="abc">
+                                        <td colspan="7">&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="quest in questions3.question">
+                                        <td>{{ quest.index }}</td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="1" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="2" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="3" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="4" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="5" ng-model="quest.answer" /></td>
+                                        <td style="text-align:left; padding-left:20px;">{{ quest.text }}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <ul>
+                                <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label class="active">INTEREST</label><img src="images/right_arrow_pink.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                            </ul>
+                            <div ng-if="!allSelected" style="color: red;float: inherit;margin-top: 24px;">
+                                <strong>Warning!</strong> Please answer all Questions. You can't proceed further without answering them!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Five Steps -->
+                    <!-- end 7 -->
+                    <!-- start 8-->
+                    <div class="discoverabsulate discoverabsulatestep5" ng-if="step==8" id="step8">
+                        <div class="topimage">
+                            <div class="topimage"><img src="images/onet_interest.png" /></div>
+                            <div class="rightscroller"><img src="images/questionpage.png" /></div>
+                        </div>
+                        <div class="stepfivecontent">
+                            <div class="overflowhidden">
+                                <table>
+                                    <tr style="border:none;">
+                                        <th width="5%;">&nbsp;</th>
+                                        <th width="7%;"><img src="images/funicon1.png" /></th>
+                                        <th width="7%;"><img src="images/funicon2.png" /></th>
+                                        <th width="7%;"><img src="images/funicon3.png" /></th>
+                                        <th width="7%;"><img src="images/funicon4.png" /></th>
+                                        <th width="7%;"><img src="images/funicon5.png" /></th>
+                                        <th width="60%;">&nbsp;</th>
+                                    </tr>
+                                    <tr class="abc">
+                                        <td colspan="7">&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="quest in questions4.question">
+                                        <td>{{ quest.index }}</td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="1" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="2" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="3" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="4" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="5" ng-model="quest.answer" /></td>
+                                        <td style="text-align:left; padding-left:20px;">{{ quest.text }}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <ul>
+                                <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label class="active">INTEREST</label><img src="images/right_arrow_pink.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                            </ul>
+                            <div ng-if="!allSelected" style="color: red;float: inherit;margin-top: 24px;">
+                                <strong>Warning!</strong> Please answer all Questions. You can't proceed further without answering them!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Five Steps -->
+                    <!-- end 8 -->
+                    <!-- start 9-->
+                    <div class="discoverabsulate discoverabsulatestep5" ng-if="step==9" id="step9">
+                        <div class="topimage">
+                            <div class="topimage"><img src="images/onet_interest.png" /></div>
+                            <div class="rightscroller"><img src="images/questionpage.png" /></div>
+                        </div>
+                        <div class="stepfivecontent">
+                            <div class="overflowhidden">
+                                <table>
+                                    <tr style="border:none;">
+                                        <th width="5%;">&nbsp;</th>
+                                        <th width="7%;"><img src="images/funicon1.png" /></th>
+                                        <th width="7%;"><img src="images/funicon2.png" /></th>
+                                        <th width="7%;"><img src="images/funicon3.png" /></th>
+                                        <th width="7%;"><img src="images/funicon4.png" /></th>
+                                        <th width="7%;"><img src="images/funicon5.png" /></th>
+                                        <th width="60%;">&nbsp;</th>
+                                    </tr>
+                                    <tr class="abc">
+                                        <td colspan="7">&nbsp;</td>
+                                    </tr>
+                                    <tr ng-repeat="quest in questions5.question">
+                                        <td>{{ quest.index }}</td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="1" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="2" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="3" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="4" ng-model="quest.answer" /></td>
+                                        <td><input type="radio" name="{{ quest.text }}" value="5" ng-model="quest.answer" /></td>
+                                        <td style="text-align:left; padding-left:20px;">{{ quest.text }}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <ul>
+                                <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label class="active">INTEREST</label><img src="images/right_arrow_pink.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                            </ul>
+                            <div class="alert alert-warning" id="alert">
+                                <strong>Warning!</strong> Please answer all Questions. You can't proceed further without answering them!
+                            </div>
+                            <div ng-if="!allSelected" style="color: red;float: inherit;margin-top: 24px;">
+                                <strong>Warning!</strong> Please answer all Questions. You can't proceed further without answering them!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Five Steps -->
+                    <!-- end 9 -->
+                    <div class="discoverabsulate sixstep" ng-if="step==10" id="step10">
+                        <div class="topimage"><img src="images/onet_interest.png" /></div>
+                        <div class="title">
+                            Great Job!
+                            <p>You answered all the questions</p>
+                        </div>
+                        <div class="get_started">
+                            <a style="cursor:pointer;" ng-click="ipadGoto(5)">review your answers</a>
+                            <input type="submit" name="submit" value="submit" ng-click="ipadNext()" />
+                        </div>
+                        <div class="padlarge" style="padding:45px 0;float:left;width:100%;"></div>
+                        <ul>
+                            <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label class="active">INTEREST</label><img src="images/right_arrow_pink.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                        </ul>
+                    </div>
+                    <div class="discoverabsulate sevenstep discoverabsulatesevenstep" ng-if="step==11" id="step11">
+                        <div class="topimage"><img src="images/onet_interest.png" /></div>
+                        <div class="title">Here are your Interest Profiler Results</div>
+                        <div class="left col-md-6">
+                            <div class="desc">Your interests are indicative <br>of the kind of work you like doing.</div>
+                            <div class="desc">They will help you find careers <br>you might want to explore. <br>The more a career meets your <br>interests, the more likely it will <br>be satisfying and rewarding to you</div>
+                            <div class="desc">You can click on any interest below <br>to learn more. When you're ready, <br>click Next to continue.</div>
+                            <ul>
+                                <li><a href="" ng-click="openPopup('realistic')">Realistic</a></li>
+                                <li><a href="" ng-click="openPopup('social')">Social</a></li>
+                                <li><a href="" ng-click="openPopup('investigative')">Investigative</a></li>
+                                <li><a href="" ng-click="openPopup('enterprising')">Enterprising</a></li>
+                                <li><a href="" ng-click="openPopup('artistic')">Artistic</a></li>
+                                <li><a href="" ng-click="openPopup('conventional')">Conventional</a></li>
+                            </ul>
+                        </div>
+                        <div class="right col-md-6">
+                            <div id="chart">
+                                <ul id="bars">
+                                    <li>
+                                        <div id="real" data-percentage="" class="bar"></div><span>R</span>
+                                    </li>
+                                    <li>
+                                        <div id="inv" data-percentage="" class="bar"></div><span>I</span>
+                                    </li>
+                                    <li>
+                                        <div id="art" data-percentage="" class="bar"></div><span>A</span>
+                                    </li>
+                                    <li>
+                                        <div id="soc" data-percentage="" class="bar"></div><span>S</span>
+                                    </li>
+                                    <li>
+                                        <div id="entp" data-percentage="" class="bar"></div><span>E</span>
+                                    </li>
+                                    <li>
+                                        <div id="conv" data-percentage="" class="bar"></div><span>C</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="rightartistic">
+                                <ul>
+                                    <li>Realistic <strong>{{realisticScore}}</strong></li>
+                                    <li>Investigative <strong>{{investigativeScore}}</strong></li>
+                                    <li>Artistic <strong>{{artisticScore}}</strong></li>
+                                    <li>Social <strong>{{socialScore}}</strong></li>
+                                    <li>Enterprising <strong>{{enterprisingScore}}</strong></li>
+                                    <li>Conventional <strong>{{conventionalScore}}</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <ul style="margin-top: 28px;">
+                            <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>INTEREST</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label class="active">RESULTS</label><img src="images/right_arrow_pink.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                        </ul>
+                        <div class="center-parent ipad-popup-container" ng-if="realisticPopupVisible">
+                            <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                <header style="text-align:right;">
+                                    <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                </header>
+                                <section>
+                                    <div class="ipad-popup-body">
+                                        <div class="title">Realistic</div>
+                                        <div class="desc">People with Realistic interests like work that includes practical, hands-on problems and answers. Often people with Realistic interests do not like careers that involve paperwork or working closely with others.</div>
+                                        <div class="subtitle">They like:</div>
+                                        <ul>
+                                            <li>Working with plants and animals</li>
+                                            <li>Real-world materials like wood. tools. and machinery</li>
+                                            <li>Outside work</li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="center-parent ipad-popup-container" ng-if="socialPopupVisible">
+                            <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                <header style="text-align:right;">
+                                    <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                </header>
+                                <section>
+                                    <div class="ipad-popup-body">
+                                        <div class="title">Social</div>
+                                        <div class="desc">
+                                            People with Social interests like working with others to help them learn and grow. They like working with people more than working with objects, machines, or information.
+                                        </div>
+                                        <div class="subtitle">They like:</div>
+                                        <ul>
+                                            <li>Teaching</li>
+                                            <li>Giving advice</li>
+                                            <li>Helping and being of service to people</li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="center-parent ipad-popup-container" ng-if="investigativePopupVisible">
+                            <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                <header style="text-align:right;">
+                                    <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                </header>
+                                <section>
+                                    <div class="ipad-popup-body">
+                                        <div class="title">Investigative</div>
+                                        <div class="desc">
+                                            People with Investigative interests like work that has to do with ideas and thinking rather than physical activity or leading people.
+                                        </div>
+                                        <div class="subtitle">They like:</div>
+                                        <ul>
+                                            <li>Searching for facts</li>
+                                            <li>Figuring out problems</li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="center-parent ipad-popup-container" ng-if="enterprisingPopupVisible">
+                            <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                <header style="text-align:right;">
+                                    <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                </header>
+                                <section>
+                                    <div class="ipad-popup-body">
+                                        <div class="title">Enterprising</div>
+                                        <div class="desc">
+                                            People with Enterprising interests like work that has to do with starting up and carrying out business projects. These people like taking action rather than thinking about things.
+                                        </div>
+                                        <div class="subtitle">They like:</div>
+                                        <ul>
+                                            <li>Persuading and leading people</li>
+                                            <li>Making decisions</li>
+                                            <li>Taking risks for profits</li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="center-parent ipad-popup-container" ng-if="artisticPopupVisible">
+                            <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                <header style="text-align:right;">
+                                    <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                </header>
+                                <section>
+                                    <div class="ipad-popup-body">
+                                        <div class="title">Artistic</div>
+                                        <div class="desc">
+                                            People with Artistic interests like work that deals with the artistic side of things, such as acting, music, art, and design.
+                                        </div>
+                                        <div class="subtitle">They like:</div>
+                                        <ul>
+                                            <li>Creativity in their work</li>
+                                            <li>Work that can be done without following a set of rules</li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="center-parent ipad-popup-container" ng-if="conventionalPopupVisible">
+                            <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                <header style="text-align:right;">
+                                    <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                </header>
+                                <section>
+                                    <div class="ipad-popup-body">
+                                        <div class="title">Conventional</div>
+                                        <div class="desc">
+                                            People with Conventional interests like work that follows set procedures and routines. They prefer working with information and paying attention to details rather than working with ideas.
+                                        </div>
+                                        <div class="subtitle">They like:</div>
+                                        <ul>
+                                            <li>Working with clear rules</li>
+                                            <li>Following a strong leader</li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="discoverabsulate sevenstep eightstep ninestep discoverabsulateninestep" ng-if="step==12">
+                        <div class="eightpad">
+                            <div class="topimage"><img src="images/onet_interest.png" /></div>
+                            <div class="title">
+                                Interests + Job Zones = Future Careers
+                                <p>To focus on your job search, think about:</p>
+                            </div>
+                            {{showLoadingMessage}}
+                            <div class="left col-md-6">
+                                <div class="desc">How much education, training and experience do I need to do the job?</div>
+                                <div class="desc">Each ONET career is in one of five Job Zones - groups of carrers that need the same level of experience, education and tarining.</div>
+                                <div class="desc">Different careers need different amountsof preperation. Based on your choice of Job Zone and your interests, the Interest Profiler will help you identify and explore careers that might be right for you.</div>
+                            </div>
+                            <div class="right col-md-6">
+                                <ul>
+                                    <li>1. <a href="" ng-click="openPopup('NoJob')">Little or no job preperation</a></li>
+                                    <li>2. <a href="" ng-click="openPopup('SomeJob')">Some job preperation</a></li>
+                                    <li>3. <a href="" ng-click="openPopup('MediumJob')">Medium job preperation</a></li>
+                                    <li>4. <a href="" ng-click="openPopup('HighJob')">High job preperation</a></li>
+                                    <li>5. <a href="" ng-click="openPopup('ExtensiveJob')">Extensive job preperation</a></li>
+                                </ul>
+                            </div>
+                            <ul>
+                                <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>INTEREST</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label class="active">JOB ZONE</label><img src="images/right_arrow_pink.png" /></li>
+                                <li>
+                                    <div class="underdoted"><img src="images/underdoted.png" /></div>
+                                </li>
+                                <li><label>CAREERS</label><img src="images/right_arrow_blue.png" /></li>
+                            </ul>
+                            <div class="center-parent ipad-popup-container" ng-if="jobZone1PopupVisible">
+                                <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                    <header style="text-align:right;">
+                                        <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                    </header>
+                                    <section>
+                                        <div class="ipad-popup-body">
+                                            <div class="title" style="text-align:center;margin-bottom: 24px;">Job Zone One: Little or No Preparation Needed</div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Experience</div>
+                                                    <div class="desc">Little or no previous work-related skill. knowledge. or experience Is needed for these careers. For example. a person can become a waiter or waitress even if he/she has never worked before.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Education</div>
+                                                    <div class="desc">Some of these careers may need a high school diploma or GED certificate.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Training</div>
+                                                    <div class="desc">Employees in these careers need from a few days to a few months of training. worker can Yuo= do the Job.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Examples</div>
+                                                    <div class="desc">These careers involve following instructions and helping others. Examples include taxi drivers. amusement and recreation attendants. counter and rental clerks. construction laborers. continuous mining machine operators. and waiters/waitresses.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="center-parent ipad-popup-container" ng-if="jobZone2PopupVisible">
+                                <div id="realisticModal" class="center ipad-popup" style="margin-top: 8% !important;">
+                                    <header style="text-align:right;">
+                                        <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                    </header>
+                                    <section>
+                                        <div class="ipad-popup-body">
+                                            <div class="title" style="text-align:center;margin-bottom: 24px;">Job Zone One: Some Preparation Needed</div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Experience</div>
+                                                    <div class="desc">Some previous work-related skill, knowledge, or experience is usually needed. For example, it would help a teller to have experience working with the public.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Education</div>
+                                                    <div class="desc">These careers usually need a high school diploma.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Training</div>
+                                                    <div class="desc">Employees in these careers need from a few months to one year of working with experienced employees. An apprenticeship program may be available for these careers.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Examples</div>
+                                                    <div class="desc">These careers often involve using your knowledge and skills to help others. Examples include sheet metal workers, forest fire fighters, customer service representatives, physical therapist aides, salespersons (retail), and tellers.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="center-parent ipad-popup-container" ng-if="jobZone3PopupVisible">
+                                <div class="center ipad-popup" style="margin-top: 8% !important;">
+                                    <header style="text-align:right;">
+                                        <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                    </header>
+                                    <section>
+                                        <div class="ipad-popup-body">
+                                            <div class="title" style="text-align:center;margin-bottom: 24px;">Job Zone One: Medium Preparation Needed</div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Experience</div>
+                                                    <div class="desc">Previous work-related skill, knowledge, or experience is needed for these careers. For example, an electrician must be in an apprenticeship for three to four years or have several years of job training. You may need to pass a test to get a license to do the job.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Education</div>
+                                                    <div class="desc">Most of these careers need vocational school training, on-the-job experience, or an associate's degree.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Training</div>
+                                                    <div class="desc">Employees in these careers need one or two years of training. Both on-the-job experience and informal training with experienced workers may be needed. An apprenticeship program may be a good choice for these careers.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Examples</div>
+                                                    <div class="desc">These careers usually involve using communication and organizational skills to coordinate, supervise, manage, or train others to accomplish goals. Examples include food service managers, electricians, agricultural technicians, legal secretaries, interviewers, and insurance sales agents.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="center-parent ipad-popup-container" ng-if="jobZone4PopupVisible">
+                                <div class="center ipad-popup" style="margin-top: 8% !important;">
+                                    <header style="text-align:right;">
+                                        <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                    </header>
+                                    <section>
+                                        <div class="ipad-popup-body">
+                                            <div class="title" style="text-align:center;margin-bottom: 24px;">Job Zone One: High Preparation Needed</div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Experience</div>
+                                                    <div class="desc">Long term work-related skill, knowledge, or experience is needed for these careers. For example, an accountant must complete four years of college and work several years in the field to be qualified for the job.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Education</div>
+                                                    <div class="desc">Most of these careers need a four-year bachelor's degree, but some do not.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Training</div>
+                                                    <div class="desc">Employees in these careers need several years of work-related experience and training. Both on-the-job and classroom job training may be needed.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Examples</div>
+                                                    <div class="desc">Many of these careers involve coordinating, supervising, managing, or training others. Examples include accountants, sales managers, database administrators, teachers, chemists, environmental engineers, criminal investigators, and special agents.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="center-parent ipad-popup-container" ng-if="jobZone5PopupVisible">
+                                <div class="center ipad-popup" style="margin-top: 8% !important;">
+                                    <header style="text-align:right;">
+                                        <i ng-click="closePopup()" class="fa fa-close" style="font-size: 18px;cursor:pointer;"></i>
+                                    </header>
+                                    <section>
+                                        <div class="ipad-popup-body">
+                                            <div class="title" style="text-align:center;margin-bottom: 24px;">Job Zone One: Extensive Preparation Needed</div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Experience</div>
+                                                    <div class="desc">Extensive skill, knowledge, and experience are needed for these careers. Many require more than five years of experience. For example, surgeons must complete four years of college and an additional five to seven years of specialized medical training to be able to do their job.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Education</div>
+                                                    <div class="desc">Most of these careers need a graduate school education. For example, they may require a master's degree, and some require a Ph.D., M.D., or J.D. (law degree).</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Training</div>
+                                                    <div class="desc">Employees may need some on-the-job training. However, the person will usually have the needed skills, knowledge, work-related experience, and training before starting the job.</div>
+                                                </div>
+                                                <div class="experience col-md-6">
+                                                    <div class="title" style="font-size:13px;color:rgb(80, 47, 131)">Examples</div>
+                                                    <div class="desc">These careers often involve coordinating, training, supervising, or managing the activities of others to accomplish goals. Very advanced communication and organizational skills are required. Examples include librarians, lawyers, aerospace engineers, wildlife biologists, school psychologists, surgeons, treasurers, and controllers.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  end job prep links -->
+                    <div class="discoverabsulate elevenstep" ng-if="step==13">
+                        <div class="topimage">
+                            <div class="leftlogo col-md-2"><img src="images/colorlogo.png" /></div>
+                            <div class="barchart col-md-4">
+                                <div id="chart">
+                                    <ul id="bars1">
+                                        <li>
+                                            <div id="real1" data-percentage="" class="bar"></div><span>R</span>
+                                        </li>
+                                        <li>
+                                            <div id="inv1" data-percentage="" class="bar"></div><span>I</span>
+                                        </li>
+                                        <li>
+                                            <div id="art1" data-percentage="" class="bar"></div><span>A</span>
+                                        </li>
+                                        <li>
+                                            <div id="soc1" data-percentage="" class="bar"></div><span>S</span>
+                                        </li>
+                                        <li>
+                                            <div id="entp1" data-percentage="" class="bar"></div><span>E</span>
+                                        </li>
+                                        <li>
+                                            <div id="conv1" data-percentage="" class="bar"></div><span>C</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="rightpreparation col-md-4">
+                                <p>Click to change your Job Zone</p>
+                                <div class="changeyourjobzone">
+                                    <!--<i class="fa fa-caret-down" aria-hidden="true"></i> -->
+                                    <ul>
+                                        <li><a href="" ng-click="fetchCareersByJobZone(1)">1</a></li>
+                                        <li><a href="" ng-click="fetchCareersByJobZone(2)">2</a></li>
+                                        <li><a href="" ng-click="fetchCareersByJobZone(3)">3</a></li>
+                                        <li><a href="" ng-click="fetchCareersByJobZone(4)">4</a></li>
+                                        <li><a href="" ng-click="fetchCareersByJobZone(5)">5</a></li>
+                                    </ul>
+                                </div>
+                                <p>{{jobPreparationText}}</p>
+                            </div>
+                            <div class="rightonet col-md-2"><img src="images/onet.png" /></div>
+                        </div>
+                        {{showLoadingMessage}}
+                        <div class="title">Careers that fit your interests and preperation level</div>
+                        <div class="preparationlevel preparationhead">
+                            <table>
+                                <tr style="border:none;">
+                                    <!--<th width="5%;">&nbsp;</th>-->
+                                    <th colspan="2" width="65%;"><i class="fa fa-star-o pinkstar" aria-hidden="true"></i> Best Fit &nbsp;&nbsp;&nbsp;<i class="fa fa-star-o bluestar" aria-hidden="true"></i> Great Fit</th>
+                                    <th width="15%;" style="text-align:center;">Bright Outlook</th>
+                                    <th width="15%;" style="text-align:center;">Green</th>
+                                </tr>
+                                <tr class="abc">
+                                    <td colspan="5">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="preparationlevel">
+                            <table>
+                                <tr style="border:none;float: left; height: 1px !important;">
+                                    <th width="5%;">&nbsp;</th>
+                                    <th width="60%;">&nbsp;</th>
+                                    <th width="15%;" style="text-align:right;">&nbsp;</th>
+                                    <th width="15%;" style="text-align:right;">&nbsp;</th>
+
+                                </tr>
+                                <tr class="abc">
+                                    <td colspan="5">&nbsp;</td>
+                                </tr>
+                                <tr ng-repeat="career in careersJobZone.career">
+                                    <td width="5%;"><i class="fa fa-star-o {{career.star}}" aria-hidden="true"></i></td>
+                                    <td width="60%;" style="text-align:left;"><a href="" ng-click="fetchCareerDetails(career.code)">{{career.title}}</a></td>
+                                    <td width="15%;" style="text-align:center;">{{career.tags.showBright}}</td>
+                                    <td width="15%;" style="text-align:center;">{{career.tags.showGreen}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="padzero" style="padding:15px 0;float:left;width:100%;"></div>
+                        <ul>
+                            <li><label>START</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>INTEREST</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>RESULTS</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label>JOB ZONE</label><img src="images/right_arrow_blue.png" /></li>
+                            <li>
+                                <div class="underdoted"><img src="images/underdoted.png" /></div>
+                            </li>
+                            <li><label class="active">CAREERS</label><img src="images/right_arrow_pink.png" /></li>
+                        </ul>
+                    </div>
+                    <!-- eleven Steps -->
+                </div>
+            </div>
+            <!-- Ipad Air -->
+        </div>
+    </div>
+    <!-- Get Started -->
+    <div class="results" id="results" ng-if="isResult">
+        <div class="container">
+            <div class="subresults">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                <h3>Results</h3>
+                <div class="result_bg">
+
+                    <h4>{{careerDetails.occupation.title}}</h4>
+                    <p>{{alsoCalled}}</p>
+
+                    <div class="theydo col-md-6">
+                        <div class="title">What they do:</div>
+                        <div class="desc">{{careerDetails.occupation.description}}</div>
+                    </div>
+                    <div class="youwould col-md-6">
+                        <div class="title">On the job, you would:</div>
+                        <ul>
+                            <li ng-repeat="job in steps"> {{job}} </li>
+                        </ul>
+                    </div>
+
+                    <div class="knowledge col-md-4">
+                        <div class="title">knowledge</div>
+                        <div class="desc">
+                            <ul>
+                                <li style="list-style-type: none;" ng-repeat="ele in knowledgeElements"> {{ele}} </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="skills col-md-4">
+                        <div class="title">skills</div>
+                        <div class="desc">
+                            <ul>
+                                <li style="list-style-type: none;" ng-repeat="skill in skillsElements"> {{skill}} </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="abilities col-md-4">
+                        <div class="title">abilities</div>
+                        <div class="desc">
+                            <ul>
+                                <li style="list-style-type: none;" ng-repeat="ele in abilitiesElements"> {{ele}} </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="personality col-md-6">
+                        <div class="title">personality</div>
+                        <div class="desc">People interested in this work like activities that<br>include practical, hands-on problems and solutions.</div>
+                        <div class="desc">They do well at jobs that need:</div>
+                        <ul>
+                            <li ng-repeat="ele in workStylesElements"> {{ele}} </li>
+                        </ul>
+                    </div>
+                    <div class="technoogy col-md-6">
+                        <div class="title">technoogy</div>
+                        <div class="desc">You might use software like this on the job:</div>
+                        <div class="desc">
+                            <ul>
+                                <li ng-repeat="ele in technologies"> {{ele}} </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="backnext col-md-6">
+                    <div class="buttons"><a href="" ng-click="disableResultsSection()">Close this</a></div>
+                </div>
+                <!-- <div class="backnext col-md-6">
+                    <div class="buttons"><a href="" >Print</a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- Results -->
+    <div ng-include="'footer.html'"></div>
+    <div class="horizonral"></div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#all").click(function() {
+                $(".popup").toggle();
+            });
+        });
+
+    </script>
+    <!-- Categories Script -->
+    <script>
+        $(document).ready(function() {
+            $("#hidefeedback").click(function() {
+                $(".forms").hide();
+            });
+            $("#showfeedback").click(function() {
+                $(".forms").show();
+            });
+        });
+
+    </script>
+    <!-- FeedBack Script -->
+    <script type="text/javascript">
+        $(function() {
+            var menuVisible = false;
+            $('#searchtips').css({
+                'display': 'none'
+            });
+            $('#tips').hover(function() {
+                if (menuVisible) {
+                    $('#searchtips').css({
+                        'display': 'none'
+                    });
+                    menuVisible = false;
+                    return;
+                }
+                $('#searchtips').css({
+                    'display': 'block'
+                });
+                menuVisible = true;
+            });
+            $('#searchtips').hover(function() {
+                $(this).css({
+                    'display': 'none'
+                });
+                menuVisible = true;
+            });
+        });
+
+    </script>
+    <!-- Tool Trp-->
+    <script>
+        $(document).ready(function() {
+            $('#searchshow').click(function() {
+                $('.hideshow').toggle("slide");
+            });
+        });
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#booktext').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchbook').click(function() {
+                $('#booktext').css({
+                    'height': '100px'
+                });
+                $('#searchbook').css({
+                    'top': '30px'
+                });
+                $('#searchclose ').css({
+                    'display': 'block'
+                });
+            });
+            $('#searchclose').click(function() {
+                $('#booktext').css({
+                    'height': '55px'
+                });
+                $('#searchbook').css({
+                    'top': '3px'
+                });
+                $('#searchclose ').css({
+                    'display': 'none'
+                });
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $("#bars li .bar").each(function(key, bar) {
+                var percentage = $(this).data('percentage');
+
+                $(this).animate({
+                    'height': percentage + '%'
+                }, 1000);
+            });
+        });
+
+
+
+        function loadBars() {
+            var r = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().realisticScore;
+            var i = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().investigativeScore;
+            var a = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().artisticScore;
+            var s = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().socialScore;
+            var e = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().enterprisingScore;
+            var c = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().conventionalScore;
+
+
+
+
+            $('#real').animate({
+                'height': r + '%'
+            }, 1000);
+            real
+
+            $('#inv').animate({
+                'height': i + '%'
+            }, 1000);
+
+            $('#art').animate({
+                'height': a + '%'
+            }, 1000);
+
+            $('#soc').animate({
+                'height': s + '%'
+            }, 1000);
+
+            $('#entp').animate({
+                'height': e + '%'
+            }, 1000);
+
+            $('#conv').animate({
+                'height': c + '%'
+            }, 1000);
+        }
+
+        function loadBars1() {
+            var r = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().realisticScore;
+            var i = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().investigativeScore;
+            var a = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().artisticScore;
+            var s = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().socialScore;
+            var e = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().enterprisingScore;
+            var c = angular.element(document.querySelector('[ng-controller="discoverController"]')).scope().conventionalScore;
+
+
+            $('#real1').animate({
+                'height': r + '%'
+            }, 1000);
+            real
+
+            $('#inv1').animate({
+                'height': i + '%'
+            }, 1000);
+
+            $('#art1').animate({
+                'height': a + '%'
+            }, 1000);
+
+            $('#soc1').animate({
+                'height': s + '%'
+            }, 1000);
+
+            $('#entp1').animate({
+                'height': e + '%'
+            }, 1000);
+
+            $('#conv1').animate({
+                'height': c + '%'
+            }, 1000);
+        }
+
+    </script>
+    <!-- Bar Chart Script -->
+
+</body>
+
+</html>

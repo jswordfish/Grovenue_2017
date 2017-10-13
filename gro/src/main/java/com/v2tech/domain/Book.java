@@ -145,7 +145,9 @@ public class Book
 			
 		public void setBookTitle(String bookTitle)
 			{
-				this.bookTitle = bookTitle;
+				if(bookTitle != null){
+					this.bookTitle = bookTitle;
+				}
 			}
 			
 		public String getEdition()
@@ -155,7 +157,10 @@ public class Book
 			
 		public void setEdition(String edition)
 			{
-				this.edition = edition;
+				if(edition != null){
+					this.edition = edition;
+				}
+			
 			}
 			
 		public String getISBN()
@@ -165,7 +170,10 @@ public class Book
 			
 		public void setISBN(String iSBN)
 			{
-				ISBN = iSBN;
+				if(iSBN != null){
+					ISBN = iSBN;
+				}
+				
 			}
 			
 		public String getStrTableOfContents()
@@ -175,7 +183,10 @@ public class Book
 			
 		public void setStrTableOfContents(String strTableOfContents)
 			{
+				
+				if(strTableOfContents != null){
 				this.strTableOfContents = strTableOfContents;
+				}
 			}
 			
 		public String getPublisher()
@@ -185,7 +196,10 @@ public class Book
 			
 		public void setPublisher(String publisher)
 			{
+				
+				if(publisher != null){
 				this.publisher = publisher;
+				}
 			}
 			
 		public String getYear()
@@ -195,7 +209,10 @@ public class Book
 			
 		public void setYear(String year)
 			{
-				this.year = year;
+				if(year != null){
+					this.year = year;
+				}
+				
 			}
 			
 		public Float getMrp()
@@ -205,7 +222,9 @@ public class Book
 			
 		public void setMrp(Float mrp)
 			{
-				this.mrp = mrp;
+				if(mrp != null){
+					this.mrp = mrp;
+				}
 			}
 			
 		public String getCurrency()
@@ -215,7 +234,9 @@ public class Book
 			
 		public void setCurrency(String currency)
 			{
+				if(currency != null){
 				this.currency = currency;
+				}
 			}
 			
 		public byte[] getBookImage()
@@ -230,6 +251,7 @@ public class Book
 			
 		public void setAuthors(String authors)
 			{
+				if(authors != null)
 				this.authors = authors;
 			}
 			
@@ -270,6 +292,7 @@ public class Book
 			
 		public void setSmallImageUrl(String smallImageUrl)
 			{
+				if(smallImageUrl != null)
 				this.smallImageUrl = smallImageUrl;
 			}
 			
@@ -280,6 +303,7 @@ public class Book
 			
 		public void setMediumImageUrl(String mediumImageUrl)
 			{
+				if(mediumImageUrl != null)
 				this.mediumImageUrl = mediumImageUrl;
 			}
 			
@@ -290,6 +314,7 @@ public class Book
 			
 		public void setLargeImageUrl(String largeImageUrl)
 			{
+				if(largeImageUrl != null)
 				this.largeImageUrl = largeImageUrl;
 			}
 			
@@ -300,6 +325,7 @@ public class Book
 			
 		public void setDetailPageURL(String detailPageURL)
 			{
+				if(detailPageURL != null)
 				this.detailPageURL = detailPageURL;
 			}
 			
@@ -310,6 +336,7 @@ public class Book
 			
 		public void setFormat(String format)
 			{
+				if(format != null)
 				this.format = format;
 			}
 			
@@ -320,6 +347,7 @@ public class Book
 			
 		public void setNumberOfPages(Integer numberOfPages)
 			{
+				if(numberOfPages != null)
 				this.numberOfPages = numberOfPages;
 			}
 			
@@ -330,6 +358,7 @@ public class Book
 			
 		public void setKeyword(String keyword)
 			{
+				if(keyword != null)
 				this.keyword = keyword;
 			}
 			
@@ -340,6 +369,7 @@ public class Book
 			
 		public void setBookTp(String bookTp)
 			{
+				if(bookTp != null)
 				this.bookTp = bookTp;
 			}
 			
@@ -350,6 +380,7 @@ public class Book
 			
 		public void setcStreams(String cStreams)
 			{
+				if(cStreams != null)
 				this.cStreams = cStreams;
 			}
 			
@@ -360,6 +391,7 @@ public class Book
 			
 		public void setrExams(String rExams)
 			{
+				if(rExams != null)
 				this.rExams = rExams;
 			}
 			
@@ -370,6 +402,7 @@ public class Book
 			
 		public void setrSubjects(String rSubjects)
 			{
+				if(rSubjects != null)
 				this.rSubjects = rSubjects;
 			}
 			
@@ -380,6 +413,7 @@ public class Book
 			
 		public void setSrcs(String srcs)
 			{
+				if(srcs != null)
 				this.srcs = srcs;
 			}
 			
@@ -420,6 +454,7 @@ public class Book
 			
 		public void setInstitute(String institute)
 			{
+				if(institute != null)
 				this.institute = institute;
 			}
 			
@@ -440,11 +475,12 @@ public class Book
 			
 		public void setAverageRating(Double averageRating)
 			{
-				if (averageRating.intValue() > 5)
-					{
+				if (averageRating != null) {
+					if (averageRating.intValue() > 5) {
 						averageRating = averageRating % 5;
 					}
-				this.averageRating = averageRating;
+					this.averageRating = averageRating;
+				}
 			}
 			
 		public Integer getRateCount()
@@ -454,6 +490,7 @@ public class Book
 			
 		public void setRateCount(Integer rateCount)
 			{
+				if(rateCount != null)
 				this.rateCount = rateCount;
 			}
 
@@ -462,6 +499,7 @@ public class Book
 		}
 
 		public void setSubject(String subject) {
+			if(subject != null)
 			this.subject = subject;
 		}
 
@@ -470,6 +508,7 @@ public class Book
 		}
 
 		public void setDescription(String description) {
+			if(description != null)
 			this.description = description;
 		}
 		

@@ -86,7 +86,7 @@ public class TestBook
 					{
 						providers.add(new JacksonJsonProvider());
 						//webClient = WebClient.create("http://utilityapplications-socialapp.rhcloud.com/ws/rest/pdfBoxService/pdfToJavaOutput", providers);
-						webClient = WebClient.create("http://localhost/v2-booksysN-1.0/ws/rest/bookService/uploadBooksExcel", providers);
+						webClient = WebClient.create("http://localhost/Grovenue_2017-1.0/ws/rest/bookService/uploadBooksExcel", providers);
 						webClient.header("Content-Type", "multipart/form-data");
 						webClient.type(MediaType.MULTIPART_FORM_DATA_TYPE);
 						HTTPConduit conduit = WebClient.getConfig(webClient).getHttpConduit();
@@ -121,7 +121,7 @@ public class TestBook
 					{
 						ContentDisposition cd = new ContentDisposition("attachment;filename=Book_Template_v1.0.xlsx");
 						List<Attachment> atts = new LinkedList<Attachment>();
-						FileInputStream fis = new FileInputStream("Book_Excel_DataCapture_March 16_v2.xlsx");
+						FileInputStream fis = new FileInputStream("D:\\jatin\\shalini\\ExcelData\\Book_Excel_DataCapture_March 16_v2_limited.xlsx");
 						Attachment att = new Attachment("root", fis, cd);
 						atts.add(att);
 						bookWebService.uploadBookExcel(att, "test");
@@ -143,7 +143,7 @@ public class TestBook
 					{
 						ContentDisposition cd = new ContentDisposition("attachment;filename=Book_Template_v1.0.xlsx");
 						List<Attachment> atts = new LinkedList<Attachment>();
-						FileInputStream fis = new FileInputStream("Book_Template_v1.0.xlsx");
+						FileInputStream fis = new FileInputStream("D:\\jatin\\shalini\\ExcelData\\Book_Excel_DataCapture_March 16_v2_limited.xlsx");
 						Attachment att = new Attachment("root", fis, cd);
 						atts.add(att);
 						Boolean res = webClient.post(att, Boolean.class);

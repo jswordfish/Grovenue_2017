@@ -71,7 +71,7 @@ public class CoachingClass
 		
 		String			addedBy						= "";
 		
-		int				batchSize;
+		int				batchSize = 0;
 		
 		String			courseMaterial				= "";
 		
@@ -217,6 +217,7 @@ public class CoachingClass
 			
 		public void setAverageBatchSize(Integer averageBatchSize)
 			{
+				if(averageBatchSize != null)
 				this.averageBatchSize = averageBatchSize;
 			}
 			
@@ -365,6 +366,7 @@ public class CoachingClass
 			
 		public void setBatchSize(int batchSize)
 			{
+				//if(batchSize != null)
 				this.batchSize = batchSize;
 			}
 			
@@ -471,6 +473,7 @@ public class CoachingClass
 			
 		public void setRateCount(Integer rateCount)
 			{
+				if(rateCount != null)
 				this.rateCount = rateCount;
 			}
 			
@@ -491,6 +494,7 @@ public class CoachingClass
 
 		public void setLat(Double lat)
 			{
+				if(lat != null)
 				this.lat = lat;
 			}
 
@@ -501,6 +505,7 @@ public class CoachingClass
 
 		public void setLon(Double lon)
 			{
+				if(lon != null)
 				this.lon = lon;
 			}
 

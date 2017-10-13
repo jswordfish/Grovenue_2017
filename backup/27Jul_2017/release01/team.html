@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title id='Description'>Team</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!--<link rel="icon" href="favicon.png">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+    <link rel="stylesheet" href="css/responsive.css?v=1.0">
+    <link rel="stylesheet" href="css/menu.css?v=1.0">
+    <link rel="stylesheet" href="css/popup.css?v=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-embed/2.1.1/ng-embed.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/1.14.1/hello.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-img-crop/0.3.2/ng-img-crop.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-embed/2.1.1/ng-embed.min.js"></script>
+    
+    <script src="js/fileSaver.js?v=1.0"></script>
+    <script src="js/modalService.js?v=1.0"></script>
+    <script src="js/commonServices.js?v=1.0"></script>
+    <script src="js/authController.js?v=1.0"></script>
+    <script src="js/feedbackController.js?v=1.0"></script>
+    <script src="js/login.js?v=1.0"></script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97928294-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body ng-app="myApp" ng-controller="loginController">
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-md-3">
+                    <a href="index.html"><img src="images/colorlogo.png" /></a>
+                </div>
+                <div class="menu col-md-6" style="visibility:hidden">
+                    <div class="top topsearch">
+                        <div class="search">
+                            <div class="all"> </div>
+                            <form ng-submit="redirectAndSearch()">
+                                <input type="text" name="search" ng-model="searchText" placeholder="Books, Coaching Classes, Digital Tools, Careers..." />
+                            </form>
+                            <!--<input type="text" class="hideshow" name="search" placeholder="Search"/>-->
+                            <a href="javascript:void(0);" id="searchshow"><i class="fa fa-search" aria-hidden="true" ng-click="redirectAndSearch()"></i></a>
+                            <div class="popup">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu col-md-3">
+                    <div class="top">
+                        <div class="login-reg">
+                            <div class="headeruser"><img src="images/user.png" /></div>
+                            <div class="logreg" ng-if="!isLoggedin()">
+                                <a ng-click="openLoginSignupModal()" style="cursor:pointer;">LOGIN / REGISTER</a>
+                            </div>
+                            <div class="logreg" ng-if="isLoggedin()">
+                                <input type="button" value="{{loggedInUser.fullName}}" popover-animation="true" popover-placement="bottom" popover-trigger="'focus'" uib-popover-template="'partials/user-menu-popover.html'" style="cursor:pointer;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="menu main_menu col-md-12">
+                    <div id='cssmenu' class="center-parent">
+                        <ul class="center">
+                            <li><a href="Discover.html" class="menulink">discover</a></li>
+                            <li class='active'><a href="prepare_for_greatness.html" class="menulink">prepare for greatness</a></li>
+                            <li><a href="be_job_ready.html" class="menulink">be job ready</a></li>
+                            <li id="last"><a href="write_review.html" class="menulink">write a review</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Header -->
+    <div class="ourteam" style="height:400px">
+        <!--<h1>
+            Our Team
+        </h1>-->
+    </div>
+    <div class="team">
+        <div class="team_head">
+            <!--<img src="images/colorlogo.png" />
+            <h1>About Us</h1>-->
+        </div>
+    </div> <!-- Team -->
+
+    <div class="aboutus">
+        <div class="container">
+            <div class="aboutus_cen">
+                <div class="about_desc">
+                    <p>
+                        GrovenueTM signifies growth. Your growth. That’s all we care about, that’s our passion, really. What do we mean by growth? We mean your professional (and personal) growth, step by step. We are with your throughout the journey.
+                        Professional growth begins with making an informed career choice. Knowing your options. Knowing your interests. Trying to figure out your calling rather than following the popular options or the ones your friends are choosing. We help you explore the options.
+                    </p>
+                </div>
+            </div>
+            <div class="aboutus_cen">
+                <div class="about_desc">
+                    <p>Next comes achieving your career goals – getting into your dream college. We help you find the best resources to ace that entrance exam. We help you get the inside scoop based on real, genuine feedback from real, genuine students.</p>
+                    <p>Now that you’re about to graduate from your dream school, you need to land that coveted job. Or you need to switch to another job. We help you there too. We pride ourselves on creating top-notch resumes and cover letters that our customers love. So much that we can only accept a limited number of requests each month – this is how we devote the necessary time and devotion to each customer.</p>
+                </div>
+            </div>
+
+        </div>
+    </div> <!-- About Us Contain -->
+
+    <div class="board_of_advisors our_team ">
+        <h4>Board of Advisors</h4>
+        <div class="prepare_for_greatness_slider preparesslide board_of_advisors_slider">
+            <div class="slider-wrap">
+                <div class="slider8 container">
+                    <ul>
+                        <li>
+                            <img src="images/team/james.gif">
+                            <div class="board_desc">
+                                <h4>James Rosenbaum</h4>
+                                <p><!--Lorem Ipsum is simply dummy text of the printing and industry.  Lorem Ipsum has been the industry's--></p>
+                                <a style="cursor:pointer;" ng-click="open('partials/team/james-modal.html')">read more</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/team/rajiv.jpg">
+                            <div class="board_desc">
+                                <h4>Rajiv Mishra</h4>
+                                <p><!--Lorem Ipsum is simply dummy text of the printing and industry.  Lorem Ipsum has been the industry's--></p>
+                                <a style="cursor:pointer;" ng-click="open('partials/team/rajiv-modal.html')">read more</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/team/Mantha.jpg">
+                            <div class="board_desc">
+                                <h4>DS. Mantha</h4>
+                                <!--<p>Lorem Ipsum is simply dummy text of the printing and industry.  Lorem Ipsum has been the industry's</p>-->
+                                <a style="cursor:pointer;" ng-click="open('partials/team/mantha-modal.html')">read more</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/team/Naresh.png">
+                            <div class="board_desc">
+                                <h4>Naresh Chandra</h4>
+                                <!--<p>Lorem Ipsum is simply dummy text of the printing and industry.  Lorem Ipsum has been the industry's</p>-->
+                                <a style="cursor:pointer;" ng-click="open('partials/team/naresh-modal.html')">read more</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/team/tarun.jpg">
+                            <div class="board_desc">
+                                <h4>Tarun Anand</h4>
+                                <!--<p>Lorem Ipsum is simply dummy text of the printing and industry.  Lorem Ipsum has been the industry's</p>-->
+                                <a style="cursor:pointer;" ng-click="open('partials/team/tarun-modal.html')">read more</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="slider-arrow sa-left8"><img src="images/left_arrow_pink.png" /></a>
+                <a href="#" class="slider-arrow sa-right8"><img src="images/right_arrow_pink.png" /></a>
+            </div>
+        </div> <!--Carousel Slider -->
+    </div> <!-- Board of Advisors -->
+
+    <div class="our_team">
+        <h4>Our Team</h4>
+        <div class="prepare_for_greatness_slider preparesslide our_team_slider">
+            <div class="slider-wrap">
+                <div class="slider9 container">
+                    <ul>
+                        <li>
+                            <img src="images/team/shalilini.jpg">
+                            <div class="out_desc">
+                                <h4>Shalini </h4>
+                                <!--<span>Name & Designation</span>-->
+                                <a style="cursor:pointer;" ng-click="open('partials/team/shalini-modal.html')">read more</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/team/user.jpg">
+                            <div class="out_desc">
+                                <h4>Rohit</h4>
+                                <a style="cursor:pointer;" ng-click="open('partials/team/rohit-modal.html')">read more</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/team/jatin.jpg">
+                            <div class="out_desc">
+                                <h4>Jatin</h4>
+                                <a style="cursor:pointer;" ng-click="open('partials/team/jatin-modal.html')">read more</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="images/team/user.jpg">
+                            <div class="out_desc">
+                                <h4>Akash</h4>
+                                <a style="cursor:pointer;" ng-click="open('partials/team/akash-modal.html')">read more</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="slider-arrow sa-left9"><img src="images/left_arrow_pink.png" /></a>
+                <a href="#" class="slider-arrow sa-right9"><img src="images/right_arrow_pink.png" /></a>
+            </div>
+        </div> <!--Carousel Slider -->
+    </div><!-- Our Team -->
+
+    <div class="horizonralblue"></div>
+
+    <div ng-include="'footer.html'"></div>
+
+    <div class="horizonral"></div>
+
+    <div ng-include="'partials/feedback.html'"></div>
+    <!--===================== Team Popup Form 1 =====================-->
+    <script type="text/ng-template" id="partials/team/shalini-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/shalilini.jpg">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>Shalini </h4>
+                    <p>
+                        Shalini strives to help students and job seekers to reach their fullest potential and do work they truly enjoy. She believes that improving productivity is the only way to achieve sustainable growth across the world. (Obsessively) focused on customers and their experience. Values simplicity. Creator of some of the most boring jokes.
+                    </p>
+                    <p>
+                        She graduated from Northwestern University where she studied Math, Economics, and Finance.
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="partials/team/rohit-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/user.jpg">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>Rohit</h4>
+                    <p>
+                        Rohit is a Finance ninja and provides practical, methodological thinking to support our ambitious goals for Grovenue. He has successfully launched two other businesses and loves to help us with all things money, competitive intel, new product strategy, and sales.
+                        He has a Masters in Finance from ESADE Business School where he focused on innovative means to finance startups in the green energy space.
+
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="partials/team/jatin-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/jatin.jpg">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>Jatin</h4>
+                    <p>
+                        The tech whiz, Jatin works hard to turn all our ideas into tangible products that our customers will continue to love and swear by. He has helped launched 3 other successful digital startups across the globe.
+                    </p>
+                    <p>He has a B.Tech in Computer Science from the University of Mumbai. </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="partials/team/akash-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/user.jpg">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>Akash</h4>
+                    <p>
+                        Akash leads business development and database management by making sure our users get relevant and accurate content each time they visit. He also manages relationships with our partners. A nature lover by heart, he is an avid fan of dogs, Taylor Swift, and vada pav.
+                        He has a BBA from BN College where he focused on marketing and process improvement.
+
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="partials/team/james-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/james.gif">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>James Rosenbaumn</h4>
+                    <p>
+                        Prof. Rosenbaum is a Professor of Sociology and Human Development and Social Policy at Northwestern University. He is also the recipient of the Senior Urban Education Fellowship in 2008. He has conducted a research project on the effects of relocating poor inner-city black families in public housing to subsidized housing in the white middle-class suburbs of Chicago. More recently, Rosenbaum has been studying the high school to work transition, in Beyond College For All, a book awarded the Waller Prize in Sociology. He has also been studying community colleges, the ways they reduce many barriers to college, and reforms that create further improvements. He is also studying ways high schools can improve college access and college completion for disadvantaged students. A specialist in research on work, education and housing opportunities, Rosenbaum has published five books and numerous articles on these subjects. He has testified before Congressional committees on several occasions. He serves as an adviser for several national programs.
+                        He has a Ph.D. in Sociology from Harvard University and a B.A. in Culture and Behavior from Yale University.
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="partials/team/rajiv-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/rajiv.jpg">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>Rajiv Mishra</h4>
+                    <p>
+                        Prof. Rajiv Mishra has more than 20 years of experience with teaching and research in the field of Urbanism, Community Architecture, Heritage Conservation, and Technology in Building Management, Classical Arts and Education of Architects and Planners in a changing society. This includes 5 years at the Academy of Architecture and 18 years at Sir J.J. College of Architecture, including Principle since 2008. He is also the Director at Directorate of Art – Government of Maharashtra since 2015, Elected Member in Council of Architecture, member of Mumbai Heritage Conservation committee, and member of the State Environment Impact Assessment Authority Maharashtra.
+                        Previously, he served as Chairman- All India Board for Architecture Education in 2010-13 and 2013-16, Chairperson – NBA for Architecture Education in 2011-13, Elected Executive Committee Member At Council of Architecture in Term 2012-2015.
+                        He graduated from the Architecture from Academy of Architecture (1989), with post-graduate studies in Town & Country Planning from Government College of Engineering at Pune (1991), and Urban Management at the Institute of Housing Studies at Rotterdam (1997) Netherlands on Netherlands Government Fellowship. In 2000, he completed his Post Graduate Diploma in Management of Education with reference to Art and Architecture Institutions from Department of Education, University of Mumbai.
+                        To him, art is a cultural output and a celebration process of ongoing expression by many civilizations.
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="partials/team/mantha-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/Mantha.jpg">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>DS. Mantha</h4>
+                    <p>
+                        Dr. S S Mantha, an eminent academician and an able administrator, was the Chairman, of All India Council for Technical Education (AICTE) from 2012-2015. Having joined AICTE in March 2009 as its Vice Chairman, he has been at the forefront of bringing in some radical changes for transparency and accountability in its administration. On completion of the tenure at AICTE he worked as Professor of Robotics, CAD/CAM and AI in the Department of Mechanical Engineering at VJTI, Mumbai till May 2016. Currently he is an Adjunct Prof., in the National Institute for Advanced Studies (NIAS), Bangalore.
+                        He holds a Bachelor’s degree in Mechanical Engineering from the M S University, Baroda, a Masters in Mechanical Engineering from VJTI, Mumbai, and A PhD in Combustion modeling from University of Mumbai.
+                        He specializes in Robotics which he taught for more than 15 years out of a rich teaching experience of more than 25 years, along with courses in Control Theory and Artificial Intelligence. He was instrumental in setting up a state of art Robotics / CAD / CAM laboratory at VJTI.
+                        He has more than 240 publications in National and International Journals and Conferences to his credit as also 23 Ph D students who have completed their PhD under him. He has three books published including “Objet Oriented Programming in C++” Published by Wiley India. He is a member of, IET India, a part of Engineering Council, London, for whom he is also an expert accreditor. He is advisor to the International Organization for Educational Development and Member, Education Council, IOED, a diplomatic mission headquartered in India. Further he is a member of association for Machines and Mechanisms, the Computer Society of India, The Consortium for information and Communications Technology and the Indian Institute of Industrial Engineering and the International Function Point Users Group. He is also the recipient of INFOCOM CMAI National Telecom award for 2010, the HR Nexus – the HR & Network, Leadership award in the field of Education, 2010, and 5th National telecom Award in 2011 for “Excellence in Education through e-governance instituted by CMAI and Star News.
+
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="partials/team/naresh-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/Naresh.png">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>Naresh Chandra</h4>
+                    <p>
+                        Dr. Naresh Chandra has worked as Pro Vice-Chancellor twice (from 17th April, 1997 to 4th May, 2000 and 12th April, 2012 to 11th May, 2015). Currently, he is the Principal of Birla College. UGC has conferred the status of “College with Potential for Excellence” (CPE) during phase-III (March 2010) and now conferred with College of Excellence (from 1st April, 2015 to 31st March, 2020 to Birla College.
+                        As Pro-Vice-Chancellor, he assisted the Vice-Chancellor proactively in all the endeavours in taking the University forward and provided help, support and guidance for the smooth functioning of the University.He played a key-role in introducing relevant, innovative and need based academic courses.
+                        Dr. Chandra is a Research Guide of the University of Mumbai for M.Sc. and Ph.D. (Science) Degree in Botany and Biotechnology. He is the Fellow and Life Member, Indian Botanical Society (FBS).  He has published several research papers in National as well as International journals. He is the Associate Editor (West Zone) of “Journal of Cell and Tissue Research”.
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="partials/team/tarun-modal.html">
+        <div class="modal-header">
+            <img class="close-btn" src="images/x.png" data-ng-click="modalOptions.close()">
+        </div>
+        <div class="modal-body boardofadvisors-popup">
+            <div class="board_popup">
+                <div class="row">
+                <div class="board_img col-md-4">
+                    <img src="images/team/tarun.jpg">
+                </div>
+                <div class="board_contain col-md-8">
+                    <h4>Tarun Anand</h4>
+                    <p>
+                        Mr. Anand has co-founded Universal Business School, India’s 1st Green Business School with a vision to bring international best practices in Management Education to India. Having experienced executive education at the best business schools in the world like Michigan Business School-USA, Tuck School of Business-USA and IE Business School-Spain, Tarun was motivated to bring a fully residential International stylized campus to Mumbai. UBS has the distinct privilege of being endorsed by 60 CEO’s from Indian and multinational corporations and is spread over a 40 acre campus in the green Karjat valley.
+                    </p>
+                    <p>
+                        Tarun at 35 years of age rejoined Thomson Reuters as Managing Director, South Asia to become the youngest MD of Thomson Reuters. He worked for Thomson Reuters in London, New York and Hong Kong. Tarun also co-founded and served as Global Head of Strategy at FXMarketSpace and invented “FXSettle” a revolutionary FX settlement solution which has won several international Innovation Awards in 2008.
+                    </p>
+                    <p>
+                        Mr. Anand has over 20 years of experience in financial services, banking and education, including working with Standard Chartered and HSBC. He has been a speaker at leading Industry conferences across North and South America, UK, Europe, Africa and Asia. He is an avid mountaineer having scaled Kilimanjaro, Africa and base camp Kanchenjunga, India. He also represented India at International Rugby Tournaments.
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!--===================== Personal Information, Education, Services Tab Popup Form =====================-->
+    <div id="tab" class="popupContainer tabcontainer"
+         style="display: none;">
+        <header class="popupHeader">
+            <span class="modal_close">
+                <a href="" ng-click="hideTab()">
+                    <img src="images/x.png" />
+                </a>
+            </span>
+            <ul class="nav nav-tabs">
+                <li class="firsttab active">
+                    <a data-toggle="tab"
+                       href="#personal_information">Personal Information</a>
+                </li>
+                <li class="secondtab firstpre">
+                    <a data-toggle="tab"
+                       href="#education">Education</a>
+                </li>
+                <li class="therdtab secondpre">
+                    <a data-toggle="tab"
+                       href="#services">Services</a>
+                </li>
+            </ul>
+        </header>
+        <section class="popupBody">
+            <div class="tabpopup">
+                <div class="tab-content">
+                    <div id="personal_information" class="tab-pane fade in active">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <form>
+                                <fieldset class="form-group">
+                                    <input type="text" name="name" placeholder="First Name*"
+                                           style="width: 36% !important; float: left;"
+                                           ng-model="loggedInUser.firstName" required /> <input type="text" name="lastname" placeholder="Last Name*"
+                                                                                                style="width: 60% !important; float: right;"
+                                                                                                ng-model="loggedInUser.lastName" required />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <input type="text" name="contactno"
+                                           placeholder="Contact Number*" ng-model="loggedInUser.contact" />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <input type="date" name="birthDate"
+                                           placeholder="Date of Birth*"
+                                           style="width: 36% !important; float: left;"
+                                           ng-model="loggedInUser.birthDate" required />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <select id="listBox" name="state" onchange="selct_district(this.value)" ng-model="loggedInUser.state" required></select>
+
+                                    <input type="hidden" id="State" name="state" placeholder="State*" value="{{loggedInUser.state}}" ng-model="loggedInUser.state" required />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <select id="secondlist" name="city" ng-model="loggedInUser.city" required></select>
+                                    <input type="hidden" id="City" name="city" placeholder="City*" value="{{loggedInUser.city}}" ng-model="loggedInUser.city" required />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <textarea rows="4" name="hobbies/interest"
+                                              placeholder="Hobbies/Interest*"
+                                              ng-model="loggedInUser.hobbies"></textarea>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="userimg">
+                                <!--<img src="images/testimonials.png">-->
+                                <!--  Added by Sagar -->
+                                <img ng-src="{{defImage}}" /> <span ng-show="editOption"
+                                                                    ng-click="editPhotoBegin()"><a href="">{{photoStatus}}</a></span>
+                                <div class="cropArea" ng-show="showImagePreview">
+                                    <input type="file" id="fileInput" />
+                                    <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+                                </div>
+                                <!-- Added by Sagar -->
+                            </div>
+                            <textarea rows="9" ng-show="!showImagePreview"
+                                      name="introduction" placeholder="Introduction*"
+                                      ng-model="loggedInUser.introduction"></textarea>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="next">
+                            <a data-toggle="tab" class="firstnext" href="#education"
+                               ng-click="updateUserProfile()">
+                                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- First Tab -->
+                    <div id="education" class="tab-pane fade">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <form>
+                                <fieldset class="form-group">
+                                    <select>
+                                        <option value="basic_graduation">Basic Graduation*</option>
+                                    </select>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <select>
+                                        <option value="specialization">Specialization*</option>
+                                    </select>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <input type="text" name="institute_name"
+                                           placeholder="Institute Name*"
+                                           ng-model="loggedInUser.institution" />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <input type="text" name="university_name"
+                                           placeholder="University Name*"
+                                           ng-model="loggedInUser.university" />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <select ng-model="loggedInUser.courseCompletionYear"
+                                            ng-options="o as o for o in courseCompletionYear">
+                                        <option value="" disabled selected>
+                                            Course Completion
+                                            Year
+                                        </option>
+                                    </select>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="col-md-5">
+                            <form>
+                                <fieldset class="form-group">
+                                    <input type="text" name="dream_job" placeholder="Dream Job"
+                                           ng-model="loggedInUser.dreamOccupation" />
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <!-- <span class="input-label" ng-if="!loggedInUser.expectedDateOfExams" style="color: #aaa;">Expected Date of Exams</span> -->
+                                    <input type="date" name="expectedDateOfExams" style="width: 100% !important;float: left;" ng-model="loggedInUser.expectedDateOfExams" />
+                                    <br /><span class="input-label" style="color: #aaa;">(Expected Date of Exams)</span>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="back">
+                            <a data-toggle="tab" class="firstpre"
+                               href="#personal_information" ng-click="updateUserProfile()">
+                                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                            </a>
+                        </div>
+                        <div class="next">
+                            <a data-toggle="tab" class="secondnext" href="#services"
+                               ng-click="updateUserProfile()">
+                                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Second Tab -->
+                    <div id="services" class="tab-pane fade">
+                        <div class="col-md-1"></div>
+                        <div class="review col-md-10">
+                            <div class="title">Resources (Books/Coaching Classes/Digital Tools) Bookmarked</div>
+                            <div class="service">
+
+
+                                <div class="secondrightborder" ng-repeat="resource in bookmarkedResources">
+
+                                    <p>
+                                        <a href="" ng-click="goToBookmarkResource(resource.name, resource.resourceType)"><strong>Click here : </strong>{{resource.name}}</a>
+                                    </p>
+
+                                </div>
+                            </div>
+
+                            <!--<div class="title">Services Taken</div>
+                            <div class="service">
+                                {{noServicesAvailedYet }}
+
+                                <div class="secondrightborder" ng-repeat="order in orders">
+
+                                    <p>
+                                        <strong>Service : </strong>{{order.serviceType}}
+                                    </p>
+                                    <p>
+                                        <strong>Date : </strong>{{order.createDate}}
+                                    </p>
+                                    <p>
+                                        <strong>Cost : </strong>{{order.totalPrice}}
+                                    </p>
+                                    <p>
+                                        <strong>Description : </strong>{{order.packageDetails}}
+                                    </p>
+                                </div>
+                            </div> -->
+                            <strong>
+                                Be Job Ready | DOWNLOAD Cover Letter <a href=""
+                                                                        ng-click="downloadCoverLetter()">
+                                    <i class="fa fa-download"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </strong> <strong>
+                                Be Job Ready |
+                                DOWNLOAD CV <a href="" ng-click="downloadCV()">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <p>
+                                To avail CV/Cover letter generation features <a href="be_job_ready">Please check this out</a>
+                            </p>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="back">
+                            <a data-toggle="tab" class="secondpre" href="#education">
+                                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Therd Tab -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/menu.js"></script>
+    <script type="text/javascript" src="libs/jquery.lbslider.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#all").click(function () {
+                $(".popup").toggle();
+            });
+        });
+    </script> <!-- Categories Script -->
+
+    <script>
+        $(document).ready(function () {
+            $('#searchshow').click(function () {
+                $('.hideshow').toggle("slide");
+            });
+        });
+    </script>
+
+
+    <script>
+        jQuery('.slider8').lbSlider({
+            leftBtn: '.sa-left8',
+            rightBtn: '.sa-right8',
+            visible: 4,
+            autoPlay: true,
+            autoPlayDelay: 5
+        });
+
+        jQuery('.slider9').lbSlider({
+            leftBtn: '.sa-left9',
+            rightBtn: '.sa-right9',
+            visible: 3,
+            autoPlay: true,
+            autoPlayDelay: 5
+        });
+    </script> <!-- Board of Advisors Script -->
+
+</body>
+
+</html>
+

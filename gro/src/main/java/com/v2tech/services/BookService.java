@@ -1,13 +1,17 @@
 package com.v2tech.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.stereotype.Service;
 
 import com.v2tech.base.V2GenericException;
@@ -97,6 +101,8 @@ public class BookService
 						book2.setPublisher(book.getPublisher());
 						book2.setYear(book.getYear());
 						book2.setMrp(book.getMrp());
+						book2.setSmallImageUrl(book.getSmallImageUrl());
+						book2.setLargeImageUrl(book.getLargeImageUrl());
 						book2.setCurrency(book.getCurrency());
 						
 						bookRepository.save(book2);
@@ -242,8 +248,10 @@ public class BookService
 						//bookToBeSaved.setSrcs(book.getSrcs());
 						bookToBeSaved.setStrTableOfContents(book.getStrTableOfContents());
 						bookToBeSaved.setYear(book.getYear());
+						if(bookToBeSaved != null){
+							
 						
-						if (!bookToBeSaved.getInstitute().contains(book.getInstitute()))
+							if (!bookToBeSaved.getInstitute().contains(book.getInstitute()))
 							{
 								if (!(bookToBeSaved.getInstitute().trim().length() == 0))
 									{
@@ -255,7 +263,7 @@ public class BookService
 									}
 									
 							}
-							
+						}	
 						//						Set<CareerStream> streams = new HashSet<CareerStream>();
 						for (CareerStream cS : book.getCareerStreams())
 							{
@@ -397,6 +405,12 @@ public class BookService
 				return bookRepository.searchBooksByKeyword(keyword, limit);
 			}
 			
+		/**
+		 * Thisd one was used in stead of searchBooksByGenericKeywordCustomQuery earlier
+		 * @param keyword
+		 * @param limit
+		 * @return
+		 */
 		public Set<Book> searchBooksByGenericKeyword(String keyword, Integer limit)
 			{
 				keyword = "(?i).*" + keyword + ".*";
@@ -409,7 +423,68 @@ public class BookService
 					}
 				return books;
 			}
+		/**
+		 * New method instead of searchBooksByGenericKeyword
+		 * @param keyword
+		 * @param limit
+		 * @return
+		 */
+		public Set<Book> searchBooksByGenericKeywordCustomQuery(String keyword, Integer limit){
+			String tokens[];
+			String qry = "MATCH (book:Book) WHERE  book.searchable ='yes' AND ( $qry ) return book LIMIT "+limit+"";
+					
+			if(keyword != null){
+				
+				/**
+				 * Some books have isbn as titles. If thats the case we need to remove that from keyword string
+				 * Example There is a book with title Rapid Review: AIPGMEE 1999-2012. Its isbn is Title-Rapid Review: AIPGMEE 1999-2012
+				 */
+				if(keyword.startsWith("Title-")){
+					keyword = keyword.substring("Title-".length());
+				}
+				
+				String revisedK = keyword.replaceAll("[\\s]", "###");
+				revisedK = revisedK.replaceAll("[.]", "###");
+				revisedK = revisedK.replaceAll("'", "###");
+				revisedK = revisedK.replaceAll("[()]", "###");
+				//revisedK = revisedK.replaceAll(")", "###");
+				StringTokenizer stk = new StringTokenizer(revisedK, "###");
+				tokens = new String[stk.countTokens()];
+				if(stk.countTokens() == 1){
+					if(keyword.contains("ISBN-")){
+						qry = "MATCH (book:Book) WHERE  book.searchable ='yes' AND (book.ISBN =~ '(?i).*"+keyword+".*') return book LIMIT "+limit+"";
+					}
+					else{
+					qry = "MATCH (book:Book) WHERE  book.searchable ='yes' AND (book.keyword =~ '(?i).*"+keyword+".*') return book LIMIT "+limit+"";
+					}
+				}
+				else{
+					String actual = "";
+					for(int i=0;i< tokens.length;i++){
+						tokens[i] = stk.nextToken();
+						if( i != tokens.length -1 )	{
+							actual += "book.keyword =~ '(?i).*"+tokens[i]+".*' AND ";
+						}
+						else{
+							actual += "book.keyword =~ '(?i).*"+tokens[i]+".*'";
+						}
+					}
+				qry = qry.replace("$qry", actual);
+				}
+				
+				
+			}
 			
+			Result<Book> books = bookRepository.query(qry, new HashMap<String,Object>());
+			Iterator<Book> itr = books.iterator();
+			Set<Book> bks = new HashSet<>();
+			while(itr.hasNext()){
+				bks.add(itr.next());
+			}
+			return bks;
+		}
+		
+		
 		public Set<Book> searchTopRatedBooksByGenericKeyword(String keyword, Integer limit)
 			{
 				keyword = "(?i).*" + keyword + ".*";
@@ -757,7 +832,8 @@ public class BookService
 			{
 				List<ResourceEntity> resourceEntities = new ArrayList<ResourceEntity>();
 				userKeywordRelationService.increaseSearchTermCounterForUser(userId, keyword);
-				Set<Book> books = searchBooksByGenericKeyword(keyword, 10);
+				//Set<Book> books = searchBooksByGenericKeyword(keyword, 10);
+				Set<Book> books = searchBooksByGenericKeywordCustomQuery(keyword, 10);
 				Set<String> uniqueKeys = new LinkedHashSet<String>();
 				for (Book book : books)
 					{

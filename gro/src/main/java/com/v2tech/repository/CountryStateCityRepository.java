@@ -31,4 +31,7 @@ public interface CountryStateCityRepository extends CrudRepository<CountryStateC
 		@Query("MATCH (countryStateCity:CountryStateCity)  WHERE countryStateCity.country =~ {0}  return DISTINCT countryStateCity.region as region ,countryStateCity.city as city ;")
 		List<CountryStateResult> findByDistinctStateForGivenCountry(String country);
 		
+		@Query("MATCH (n:CountryStateCity) where n.region = {0} AND n.city={1} RETURN n LIMIT 1")
+		CountryStateCity findCountryRegionAndCity(String region, String city);
+		
 	}

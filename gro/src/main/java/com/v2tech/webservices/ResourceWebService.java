@@ -24,12 +24,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.StatusType;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.v2.booksys.common.util.EmailHtmlThread;
+import com.v2.booksys.common.util.EmailResetPasswordThread;
 import com.v2.booksys.common.util.EmailThread;
 import com.v2.booksys.common.util.UtilService;
 import com.v2tech.base.V2GenericException;
@@ -39,6 +41,7 @@ import com.v2tech.domain.DigitalTool;
 import com.v2tech.domain.Keyword;
 import com.v2tech.domain.KeywordEntity;
 import com.v2tech.domain.RESOURCE_TYPE;
+import com.v2tech.domain.ResetPassword;
 import com.v2tech.domain.Review;
 import com.v2tech.domain.SocialMediaType;
 import com.v2tech.domain.User;
@@ -47,11 +50,13 @@ import com.v2tech.domain.util.ResourceEntity;
 import com.v2tech.domain.util.ResultRow;
 import com.v2tech.domain.util.SearchList;
 import com.v2tech.domain.util.ServiceResponse;
+import com.v2tech.repository.ResetPasswordRepository;
 import com.v2tech.services.BookService;
 import com.v2tech.services.CoachingClassService1;
 import com.v2tech.services.CountryStateCityService;
 import com.v2tech.services.DigitalToolService;
 import com.v2tech.services.KeywordService;
+import com.v2tech.services.ResetPasswordService;
 import com.v2tech.services.ReviewService;
 import com.v2tech.services.UserKeywordRelationService;
 import com.v2tech.services.UserService;
@@ -87,6 +92,12 @@ public class ResourceWebService
 		
 		@Autowired
 		DigitalToolService			digitalToolService;
+		
+		@Autowired
+		ResetPasswordService  resetPasswordService;
+		
+		@Autowired
+		ResetPasswordRepository resetPasswordRepository;
 		
 		@PostConstruct
 		public void init()
@@ -126,6 +137,11 @@ public class ResourceWebService
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Response changePAssword(User user, @PathParam("token") String token)
 			{
+				if(!user.getSocialMediaType().getType().equalsIgnoreCase(SocialMediaType.NONE.getType())){
+					return Response.status(Status.BAD_REQUEST).build();
+				}
+				
+				
 				userService.updatePassword(user);
 				return Response.ok().build();
 			}
@@ -210,6 +226,52 @@ public class ResourceWebService
 				//Response.ok().e
 				return Response.ok().entity(response).build();
 			}
+		
+		@POST
+		@Path("/resetPassword/user/{user}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response resetPassword(@PathParam("user") String user, @PathParam("token") String token){
+			//step 1 check if the user is genuine
+			User usr = new User();
+			usr.setSocialMedia(false);
+			usr.setSocialMediaType(SocialMediaType.NONE);
+			usr.setUser(user);
+			usr = userService.getSingleUserBySocialMediaType(usr);
+				if(usr == null){
+					return Response.ok().entity("Invalid_Email").build();
+				}
+				
+			
+			//step 2 save in resetpassword object  
+			ResetPassword resetPassword = new ResetPassword();
+			resetPassword.setReset(true);
+			resetPassword.setUser(user);
+			resetPasswordService.saveOrUpdate(resetPassword);
+			//send the link
+			Thread th = new Thread(new EmailResetPasswordThread(usr));
+			th.start();
+			return Response.ok().build();
+		}
+		
+		
+		@POST
+		@Path("/saveResetPassword/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveResetPassword(User user, @PathParam("token") String token)
+			{
+				//ResetPassword password = resetPasswordRepository.getResetPassword(user.getUser());
+//				if(!password.isReset()){
+//					return	Response.ok().entity("Password_Already_Reset").build();
+//				}
+//				password.setReset(false);
+//				resetPasswordService.saveOrUpdate(password);
+			
+				userService.updatePassword(user);
+				return Response.ok().build();
+			}
+		
 			
 		@GET
 		@Path("/user/token/{token}")
@@ -242,6 +304,10 @@ public class ResourceWebService
 							}
 							
 						User usr = userService.getSingleUserBySocialMediaType(new User(user, SocialMediaType.valueOf(socialMediaType)));
+						
+							if(usr == null){
+								return Response.status(Status.BAD_REQUEST).entity("Invalid Credentials").build();
+							}
 						
 							if(!usr.isValidated()){
 								return Response.status(Status.BAD_REQUEST).entity("Invalid Credentials").build();
