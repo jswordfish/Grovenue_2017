@@ -15,11 +15,15 @@ public class EmailFeedbackThread implements Runnable{
 	
 	String name = "";
 	
+	boolean addResourceFlag = false;
+	
 	public EmailFeedbackThread(String email, String name, String message){
 		this.email = email;
 		this.emailText = message;
 		this.name = name;
 	}
+	
+	
 
 	@Override
 	public void run() {
@@ -36,10 +40,20 @@ public class EmailFeedbackThread implements Runnable{
 			  email.setHostName(host);
 			  //email.addTo("jatin.sutaria@thev2technologies.com");
 			  email.addBcc("jatin.sutaria@thev2technologies.com");
-			  email.addTo("hello@grovenue.com");
+			  	if(isAddResourceFlag()){
+			  		email.addTo("grovenueaddaresource@gmail.com");
+			  		email.setMsg(emailText+"\n\n"+"Send by: "+this.name+"\n"+"Sender: "+this.email);
+			  		email.setSubject("Add Resource Request Sent by "+this.email);
+			  	}
+			  	else{
+			  		email.addTo("hello@grovenue.com");
+			  		email.setMsg(emailText+"\n\n"+"Send by: "+this.name+"\n"+"Sender: "+this.email);
+			  		email.setSubject("Message Sent by "+this.email);
+			  	}
+			  
 			  email.setFrom(from, fromName);
-			  email.setMsg(emailText+"\n\n"+"Send by: "+this.name+"\n"+"Sender: "+this.email);
-			  email.setSubject("Message Sent by "+this.email);
+			 
+			  
 			 
 			  email.setAuthenticator(new DefaultAuthenticator(from, pass)	);
 				email.setTLS(true);
@@ -55,5 +69,19 @@ public class EmailFeedbackThread implements Runnable{
 			throw new V2GenericException("Can not send Email", e);
 		}
 	}
+
+
+
+	public boolean isAddResourceFlag() {
+		return addResourceFlag;
+	}
+
+
+
+	public void setAddResourceFlag(boolean addResourceFlag) {
+		this.addResourceFlag = addResourceFlag;
+	}
+	
+	
 
 }

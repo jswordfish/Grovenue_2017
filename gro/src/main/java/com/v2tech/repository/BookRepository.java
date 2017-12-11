@@ -1,5 +1,6 @@
 package com.v2tech.repository;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Query;
@@ -85,4 +86,7 @@ public interface BookRepository extends GraphRepository<Book>
 		
 		@Query("MATCH (book:Book) where book.searchable ='yes' RETURN book ORDER BY book.year DESC LIMIT {0};")
 		public Set<Book> findAllBooksByRecentPublicationYear(Integer limit);
+		
+		@Query("MATCH (book:Book) RETURN book SKIP{0} LIMIT {1};")
+		public List<Book> getBooksByRange(Integer start, Integer limit);
 	}

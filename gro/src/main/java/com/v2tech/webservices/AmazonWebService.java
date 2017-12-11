@@ -45,9 +45,13 @@ static org.slf4j.Logger logger = LoggerFactory.getLogger(AmazonClient.class);
 //private static final String AWS_KEY = "AKIAIHYXAS2JB4ND2N6A";
 //private static final String ASSOCIATE_TAG = "academ058-20";
 
-private static final String SECRET_KEY = "JY4SoaN+PGjFOF8fdVPvPmwaZvLEyq0YN4pXDNTb";
-private static final String AWS_KEY = "AKIAIWJR2CYTIJG6FIBA";
-private static final String ASSOCIATE_TAG = "httpgrovencom-21";
+//private static final String SECRET_KEY = "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";
+//private static final String AWS_KEY = "AKIAIWJR2CYTIJG6FIBA";
+//private static final String ASSOCIATE_TAG = "httpgrovencom-21";
+
+private static final String SECRET_KEY = "wy2EYzbEJNcFFhGCkjVaSqPQCDTJ38/v09h/q3Iv";
+private static final String AWS_KEY = "AKIAJ4KKUB4L4EQRLISQ";
+private static final String ASSOCIATE_TAG = " mirabilia-21";
 
 @Autowired
 BookService bookService;  

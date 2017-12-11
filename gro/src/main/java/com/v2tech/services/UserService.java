@@ -186,7 +186,7 @@ public class UserService
 			
 		public User getSingleUserBySocialMediaType(User user)
 			{
-				java.util.Set<User> users = userRepository.findUserByNameAndSocialMediaType(user.getUser(), user.getSocialMediaType().getType());
+				java.util.Set<User> users = userRepository.findUserByNameAndSocialMediaType("(?i)"+user.getUser(), user.getSocialMediaType().getType());
 				if (users.size() == 0)
 					{
 						return null;

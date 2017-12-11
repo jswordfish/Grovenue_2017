@@ -475,6 +475,7 @@ public class BookService
 				
 			}
 			
+			System.out.println(" Query is *********************************8888  "+qry);
 			Result<Book> books = bookRepository.query(qry, new HashMap<String,Object>());
 			Iterator<Book> itr = books.iterator();
 			Set<Book> bks = new HashSet<>();
@@ -794,7 +795,7 @@ public class BookService
 				SearchList publicationInformation = findAllBooksByRecentPublicationYear(5);
 				books.addAll(publicationInformation.getBooks());
 				Set<String> bookKeywords = new HashSet<String>();
-				bookKeywords.add("Pratice");
+				bookKeywords.add("Practice");
 				bookKeywords.add("solved");
 				bookKeywords.add("paper");
 				SearchList relativeKeywordInformation = findBooksByKeywords(bookKeywords);
@@ -854,4 +855,42 @@ public class BookService
 					}
 				return resourceEntities;
 			}
+		
+		
+		public void updateKeyWordsInAllBooks(){
+			Result<Book> books = bookRepository.findAll();
+			Iterator<Book> itr = books.iterator();
+				while(itr.hasNext()){
+					Book book = itr.next();
+					book = updateKeyword(book);
+					bookRepository.save(book);
+				}
+//			Long count = countBooks();
+//			int start = 0;
+//			int end = 25;
+//			if(count < 25){
+//				List<Book> books = bookRepository.getBooksByRange(start, end);
+//				for(Book book : books){
+//					book = updateKeyword(book);
+//					bookRepository.save(book);
+//				}
+//			}
+//			else{
+//			int limit = 25;
+//				for(int i=0;i<limit;i++){
+//					if(i > 25){
+//						break;
+//					}
+//					
+//					i++;
+//				}
+//			}
+		}
+		
+		private Book updateKeyword(Book bookToBeSaved){
+			bookToBeSaved.setKeyword(getUnique(bookToBeSaved.getKeyword(), bookToBeSaved.getAuthors()));
+			bookToBeSaved.setKeyword(getUnique(bookToBeSaved.getKeyword(), bookToBeSaved.getBookTitle()));
+			return bookToBeSaved;
+
+		}
 	}

@@ -318,6 +318,26 @@ public class OnetWebService
 					
 				return Response.ok().build();
 			}
+		
+		@POST
+		@Path("/onet/questions/answersFromLocalDb/user/{user}/socialMedia/{socialMedia}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response getAnswersFromDb(@PathParam("user") String user, @PathParam("socialMedia") String socialMedia, @PathParam("token") String token) throws JsonParseException, JsonMappingException, IOException
+			{
+				try
+					{
+					OnetReportData onetReportData = onetReportDataService.findByUserDetails(user, socialMedia);
+						return Response.ok().entity(onetReportData).build();
+					}
+				catch (Exception e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						logger.error("Can not unmarshal back the xml rsults from onet to java", e);
+						return Response.status(Status.SERVICE_UNAVAILABLE).build();
+					}
+			}
+		
 			
 		@GET
 		@Path("/onet/questions/answers/{answers}/token/{token}")
@@ -560,9 +580,9 @@ public class OnetWebService
 			}
 		
 		@GET
-		@Path("/onet/downloadOccupationFullDetails/occupationCode/{occupationCode}/token/{token}")
+		@Path("/onet/downloadOccupationFullDetails/occupationCode/{occupationCode}/fullName/{fullName}/{R}/{I}/{A}/{S}/{E}/{C}/token/{token}")
 		@Produces("application/pdf")
-		public Response downloadOccupationFullDetailsReport(@PathParam("occupationCode") String occupationCode, @PathParam("token") String token) throws JsonParseException, JsonMappingException, IOException
+		public Response downloadOccupationFullDetailsReport(@PathParam("occupationCode") String occupationCode, @PathParam("fullName") String fullName,@PathParam("R") String R,@PathParam("I") String I,@PathParam("A") String A,@PathParam("S") String S,@PathParam("E") String E,@PathParam("C") String C, @PathParam("token") String token) throws JsonParseException, JsonMappingException, IOException
 			{
 				try
 					{
@@ -571,6 +591,21 @@ public class OnetWebService
 						StringBuilder data = new StringBuilder();
 						byte[] htmlBytes = Files.readAllBytes(path);
 						String html = new String(htmlBytes);
+						html = html.replace("&FULL_NAME&", fullName);
+						html = html.replace("{R_HEIGHT}", ""+Integer.parseInt(R));
+						html = html.replace("{I_HEIGHT}", ""+Integer.parseInt(I));
+						html = html.replace("{A_HEIGHT}", ""+Integer.parseInt(A));
+						html = html.replace("{S_HEIGHT}", ""+Integer.parseInt(S));
+						html = html.replace("{E_HEIGHT}", ""+Integer.parseInt(E));
+						html = html.replace("{C_HEIGHT}", ""+Integer.parseInt(C));
+						
+						html = html.replace("{R_SCORE}", ""+Integer.parseInt(R));
+						html = html.replace("{I_SCORE}", ""+Integer.parseInt(I));
+						html = html.replace("{A_SCORE}", ""+Integer.parseInt(A));
+						html = html.replace("{S_SCORE}", ""+Integer.parseInt(S));
+						html = html.replace("{E_SCORE}", ""+Integer.parseInt(E));
+						html = html.replace("{C_SCORE}", ""+Integer.parseInt(C));
+						
 						html = html.replace("&OCCUPATION_LABEL&", detailsReport.getOccupation().getTitle());
 						SampleOfReportedJobTitles titles =   detailsReport.getOccupation().getSampleOfReportedJobTitles();
 						String alsoCalled = "";
@@ -631,6 +666,7 @@ public class OnetWebService
 						html = html.replace("&TECHNOLOGY&", "<ul> \n"+tech+"\n </ul>");
 						
 						ITextRenderer renderer = new ITextRenderer();
+						//renderer.
 						renderer.setDocumentFromString( html );
 						renderer.layout();
 						//String fileNameWithPath = outputFileFolder + "PDF-FromHtmlString.pdf";

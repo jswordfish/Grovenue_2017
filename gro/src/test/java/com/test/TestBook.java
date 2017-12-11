@@ -51,7 +51,7 @@ import com.v2tech.webservices.BookWebService;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:appContext.xml" })
+@ContextConfiguration(locations = {"classpath:appContext.xml"})
 @Transactional
 public class TestBook
 	{
@@ -101,6 +101,47 @@ public class TestBook
 						throw e;
 					}
 			}
+		
+		@Test
+		public void testUpdateKeywords(){
+			bookService.updateKeyWordsInAllBooks();
+		}
+		
+		@Test
+		public void testUpdateArchKeyword(){
+			String keyword = "(?i).*Arch.*";
+			System.out.println("rr");
+			int count = 0;
+			Set<Book> books = bookRepository.searchBooksByKeyword(keyword, 100);
+				for(Book book : books){
+					String key = getUnique(book.getKeyword(), "Architecture");
+					book.setKeyword(key);
+					bookRepository.save(book);
+					count++;
+					System.out.println("Count is ***********************************   "+count);
+				}
+		}
+		
+		private String getUnique(String original, String toBeAdded)
+		{
+			if (original == null)
+				{
+					return "";
+				}
+				
+			if (toBeAdded == null)
+				{
+					return original;
+				}
+			if (original.contains(toBeAdded))
+				{
+					return original;
+				}
+			else
+				{
+					return original + "," + toBeAdded;
+				}
+		}
 			
 		@Test
 		public void testSearchBooksByGenericCriteria()

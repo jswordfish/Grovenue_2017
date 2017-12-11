@@ -46,6 +46,36 @@ CoachingClassWebService coachingClassWebService;
 @Autowired
 CoachingClassRepository coachingClassRepository;
 
+@Test
+@Rollback(value=false)
+public void testUpdateImageUrls(){
+//	Result<CoachingClass> results = coachingClassRepository.findAll();
+	int total = 351;
+	int skip = 0;
+	int limit = 25;
+	int begin = 0;
+	while(skip <= total){
+		Set<CoachingClass> classes = coachingClassRepository.getCoachingClassesWithRange(skip, limit);
+		
+		for(CoachingClass class1 : classes ){
+			
+			String url = class1.getImageUrl();
+			if(url != null){
+				if(url.contains("8080")){
+					url = url.replace(":8080", "");
+					class1.setImageUrl(url);
+					coachingClassRepository.save(class1);
+				}
+				
+			}
+			
+		}
+		skip = skip+24;
+		
+	}
+	
+}
+
 
 @Test
 @Rollback(value=false)

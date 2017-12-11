@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
+import com.v2tech.domain.CoachingClass;
 import com.v2tech.domain.DigitalTool;
 
 public interface DigitalToolRepository extends GraphRepository<DigitalTool>
@@ -21,4 +22,7 @@ public interface DigitalToolRepository extends GraphRepository<DigitalTool>
 		
 		@Query("MATCH (dt:DigitalTool) WHERE  dt.searchable ='yes'  return dt ORDER BY dt.averageRating DESC LIMIT {0};")
 		Set<DigitalTool> searchTopRatedDigitalTool(Integer limit);
+		
+		@Query("MATCH (tool:DigitalTool) return tool skip {0} limit {1}")
+		public Set<DigitalTool> getToolsWithRange(Integer skip,  Integer limit);
 	}

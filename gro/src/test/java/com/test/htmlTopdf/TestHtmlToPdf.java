@@ -40,7 +40,7 @@ public class TestHtmlToPdf {
 			document.open();
 			// step 4
 			XMLWorkerHelper.getInstance().parseXHtml(writer, document,
-			        new FileInputStream("Bunty Shah.html")); 
+			        new FileInputStream("onetResult.html")); 
 			//step 5
 			 document.close();
  
@@ -59,7 +59,7 @@ public class TestHtmlToPdf {
 
 	@Test
 	public void testFlyingSaucer() throws IOException{
-		String html  = FileUtils.readFileToString(new File("Bunty Shah.html"));
+		String html  = FileUtils.readFileToString(new File("onetResult.html"));
 		ITextRenderer renderer = new ITextRenderer();
 		renderer.setDocumentFromString( html );
 		renderer.layout();

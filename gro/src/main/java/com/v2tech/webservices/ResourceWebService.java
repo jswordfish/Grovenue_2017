@@ -145,6 +145,47 @@ public class ResourceWebService
 				userService.updatePassword(user);
 				return Response.ok().build();
 			}
+		
+		@POST
+		@Path("/saveOrUpdateStudent/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateStudent(User user, @PathParam("token") String token){
+			if (user == null)
+			{
+				throw new V2GenericException("Code-NullUserPassed,Msg-User can not be null");
+			}
+			
+			user.setValidated(true);
+			user.setUser(user.getFirstName()+"."+user.getLastName()+"."+user.getStandardOfStudy());
+			user.setPassword("secret");
+			user.setSocialMedia(false);
+			user.setSocialMediaType(SocialMediaType.NONE);
+			Date createdDate = new Date();
+			user.setCreatedDate(createdDate);
+			
+		if ((user.getUser() != null) && (user.getUser().trim().length() == 0))
+			{
+				throw new V2GenericException("Code-InvalidUserNamePassed,Msg-Pass basic info");
+			}
+			
+		
+		User user1 = userService.getSingleUserBySocialMediaType(user);
+		if (user1 != null)
+			{
+				return Response.ok().entity(user1).build();
+					
+			}
+		else
+			{
+				
+			user = userService.saveOrUpdate(user);
+				
+			}
+	
+		//Response.ok().e
+		return Response.ok().entity(user).build();
+		}
 			
 		@POST
 		@Path("/saveOrUpdateUser/token/{token}")
@@ -310,7 +351,7 @@ public class ResourceWebService
 							}
 						
 							if(!usr.isValidated()){
-								return Response.status(Status.BAD_REQUEST).entity("Invalid Credentials").build();
+								return Response.status(Status.BAD_REQUEST).entity("User Not Validated").build();
 							}
 						
 						if ((usr != null) && usr.getPassword().equals(password))

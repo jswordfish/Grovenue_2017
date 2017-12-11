@@ -117,9 +117,11 @@ public class User
 		
 		
 		
+		String standardOfStudy;
 		
+		String schoolOfStudy;
 		
-		
+		String tempEmailIDForSchoolCampaigns = "";
 		
 		
 		//	@RelatedTo
@@ -560,5 +562,32 @@ public class User
 			{
 				this.base64Image = base64Image;
 			}
+
+		public String getStandardOfStudy() {
+			return standardOfStudy;
+		}
+
+		public void setStandardOfStudy(String standardOfStudy) {
+			this.standardOfStudy = standardOfStudy;
+		}
+
+		public String getSchoolOfStudy() {
+			return schoolOfStudy;
+		}
+
+		public void setSchoolOfStudy(String schoolOfStudy) {
+			this.schoolOfStudy = schoolOfStudy;
+		}
+
+		public String getTempEmailIDForSchoolCampaigns() {
+			return tempEmailIDForSchoolCampaigns;
+		}
+
+		public void setTempEmailIDForSchoolCampaigns(
+				String tempEmailIDForSchoolCampaigns) {
+			this.tempEmailIDForSchoolCampaigns = tempEmailIDForSchoolCampaigns;
+		}
+		
+		
 			
 	}

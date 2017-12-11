@@ -3,14 +3,12 @@ package com.v2.booksys.quartz;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.PropertyConfigurator;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -21,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import com.sun.org.apache.bcel.internal.util.ClassPath;
 import com.v2.booksys.quartz.jobs.AmazonDataRetrievalJob;
 
 public class QuartzListener implements ServletContextListener

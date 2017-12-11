@@ -33,6 +33,14 @@ public class TestUser
 		UserService			userService;
 		
 		@Test
+		public void testGetJson() throws Exception{
+			User user = new User();
+			ObjectMapper mapper = new ObjectMapper();
+			String s = mapper.writeValueAsString(user);
+			System.out.println(s);
+		}
+		
+		@Test
 		public void testEncode(){
 			String str = "ttt@yyy.com";
 			str = URLEncoder.encode(str);

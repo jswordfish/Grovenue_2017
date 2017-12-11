@@ -111,7 +111,13 @@ public class UtilWebService
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response sendFeedbackEmail(@PathParam("email") String email, @PathParam("name") String name, String message)
 			{
-				EmailFeedbackThread emailFeedbackThread = new EmailFeedbackThread(email, name, message);
+			EmailFeedbackThread emailFeedbackThread = new EmailFeedbackThread(email, name, message);
+				if(name.contains("{AddResource}")){
+					emailFeedbackThread.setAddResourceFlag(true);
+					name.replace("{AddResource}", "");
+					message += "\n Resource Add request by "+email;
+				}
+				
 				Thread t = new Thread(emailFeedbackThread);
 				t.start();
 				return Response.ok().build();
