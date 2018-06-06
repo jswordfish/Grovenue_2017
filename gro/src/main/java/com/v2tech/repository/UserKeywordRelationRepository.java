@@ -14,5 +14,8 @@ public interface UserKeywordRelationRepository extends GraphRepository<UserKeywo
 	
 	@Query("MATCH (a)-[r:HAVE_SEARCHED]->(b)  where a.user =~ {0} RETURN b.text order by r.count desc LIMIT 1")
 	public String findTopRatedKeywordsForUser(String user);
+	
+	@Query("MATCH (a)-[r:HAVE_SEARCHED]->(b)  where a.user =~ {0} RETURN b.text order by r.count desc LIMIT 2")
+	public List<String> findTop2RatedKeywordsForUser(String user);
 
 }

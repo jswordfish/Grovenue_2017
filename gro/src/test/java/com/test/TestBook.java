@@ -87,8 +87,8 @@ public class TestBook
 						providers.add(new JacksonJsonProvider());
 						//webClient = WebClient.create("http://utilityapplications-socialapp.rhcloud.com/ws/rest/pdfBoxService/pdfToJavaOutput", providers);
 						webClient = WebClient.create("http://localhost/Grovenue_2017-1.0/ws/rest/bookService/uploadBooksExcel", providers);
-						webClient.header("Content-Type", "multipart/form-data");
-						webClient.type(MediaType.MULTIPART_FORM_DATA_TYPE);
+						webClient.header("Content-Type", "application/json");
+						webClient.type(MediaType.APPLICATION_JSON);
 						HTTPConduit conduit = WebClient.getConfig(webClient).getHttpConduit();
 						conduit.getClient().setReceiveTimeout(0);
 						webClient.accept("application/json").type("multipart/form-data");

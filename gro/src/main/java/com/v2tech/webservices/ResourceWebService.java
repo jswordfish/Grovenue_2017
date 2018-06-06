@@ -1,5 +1,7 @@
 package com.v2tech.webservices;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,42 +26,50 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.StatusType;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.v2.booksys.common.util.EmailGenericMessageThread;
 import com.v2.booksys.common.util.EmailHtmlThread;
 import com.v2.booksys.common.util.EmailResetPasswordThread;
 import com.v2.booksys.common.util.EmailThread;
+import com.v2.booksys.common.util.ReferralClient;
 import com.v2.booksys.common.util.UtilService;
 import com.v2tech.base.V2GenericException;
-import com.v2tech.domain.Book;
-import com.v2tech.domain.CoachingClass;
-import com.v2tech.domain.DigitalTool;
 import com.v2tech.domain.Keyword;
-import com.v2tech.domain.KeywordEntity;
-import com.v2tech.domain.RESOURCE_TYPE;
 import com.v2tech.domain.ResetPassword;
-import com.v2tech.domain.Review;
 import com.v2tech.domain.SocialMediaType;
+import com.v2tech.domain.SurveyFormData;
 import com.v2tech.domain.User;
+import com.v2tech.domain.UserCollegeDetails;
+import com.v2tech.domain.UserInternshipDetails;
+import com.v2tech.domain.UserSchoolDetails;
 import com.v2tech.domain.UserType;
+import com.v2tech.domain.UserWorkDetails;
 import com.v2tech.domain.util.ResourceEntity;
-import com.v2tech.domain.util.ResultRow;
-import com.v2tech.domain.util.SearchList;
 import com.v2tech.domain.util.ServiceResponse;
+import com.v2tech.dto.UserDetails;
 import com.v2tech.repository.ResetPasswordRepository;
 import com.v2tech.services.BookService;
 import com.v2tech.services.CoachingClassService1;
 import com.v2tech.services.CountryStateCityService;
 import com.v2tech.services.DigitalToolService;
 import com.v2tech.services.KeywordService;
+import com.v2tech.services.ReferralMappingService;
 import com.v2tech.services.ResetPasswordService;
 import com.v2tech.services.ReviewService;
+import com.v2tech.services.SurveyFormService;
+import com.v2tech.services.UserCollegeDetailsService;
+import com.v2tech.services.UserInternshipDetailsService;
 import com.v2tech.services.UserKeywordRelationService;
+import com.v2tech.services.UserSchoolDetailsService;
 import com.v2tech.services.UserService;
+import com.v2tech.services.UserWorkDetailsService;
 
 @Path("/resourceService")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -67,6 +77,9 @@ import com.v2tech.services.UserService;
 @Transactional
 public class ResourceWebService
 	{
+		
+		Logger logger = LoggerFactory.getLogger(ResourceWebService.class);
+	
 		@Autowired
 		UserService					userService;
 		
@@ -98,6 +111,24 @@ public class ResourceWebService
 		
 		@Autowired
 		ResetPasswordRepository resetPasswordRepository;
+		
+		@Autowired
+		ReferralMappingService  referralService;
+		
+		@Autowired
+		SurveyFormService surveyService;
+		
+		@Autowired
+		UserSchoolDetailsService schoolDetailsService;
+		
+		@Autowired
+		UserCollegeDetailsService collegeDetailsService;
+		
+		@Autowired
+		UserInternshipDetailsService internshipDetailsService;
+		
+		@Autowired
+		UserWorkDetailsService userWorkDetailsService;
 		
 		@PostConstruct
 		public void init()
@@ -147,6 +178,25 @@ public class ResourceWebService
 			}
 		
 		@POST
+		@Path("/survey/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response createSurveyUserAndForm(SurveyFormData survey, @PathParam("token") String token){
+			try {
+				User user = survey.getUsr();
+				survey.setUser(user.getUser());
+				saveOrUpdateStudent(user, token);
+				survey.setUsr(null);
+				surveyService.createSurveyRecord(survey);
+				return Response.ok().build();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				logger.error("Can't create survey record for user "+survey.getUsr().getUser(), e);
+				return Response.status(Status.BAD_REQUEST).build();
+			}
+		}
+		
+		@POST
 		@Path("/saveOrUpdateStudent/token/{token}")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -157,8 +207,12 @@ public class ResourceWebService
 			}
 			
 			user.setValidated(true);
-			user.setUser(user.getFirstName()+"."+user.getLastName()+"."+user.getStandardOfStudy());
-			user.setPassword("secret");
+			user.setSocialMediaType(SocialMediaType.NONE);
+				if(user.getUser() == null) {
+					user.setUser(user.getFirstName()+"."+user.getLastName()+"."+user.getStandardOfStudy());
+				}
+			
+			user.setPassword("qwerty");
 			user.setSocialMedia(false);
 			user.setSocialMediaType(SocialMediaType.NONE);
 			Date createdDate = new Date();
@@ -180,11 +234,206 @@ public class ResourceWebService
 			{
 				
 			user = userService.saveOrUpdate(user);
+			//Send generic email
+			try {
+				String welcomeMailData = FileUtils.readFileToString(new File("surveymail.html"));
+				welcomeMailData = welcomeMailData.replace("{FIRST_NAME}", user.getFirstName());
+				welcomeMailData = welcomeMailData.replace("{USER_NAME}", user.getUser());
+				welcomeMailData = welcomeMailData.replace("{PASSWORD}", user.getPassword());
+				EmailGenericMessageThread client = new EmailGenericMessageThread(user.getUser(), "Welcome to Grovenue", welcomeMailData);
+				Thread th = new Thread(client);
+				th.start();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				String message = "Welcome mail could not be sent for "+user.getFullName() +" using "+user.getUser()+" email id";
+				EmailGenericMessageThread client = new EmailGenericMessageThread("jatin.sutaria@thev2technologies.com", "Welcome Email sending failed", message);
+				Thread th = new Thread(client);
+				th.start();
+			}
 				
 			}
 	
 		//Response.ok().e
 		return Response.ok().entity(user).build();
+		}
+		
+		@POST
+		@Path("/saveOrUpdateStudentIntern/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateStudentIntern(User user, @PathParam("token") String token){
+			if (user == null)
+			{
+				throw new V2GenericException("Code-NullUserPassed,Msg-User can not be null");
+			}
+			
+			user.setValidated(true);
+			user.setSocialMediaType(SocialMediaType.NONE);
+				if(user.getUser() == null) {
+					user.setUser(user.getFirstName()+"."+user.getLastName()+"."+user.getStandardOfStudy());
+				}
+			
+			user.setPassword("qwerty");
+			user.setSocialMedia(false);
+			user.setSocialMediaType(SocialMediaType.NONE);
+			Date createdDate = new Date();
+			user.setCreatedDate(createdDate);
+			
+		if ((user.getUser() != null) && (user.getUser().trim().length() == 0))
+			{
+				throw new V2GenericException("Code-InvalidUserNamePassed,Msg-Pass basic info");
+			}
+			
+		
+		User user1 = userService.getSingleUserBySocialMediaType(user);
+		if (user1 != null)
+			{
+				return Response.ok().entity(user1).build();
+					
+			}
+		else
+			{
+				
+			user = userService.saveOrUpdate(user);
+			//Send generic email
+			try {
+				String welcomeMailData = FileUtils.readFileToString(new File("internmail.html"));
+				welcomeMailData = welcomeMailData.replace("{FIRST_NAME}", user.getFirstName());
+				welcomeMailData = welcomeMailData.replace("{USER_NAME}", user.getUser());
+				welcomeMailData = welcomeMailData.replace("{PASSWORD}", user.getPassword());
+				EmailGenericMessageThread client = new EmailGenericMessageThread(user.getUser(), "Welcome to Grovenue", welcomeMailData);
+				Thread th = new Thread(client);
+				th.start();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				String message = "Welcome mail could not be sent for "+user.getFullName() +" using "+user.getUser()+" email id";
+				EmailGenericMessageThread client = new EmailGenericMessageThread("jatin.sutaria@thev2technologies.com", "Welcome Email sending failed", message);
+				Thread th = new Thread(client);
+				th.start();
+			}
+				
+			}
+	
+		//Response.ok().e
+		return Response.ok().entity(user).build();
+		}
+		
+		@GET
+		@Path("/getUserWithAllDetails/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response getUserWithAllDetails(  @PathParam("user") String user, @PathParam("socialMedia") String socialMedia, @PathParam("token") String token) {
+			User usr = new User(user, SocialMediaType.valueOf(socialMedia));
+			User u = userService.getSingleUserBySocialMediaType(usr);
+			if(u == null) {
+				return Response.status(Status.PRECONDITION_FAILED).entity("NO USER FOUND").build();
+			}
+			
+			UserSchoolDetails schoolDetails = schoolDetailsService.getSchoolDetails(user, socialMedia);
+			UserCollegeDetails collegeDetails = collegeDetailsService.getCollegeDetails(user, socialMedia);
+			List<UserInternshipDetails> userInternshipDetailsList = internshipDetailsService.getDetails(user, socialMedia);
+			List<UserWorkDetails> workDetailsList = userWorkDetailsService.getDetails(user, socialMedia);
+			
+			UserDetails userDetails = new UserDetails();
+			userDetails.setUser(u);
+			userDetails.setSchoolDetails(schoolDetails);
+			userDetails.setCollegeDetails(collegeDetails);
+			userDetails.setInternshipDetails(userInternshipDetailsList);
+			userDetails.setWorkDetails(workDetailsList);
+			return Response.ok().entity(userDetails).build();
+			
+		}
+		
+		@POST
+		@Path("/saveOrUpdateUserSchoolDetails/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateUserSchoolDetails(UserSchoolDetails schoolDetails, @PathParam("token") String token) {
+			try {
+			schoolDetailsService.saveOrUpdate(schoolDetails);
+			return Response.ok().entity("ok").build();
+			}
+			catch(V2GenericException e) {
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
+		
+		@POST
+		@Path("/saveOrUpdateUserWorkDetailsList/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateUserWorkDetailsList(List<UserWorkDetails> userWorkDetailsList, @PathParam("token") String token) {
+			try {
+				for(UserWorkDetails details : userWorkDetailsList) {
+					userWorkDetailsService.saveOrUpdate(details);
+				}
+			
+			return Response.ok().entity("ok").build();
+			}
+			catch(V2GenericException e) {
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
+		
+		
+		@POST
+		@Path("/saveOrUpdateUserWorkDetails/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateUserWorkDetails(UserWorkDetails userWorkDetails, @PathParam("token") String token) {
+			try {
+			userWorkDetailsService.saveOrUpdate(userWorkDetails);
+			return Response.ok().entity("ok").build();
+			}
+			catch(V2GenericException e) {
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
+		
+		
+		@POST
+		@Path("/saveOrUpdateUserInternshipDetailsList/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateUserInternshipDetailsList(List<UserInternshipDetails> internshipDetailsList, @PathParam("token") String token) {
+			try {
+				for(UserInternshipDetails userInternshipDetails : internshipDetailsList) {
+					internshipDetailsService.saveOrUpdate(userInternshipDetails);
+				}
+			
+			return Response.ok().entity("ok").build();
+			}
+			catch(V2GenericException e) {
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
+		
+		@POST
+		@Path("/saveOrUpdateUserInternshipDetails/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateUserInternshipDetails(UserInternshipDetails internshipDetails, @PathParam("token") String token) {
+			try {
+			internshipDetailsService.saveOrUpdate(internshipDetails);
+			return Response.ok().entity("ok").build();
+			}
+			catch(V2GenericException e) {
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
+		
+		@POST
+		@Path("/saveOrUpdateUserCollegeDetails/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateUserCollegeDetails(UserCollegeDetails collegeDetails, @PathParam("token") String token) {
+			try {
+			collegeDetailsService.saveOrUpdate(collegeDetails);
+			return Response.ok().entity("ok").build();
+			}
+			catch(V2GenericException e) {
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
 		}
 			
 		@POST
@@ -256,17 +505,30 @@ public class ResourceWebService
 						user.setCreatedDate(createdDate);
 						user.setValidated((isSocialMediaUser == true) ? true : false);
 						userService.saveOrUpdate(user);
+						
+						
 						if (isSocialMediaUser == false)
 							{
 								Thread thread = new Thread(new EmailHtmlThread(user));
 								thread.start();
 							}
+						else {
+							//sent email to social media user for first time
+							String referralCode = referralService.generateReferralForUser(user.getFirstName() == null ?user.getUser():user.getFirstName(), user.getUser());
+							String html = ReferralClient.getContent();
+							html = html.replaceAll("&amp;Referral_Code&amp;", referralCode);
+							EmailGenericMessageThread email = new EmailGenericMessageThread(user.getUser(), "Grovenue Referral Program", html);
+							Thread th = new Thread(email);
+							th.start();
+						}
 					}
 				response.setRequestType("User_Save_Request");
 				response.setResponseStatus("User_Saved");
 				//Response.ok().e
 				return Response.ok().entity(response).build();
 			}
+		
+		
 		
 		@POST
 		@Path("/resetPassword/user/{user}/token/{token}")

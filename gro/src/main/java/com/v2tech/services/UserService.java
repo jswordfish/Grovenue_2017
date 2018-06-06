@@ -1,5 +1,7 @@
 package com.v2tech.services;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -7,10 +9,12 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
 
+import com.v2.booksys.common.util.ConfUtil;
 import com.v2tech.base.V2GenericException;
 import com.v2tech.domain.Book;
 import com.v2tech.domain.Rating;
@@ -87,6 +91,8 @@ public class UserService
 						throw new V2GenericException("Too small User Name");
 					}
 					
+				
+				user = saveAndGenerateResumeUrl(user);
 				java.util.Set<User> users = userRepository.findUserByNameAndSocialMediaType(user.getUser(), user.getSocialMediaType().getType());
 				if (users.size() == 0)
 					{
@@ -144,6 +150,24 @@ public class UserService
 						return existingUser;
 					}
 			}
+		
+		
+		private User saveAndGenerateResumeUrl(User user){
+	    	try {
+				if(user.getResumeURLExtension() != null && user.getResumeURLExtension().trim().length() != 0){
+					FileUtils.writeByteArrayToFile(new File(ConfUtil.getDocumentsLocation()+File.separator+""+user.getFirstName()+"-"+user.getContact()+"."+user.getResumeURLExtension()), user.getResume());
+					user.setResumeURL(ConfUtil.getDocumentsServerBaseUrl()+user.getFirstName()+"-"+user.getContact()+"."+user.getResumeURLExtension());
+				user.setResume(null);
+				user.setResumeURLExtension(null);
+				}
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				throw new V2GenericException("CAN_NOT_CREATE_LOGO_FILE", e);
+			}
+	    	return user;
+	    }
 			
 		private Set<User> findFriendsExistingInSystem(java.util.Set<User> users)
 			{

@@ -1,8 +1,13 @@
 package com.test;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,8 @@ import com.v2tech.domain.UserType;
 import com.v2tech.repository.UserRepository;
 import com.v2tech.services.UserService;
 import com.v2tech.webservices.ResourceWebService;
+
+import scala.collection.immutable.HashMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:appContext.xml" })
@@ -35,6 +42,8 @@ public class TestUser
 		@Test
 		public void testGetJson() throws Exception{
 			User user = new User();
+			user.setFirstName("jatin");
+			user.setUser("jatin.sutaria@thev2technologies.com");
 			ObjectMapper mapper = new ObjectMapper();
 			String s = mapper.writeValueAsString(user);
 			System.out.println(s);
@@ -82,6 +91,32 @@ public class TestUser
 				//Ruser
 				userService.saveOrUpdate(user);
 			}
+		
+		@Test
+		public void testCreateAkashUsers()  throws IOException{
+			List<String> lines = FileUtils.readLines(new File("final.txt"));
+			Map<String, User> map = new java.util.HashMap<>();
+			
+			for(String str : lines) {
+				String[] values = str.split("\\s*,\\s*");
+				String college = values[0];
+				String email = values[1];
+				String mobile = values[2];
+				User user = new User();
+				user.setUser(email);
+				user.setValidated(true);
+				user.setContact(mobile);
+				user.setNameOfCollege(college);
+				user.setPassword("qwerty");
+				map.put(email, user);
+			}
+			
+			for(User user : map.values()) {
+				userService.saveOrUpdate(user);
+			}
+			
+ 
+		}
 			
 		@Test
 		public void testCreateNormalUser()

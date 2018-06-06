@@ -66,9 +66,11 @@ public class UserKeywordRelationService
 		public void increaseSearchTermCounterForUser(String user, String key)
 			{
 
+				System.out.println("in increaseSearchTermCounterForUser 1 user "+user+" key "+key);
 				User user2 = null;
 				
 				if(key == "" || key == null || key.trim().length() ==0 || key.equalsIgnoreCase("None")){
+					System.out.println("in increaseSearchTermCounterForUser 2 return user "+user+" key "+key);
 					return;
 				}
 			
@@ -86,15 +88,18 @@ public class UserKeywordRelationService
 						throw new V2GenericException("User can nopt be null");
 					}
 				Keyword keyword = keywordRepository.findKeywordByText(key);
+				System.out.println("in increaseSearchTermCounterForUser 3 keyword is "+keyword);
 				if (keyword == null)
 					{
 						keyword = keywordRepository.save(new Keyword(key));
 					}
 					
+				System.out.println("in increaseSearchTermCounterForUser 4 keyword is "+keyword);
+				
 				UserKeywordRelation obj = searchRepository.findUserKeywordRelation(user, key);
 				if (obj == null)
 					{
-						
+					System.out.println("in increaseSearchTermCounterForUser 5 new user "+user +" key "+key);
 						UserKeywordRelation keywordRelation = new UserKeywordRelation();
 						keywordRelation.setCount(1l);
 						keywordRelation.setUser(user2);
@@ -106,6 +111,7 @@ public class UserKeywordRelationService
 					}
 				else
 					{
+					System.out.println("in increaseSearchTermCounterForUser 5 exist user "+user +" key "+key);
 						obj.setCount(obj.getCount() + 1);
 						obj = template.save(obj);
 					}

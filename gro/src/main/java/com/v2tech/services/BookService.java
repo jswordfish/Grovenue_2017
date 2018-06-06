@@ -26,12 +26,16 @@ import com.v2tech.domain.Subject;
 import com.v2tech.domain.util.ResourceEntity;
 import com.v2tech.domain.util.SearchList;
 import com.v2tech.repository.BookRepository;
+import com.v2tech.repository.UserKeywordRelationRepository;
 
 @Service
 public class BookService
 	{
 		@Autowired
 		UserKeywordRelationService	userKeywordRelationService;
+		
+		@Autowired
+		UserKeywordRelationRepository  userKeywordRelationRepository;
 		
 		@Autowired
 		ReviewService				reviewService;
@@ -782,6 +786,15 @@ public class BookService
 					}
 				return resourceEntities;
 			}
+		
+		private List<Book> getSomeBooksIfNothingAvailableByKeyword(){
+			Set<String> bookKeywords = new HashSet<String>();
+			bookKeywords.add("Practice");
+			bookKeywords.add("solved");
+			bookKeywords.add("paper");
+			SearchList relativeKeywordInformation = findBooksByKeywords(bookKeywords);
+			return relativeKeywordInformation.getBooks();
+		}
 			
 		public List<ResourceEntity> findBooksForUserPreference(String userId)
 			{
@@ -794,12 +807,31 @@ public class BookService
 				books.addAll(profileInformation.getBooks());
 				SearchList publicationInformation = findAllBooksByRecentPublicationYear(5);
 				books.addAll(publicationInformation.getBooks());
-				Set<String> bookKeywords = new HashSet<String>();
-				bookKeywords.add("Practice");
-				bookKeywords.add("solved");
-				bookKeywords.add("paper");
-				SearchList relativeKeywordInformation = findBooksByKeywords(bookKeywords);
-				books.addAll(relativeKeywordInformation.getBooks());
+				/**
+				 * return 2 top keywords
+				 */
+				List<String> mostsearchedKeywordBasedResources = userKeywordRelationRepository.findTop2RatedKeywordsForUser(userId);
+					if(mostsearchedKeywordBasedResources.size() == 0) {
+//						Set<String> bookKeywords = new HashSet<String>();
+//						bookKeywords.add("Practice");
+//						bookKeywords.add("solved");
+//						bookKeywords.add("paper");
+//						SearchList relativeKeywordInformation = findBooksByKeywords(bookKeywords);
+						books.addAll(getSomeBooksIfNothingAvailableByKeyword());
+					}
+					else {
+						for(String key:mostsearchedKeywordBasedResources) {
+							Set<Book> bks = bookRepository.searchBooksByGenericKeyword(key, 3);
+							books.addAll(bks);
+						}
+						
+						if(books.size() == 0) {
+						
+							books.addAll(getSomeBooksIfNothingAvailableByKeyword());
+						}
+						
+					}
+				
 				Set<String> uniqueKeys = new LinkedHashSet<String>();
 				for (Book book : books)
 					{

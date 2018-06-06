@@ -123,10 +123,40 @@ public class User
 		
 		String tempEmailIDForSchoolCampaigns = "";
 		
+		String resumeURL;
+		
+		@Transient
+		String resumeURLExtension;
+		
+		@Transient
+		byte[] resume;
+		
+		String nameOfCollege;
+		
+		String language;
+		
+		private UserEducationWorkStatus userEducationWorkStatus = UserEducationWorkStatus.COLLEGE;
+		
 		
 		//	@RelatedTo
 		//	private Address address;
 		
+		public String getResumeURLExtension() {
+			return resumeURLExtension;
+		}
+
+		public void setResumeURLExtension(String resumeURLExtension) {
+			this.resumeURLExtension = resumeURLExtension;
+		}
+
+		public byte[] getResume() {
+			return resume;
+		}
+
+		public void setResume(byte[] resume) {
+			this.resume = resume;
+		}
+
 		//	@RelatedToVia(type="Have_Rated")
 		//	Set<Rating> ratings = new HashSet<>();
 		@RelatedTo(type = "IS_FRIEND_OF", direction = Direction.OUTGOING)
@@ -586,6 +616,38 @@ public class User
 		public void setTempEmailIDForSchoolCampaigns(
 				String tempEmailIDForSchoolCampaigns) {
 			this.tempEmailIDForSchoolCampaigns = tempEmailIDForSchoolCampaigns;
+		}
+
+		public String getResumeURL() {
+			return resumeURL;
+		}
+
+		public void setResumeURL(String resumeURL) {
+			this.resumeURL = resumeURL;
+		}
+
+		public String getNameOfCollege() {
+			return nameOfCollege;
+		}
+
+		public void setNameOfCollege(String nameOfCollege) {
+			this.nameOfCollege = nameOfCollege;
+		}
+
+		public String getLanguage() {
+			return language;
+		}
+
+		public void setLanguage(String language) {
+			this.language = language;
+		}
+
+		public UserEducationWorkStatus getUserEducationWorkStatus() {
+			return userEducationWorkStatus;
+		}
+
+		public void setUserEducationWorkStatus(UserEducationWorkStatus userEducationWorkStatus) {
+			this.userEducationWorkStatus = userEducationWorkStatus;
 		}
 		
 		

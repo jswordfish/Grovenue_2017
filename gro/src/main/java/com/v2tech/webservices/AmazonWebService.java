@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +57,34 @@ private static final String ASSOCIATE_TAG = " mirabilia-21";
 @Autowired
 BookService bookService;  
 
+	private boolean validateToken(String token) {
+		try {
+			String decodedToken = new String(Base64.getDecoder().decode(token));
+			Long time = Long.parseLong(decodedToken);
+			Long currTime = System.currentTimeMillis();
+			
+			long hours = ((currTime - time) /(1000 * 60 * 60)) % 24;
+			if(hours > 24) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+	}
+
 	@POST
 	@Path("/download/amazon/data/token/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public boolean fetchDataFromAmazon(@PathParam("token") String token){
+		if(!validateToken(token)) {
+			return false;
+		}
+		
 		SignedRequestsHelper helper;
 		try {
 			helper = SignedRequestsHelper.getInstance("webservices.amazon.in", AWS_KEY, SECRET_KEY);
