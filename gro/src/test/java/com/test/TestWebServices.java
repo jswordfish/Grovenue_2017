@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +22,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.v2tech.base.V2GenericException;
+import com.v2tech.domain.SocialMediaType;
 import com.v2tech.domain.SurveyFormData;
 import com.v2tech.domain.User;
+import com.v2tech.domain.UserCollegeDetails;
+import com.v2tech.domain.UserEducationWorkStatus;
+import com.v2tech.domain.UserInternshipDetails;
+import com.v2tech.domain.UserSchoolDetails;
+import com.v2tech.domain.UserWorkDetails;
 
 public class TestWebServices {
 	static List<Object>	providers	= new ArrayList<Object>();
@@ -49,6 +56,116 @@ public class TestWebServices {
 					throw e;
 				}
 		}
+	
+	@Test
+	public void testGetUserJson() throws Exception{
+		User user = new User();
+		user.setFirstName("jatin");
+		user.setUser("jatin.sutaria@thev2technologies.com");
+		user.setUserEducationWorkStatus(UserEducationWorkStatus.WORKING_PROFESSIONAL);
+		user.setValidated(true);
+		ObjectMapper mapper = new ObjectMapper();
+		String s = mapper.writeValueAsString(user);
+		System.out.println(s);
+	}
+	
+	@Test
+	public void testGetSchoolDetailsJson() throws Exception{
+		UserSchoolDetails user = new UserSchoolDetails();
+		
+		user.setUser("jatin.sutaria@thev2technologies.com");
+		user.setSocialMediaType(SocialMediaType.NONE);
+		user.setClass10Score("65");
+		user.setClass12Score("75");
+		user.setFieldOfStudy("science");
+		user.setNameOfSchool("mhs");
+		user.setSchoolBoard("Mumbai");
+		user.setStandard("Fourth year Completed");
+		user.setStateOfSchool("Maharashtra");
+		user.setStreamFor11Or12("Science");
+		user.setTargetExam("None");
+		user.setYearForUGExams("1993");
+		ObjectMapper mapper = new ObjectMapper();
+		String s = mapper.writeValueAsString(user);
+		System.out.println(s);
+	}
+	
+	@Test
+	public void testGetSchoolInternshipDetailsJson() throws Exception{
+		UserInternshipDetails  user = new UserInternshipDetails();
+		
+		user.setUser("jatin.sutaria@thev2technologies.com");
+		user.setSocialMediaType(SocialMediaType.NONE);
+		user.setCompany("IIHT Electronics");
+		user.setDepartment("Electronics");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		String dt = "19960510";
+		Date startDate = dateFormat.parse(dt);
+		user.setStartDate(startDate);
+		dt = "19960710";
+		Date endDate = dateFormat.parse(dt);
+		user.setEndDate(endDate);
+		user.setSequence(1);
+		user.setWhatDidYouDo("what did i do");
+		ObjectMapper mapper = new ObjectMapper();
+		String s = mapper.writeValueAsString(user);
+		System.out.println(s);
+	}
+	
+	@Test
+	public void testGetCollegeDetailsJson() throws Exception{
+		UserCollegeDetails  user = new UserCollegeDetails();
+		
+		user.setUser("jatin.sutaria@thev2technologies.com");
+		user.setSocialMediaType(SocialMediaType.NONE);
+		user.setCity("Dhule");
+		user.setCollegeLevel("Degree in Engineering");
+		user.setExamQualifiedToGetIntoCollege("XII grade Science");
+		user.setFinalGrade("first class");
+		user.setFinalScoreCGPA(0f);
+		user.setFinalScoreGPA(0f);
+		user.setFinalScorePercentage(64f);
+		user.setInstitution("SSVPS COE");
+		user.setInternshipDone(true);
+		user.setSpecialization("Electronics and Telecommunications");
+		user.setState("Mah");
+		user.setUniversityName("North Mah Uni");
+		user.setYearOfPassingOut("1997");
+		
+	
+		ObjectMapper mapper = new ObjectMapper();
+		String s = mapper.writeValueAsString(user);
+		System.out.println(s);
+	}
+	
+	@Test
+	public void testGetWorkDetailsJson() throws Exception{
+		UserWorkDetails  user = new UserWorkDetails();
+		
+		user.setUser("jatin.sutaria@thev2technologies.com");
+		user.setSocialMediaType(SocialMediaType.NONE);
+		user.setAimingForHigherEducation(false);
+		user.setCompany("V2 Technologies");
+		user.setCurrent(true);
+		user.setDesignation("Founder");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		String dt = "19980510";
+		Date startDate = dateFormat.parse(dt);
+		user.setStartDate(startDate);
+		
+		dt = "20180510";
+		Date endDate = dateFormat.parse(dt);
+		user.setEndDate(endDate);
+		user.setExamPreparingFor("Big Data");
+		user.setIndustry("IT");
+		user.setRole("Architect");
+		user.setSequence(1);
+		user.setSkills("Java, Big Data");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String s = mapper.writeValueAsString(user);
+		System.out.println(s);
+	}
 	
 	@Test
 	public void testCreateSurvey() throws JsonProcessingException {

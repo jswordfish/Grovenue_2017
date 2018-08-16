@@ -13,5 +13,6 @@ public interface UserInternshipDetailsRepository extends GraphRepository<UserInt
 	@Query("MATCH (user:UserInternshipDetails) WHERE user.user =~ {0} AND user.socialMediaType={1} AND user.company={2} return user;")
 	public UserInternshipDetails findUserByUserName(String userName, String socialMedia, String company);
 	
+	@Query("MATCH (user:UserInternshipDetails) WHERE user.user =~ {0} AND user.socialMediaType={1}  return user;")
 	public List<UserInternshipDetails> findInternshipDetails(String userName, String socialMedia);
 }

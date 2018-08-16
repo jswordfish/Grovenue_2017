@@ -12,13 +12,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.v2tech.domain.Course;
 import com.v2tech.domain.CourseType;
+import com.v2tech.domain.Mentor;
 import com.v2tech.domain.RESOURCE_TYPE;
 import com.v2tech.domain.ResourceUnderReview;
 import com.v2tech.domain.Review;
 import com.v2tech.repository.ResourceUnderReviewRepository;
 import com.v2tech.services.CourseService;
+import com.v2tech.services.MentorService;
 import com.v2tech.services.ReviewService;
 import com.v2tech.webservices.ReviewRelatedWebService;
 import com.v2tech.webservices.UtilWebService;
@@ -44,6 +48,32 @@ public class TestUtil {
 	
 	@Autowired
 	ResourceUnderReviewRepository resourceUnderReviewRepository;
+	
+	@Autowired
+	MentorService mentorService;
+	
+	@Test
+	public void testCreateMentor() throws JsonProcessingException {
+		Mentor mentor = new Mentor();
+		mentor.setCategories("AI and Machine Learning");
+		mentor.setCompany("V2 Technologies");
+		mentor.setEducationDegree("BE");
+		mentor.setEducationField("Big Data & Machine Learning");
+		mentor.setEmail("jatin.sutaria@thev2technologies.com");
+		mentor.setLanguage("English");
+		mentor.setMentorFirstName("Jatin");
+		mentor.setMentorLastName("Sutaria");
+		mentor.setLocation("Mumbai");
+		mentor.setMobile("9930070660");
+		mentor.setOccupation("Technology Consulting Firm ");
+		mentor.setPreferredTime("Late Evening Hours IST Time");
+		mentor.setSkypeId("jatinsut");
+		mentor.setValidated(false);
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println(mapper.writeValueAsString(mentor));
+		
+		//mentorService.saveOrUpdate(mentor);
+	}
 	
 	@Test
 	public void testTopicsBySubject(){

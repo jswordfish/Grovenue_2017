@@ -15,10 +15,19 @@ public class EmailGenericMessageThread  implements Runnable{
 	
 	private String message;
 	
+	String emailSentCC;
+	
 	public EmailGenericMessageThread(String emailSentTo, String subject, String message){
 		this.emailSentTo = emailSentTo;
 		this.subject = subject;
 		this.message = message;
+	}
+	
+	public EmailGenericMessageThread(String emailSentTo, String subject, String message, String cc){
+		this.emailSentTo = emailSentTo;
+		this.subject = subject;
+		this.message = message;
+		this.emailSentCC = cc;
 	}
 	
 	
@@ -38,8 +47,14 @@ public class EmailGenericMessageThread  implements Runnable{
 			  email.setHostName(host);
 			  email.setSmtpPort(Integer.parseInt(smtpPort));
 			  //email.addTo("jatin.sutaria@thev2technologies.com");
-			  email.addBcc("jatin.sutaria@thev2technologies.com", "kunal@grovenue.com");
+			  String bccs[] = {"jatin.sutaria@thev2technologies.com", "kunal@grovenue.com", "hello@grovenue.com"};
+			  email.addBcc(bccs);//keep 4 arguments.
+			  
+			  
 		  		email.addTo(emailSentTo);
+		  			if(getEmailSentCC() != null) {
+		  				email.addCc(emailSentCC);
+		  			}
 		  		email.setHtmlMsg(message);
 		  		email.setSubject(subject);
 			  	email.setCharset("UTF-8");
@@ -63,6 +78,14 @@ public class EmailGenericMessageThread  implements Runnable{
 			e.printStackTrace();
 			throw new V2GenericException("Can not send Email", e);
 		}
+	}
+
+	public String getEmailSentCC() {
+		return emailSentCC;
+	}
+
+	public void setEmailSentCC(String emailSentCC) {
+		this.emailSentCC = emailSentCC;
 	}
 
 

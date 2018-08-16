@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.v2tech.domain.User;
+import com.v2tech.domain.UserEducationWorkStatus;
 import com.v2tech.domain.UserType;
 import com.v2tech.repository.UserRepository;
 import com.v2tech.services.UserService;
@@ -44,6 +45,7 @@ public class TestUser
 			User user = new User();
 			user.setFirstName("jatin");
 			user.setUser("jatin.sutaria@thev2technologies.com");
+			user.setUserEducationWorkStatus(UserEducationWorkStatus.WORKING_PROFESSIONAL);
 			ObjectMapper mapper = new ObjectMapper();
 			String s = mapper.writeValueAsString(user);
 			System.out.println(s);

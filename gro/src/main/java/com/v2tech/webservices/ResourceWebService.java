@@ -42,6 +42,9 @@ import com.v2.booksys.common.util.ReferralClient;
 import com.v2.booksys.common.util.UtilService;
 import com.v2tech.base.V2GenericException;
 import com.v2tech.domain.Keyword;
+import com.v2tech.domain.Mentor;
+import com.v2tech.domain.MentorRequest;
+import com.v2tech.domain.MentorWorkExperience;
 import com.v2tech.domain.ResetPassword;
 import com.v2tech.domain.SocialMediaType;
 import com.v2tech.domain.SurveyFormData;
@@ -60,6 +63,9 @@ import com.v2tech.services.CoachingClassService1;
 import com.v2tech.services.CountryStateCityService;
 import com.v2tech.services.DigitalToolService;
 import com.v2tech.services.KeywordService;
+import com.v2tech.services.MentorRequestService;
+import com.v2tech.services.MentorService;
+import com.v2tech.services.MentorWorkExperienceService;
 import com.v2tech.services.ReferralMappingService;
 import com.v2tech.services.ResetPasswordService;
 import com.v2tech.services.ReviewService;
@@ -319,7 +325,7 @@ public class ResourceWebService
 		}
 		
 		@GET
-		@Path("/getUserWithAllDetails/token/{token}")
+		@Path("/getUserWithAllDetails/user/{user}/socialMedia/{socialMedia}/token/{token}")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Response getUserWithAllDetails(  @PathParam("user") String user, @PathParam("socialMedia") String socialMedia, @PathParam("token") String token) {
@@ -514,12 +520,12 @@ public class ResourceWebService
 							}
 						else {
 							//sent email to social media user for first time
-							String referralCode = referralService.generateReferralForUser(user.getFirstName() == null ?user.getUser():user.getFirstName(), user.getUser());
-							String html = ReferralClient.getContent();
-							html = html.replaceAll("&amp;Referral_Code&amp;", referralCode);
-							EmailGenericMessageThread email = new EmailGenericMessageThread(user.getUser(), "Grovenue Referral Program", html);
-							Thread th = new Thread(email);
-							th.start();
+							//String referralCode = referralService.generateReferralForUser(user.getFirstName() == null ?user.getUser():user.getFirstName(), user.getUser());
+							//String html = ReferralClient.getContent();
+							//html = html.replaceAll("&amp;Referral_Code&amp;", referralCode);
+//							EmailGenericMessageThread email = new EmailGenericMessageThread(user.getUser(), "Grovenue Referral Program", html);
+//							Thread th = new Thread(email);
+//							th.start();
 						}
 					}
 				response.setRequestType("User_Save_Request");
@@ -1000,5 +1006,148 @@ public class ResourceWebService
 			{
 				return countryStateCityService.findByDistinctStateAndCityForGivenCountry(country);
 			}
+		
+		
+		@Autowired
+		MentorService mentorService;
+		
+		@Autowired
+		MentorRequestService mentorRequestService;
+		
+		@Autowired
+		MentorWorkExperienceService mentorWorkExperienceService;
+		
+		
+		
+		@POST
+		@Path("/saveOrUpdateMentorOnly/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateMentorOnly(Mentor mentor, @PathParam("token") String token){
+			logger.debug("in saveOrUpdateMentor");
+			logger.info("in saveOrUpdateMentor");
+			System.out.println("in saveOrUpdateMentor");
+			if (mentor == null || mentor.getEmail() == null || mentor.getEmail().trim().length() == 0)
+			{
+				throw new V2GenericException("Code-BasicDetailsNotPassed,Msg-Mentor or email can not be null");
+			}
+		
+			mentorService.saveOrUpdate(mentor);
+
+		//Response.ok().e
+		return Response.ok(mentor).build();
+		}
+		
+		@POST
+		@Path("/saveOrUpdateMentorWorkExperiences/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateMentorWorkExperience(List<MentorWorkExperience> workExperiences, @PathParam("token") String token){
+			logger.debug("in saveOrUpdateMentor");
+			logger.info("in saveOrUpdateMentor");
+			System.out.println("in saveOrUpdateMentor");
+			if (workExperiences.size() == 0)
+			{
+				throw new V2GenericException("No work experience to be saved");
+			}
+		
+			for(MentorWorkExperience mentorWorkExperience : workExperiences) {
+				mentorWorkExperienceService.saveOrUpdateMentorWorkExperience(mentorWorkExperience);
+			}
 			
+
+		//Response.ok().e
+		return Response.ok().build();
+		}
+		
+		@GET
+		@Path("/fetchMentorWorkExperiences/mentorEmail/{mentorEmail}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public List<MentorWorkExperience> fetchMentorWorkExperiences(@PathParam("mentorEmail") String mentorEmail, @PathParam("token") String token){
+			logger.debug("in saveOrUpdateMentor");
+			logger.info("in saveOrUpdateMentor");
+			List<MentorWorkExperience> mentorWorkExperiences = mentorWorkExperienceService.getMentorWorkExperiences(mentorEmail);
+			
+
+		//Response.ok().e
+		return mentorWorkExperiences;
+		}
+		
+		@POST
+		@Path("/saveOrUpdateMentorRequest/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response saveOrUpdateMentorRequest(MentorRequest mentorRequest, @PathParam("token") String token){
+		
+		
+			mentorRequestService.saveOrUpdate(mentorRequest);
+
+		//Response.ok().e
+		return Response.ok(mentorRequest).build();
+		}
+
+		@GET
+		@Path("/getMentorForCategory/category/{category}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<Mentor> getMentorForCategory(@PathParam("category") String category, @PathParam("token") String token)
+			{
+				return mentorService.findMentorsByCategory(category);
+			}
+		
+		@GET
+		@Path("/getMentorForCategoryAndLanguage/category/{category}/language/{language}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<Mentor> getMentorForCategoryAndLanguage(@PathParam("category") String category, @PathParam("language") String language, @PathParam("token") String token)
+			{
+				return mentorService.findMentorsByCategoryAndLanguage(category, language);
+			}
+		
+
+		@POST
+		@Path("/approveMentor/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public void approveMentor(Mentor mentor) {
+			mentorService.markMentorAsValidated(mentor);
+		}
+		
+		@GET
+		@Path("/getValidatedMentorForCategory/category/{category}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<Mentor> getValidatedMentorForCategory(@PathParam("category") String category, @PathParam("token") String token)
+			{
+				return mentorService.findValidatedMentorsByCategory(category, true);
+			}
+		
+		@GET
+		@Path("/getValidatedMentorForCategoryAndLanguage/category/{category}/language/{language}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<Mentor> getValidatedMentorForCategoryAndLanguage(@PathParam("category") String category, @PathParam("language") String language, @PathParam("token") String token)
+			{
+				return mentorService.findValidatedMentorsByCategoryAndLanguage(category, language, true);
+			}
+			
+		
+		@GET
+		@Path("/getAllUnValidatedMentors/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<Mentor> getAllUnValidatedMentors( @PathParam("token") String token)
+			{
+				return mentorService.findAllUnValidatedMentors();
+			}
+		
+
+		@POST
+		@Path("/sendMentorInvite/email/{email}/subject/{subject}/firstName/{firstName}/token/{token}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public void sendMentorInvite(@PathParam("email") String email, @PathParam("subject") String subject, @PathParam("firstName") String firstName, @PathParam("token") String token) throws IOException {
+			String welcomeMailData = FileUtils.readFileToString(new File("mentor.html"));
+			welcomeMailData = welcomeMailData.replace("[F_name]", firstName);
+			
+			EmailGenericMessageThread client = new EmailGenericMessageThread(email, subject, welcomeMailData);
+			Thread th = new Thread(client);
+			th.start();
+		}
 	}

@@ -94,6 +94,8 @@ public class SurveyFormData {
 	Long surveyTime;
 	
 	Boolean newBookAdded;
+	
+	Long createdTime;
 
 	public String getUser() {
 		return user;
@@ -437,6 +439,14 @@ public class SurveyFormData {
 
 	public void setNewBookAdded(Boolean newBookAdded) {
 		this.newBookAdded = newBookAdded;
+	}
+
+	public Long getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Long createdTime) {
+		this.createdTime = createdTime;
 	}
 	
 	
